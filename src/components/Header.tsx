@@ -25,7 +25,7 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        `flex grow items-center h-20 justify-between px-5 font-roboto font-oswald sticky top-0 z-50 lg:justify-evenly lg:px-24`,
+        `flex grow items-center h-20 justify-between px-5 sticky top-0 z-50 lg:justify-evenly lg:px-24`,
         {
           'bg-primary': header === 'primary'
         },
