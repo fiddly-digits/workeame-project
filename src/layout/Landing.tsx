@@ -6,6 +6,7 @@ import BottomButtons from "../components/BottomButtons";
 import SwiperCard from "../components/SwiperCard";
 import CustomCard from "../components/CustomCard";
 import WorkeaTitle from "../components/WorkeaTitle";
+import HeroSection from "../components/HeroSection";
 
 export default function Landing() {
   return (
@@ -13,14 +14,9 @@ export default function Landing() {
       <Header />
       <main className="flex flex-col mx-auto">
         <section className="flex items-center justify-center bg-primary">
-          <article className="container flex flex-col items-center justify-center h-screen min-h-screen px-5 bg-primary grow lg:px-24">
+          <article className="container flex flex-col gap-5 items-center justify-center h-screen min-h-screen px-5 bg-primary grow lg:px-24">
             <WorkeaTitle></WorkeaTitle>
-            {/* <div className='bg-center bg-hero-pattern bg-clip-text'>
-              <h1 className='text-[20vw] max-bg-no-repeat bg-fixed bg-cover text-center font-oswald font-bold leading-none text-transparent'>
-                Workea
-              </h1>
-            </div> */}
-            <p className="text-center text-md font-roboto lg:text-3xl">
+            <p className="text-center text-xl font-roboto lg:text-3xl">
               Somos más que una <span className="font-bold">plataforma</span>;
               somos el enlace entre quienes{" "}
               <span className="font-bold">buscan</span> servicios y aquellos que
@@ -29,7 +25,6 @@ export default function Landing() {
             <BottomButtons nextTitle="QUIENES SOMOS" reference="second" />
           </article>
         </section>
-
         <section className="flex flex-col items-center h-auto p-24 bg-primary">
           <CustomCard />
           <div></div>

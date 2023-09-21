@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import clsx from "clsx";
 
 export default function WorkeaTitle() {
-  const [backgroundText, setBackgroundText] = useState("text-black"); // Clase de fondo inicial
+  const [backgroundText, setBackgroundText] = useState();
   const backgroundClasses = [
-    "bg-clip-text-image-landing-first",
+    "bg-clip-text-image-landing-black",
     "bg-clip-text-image-landing-second",
+    "bg-clip-text-image-landing-first",
   ];
-  const intervalDuration = 5000;
+  const intervalDuration = 4000;
   let currentIndex = 0;
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function WorkeaTitle() {
         <h1
           className={clsx(
             backgroundText,
-            "text-[400px] font-bold font-oswald transition-all duration-[20s] ease-linear"
+            " font-bold font-oswald transition-all duration-[11000ms] ease-linear"
           )}
         >
           W<span className="hidden lg:inline">orkea</span>
