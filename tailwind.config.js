@@ -18,7 +18,8 @@ export default {
         primary: '#FFDEBE',
         secondary: '#9980FF',
         third: '#FF7145',
-        fourth: 'var(--White, #F6F6F6)'
+        fourth: 'var(--White, #F6F6F6)',
+        wkablack: '#2C2A29'
       }
     }
   },

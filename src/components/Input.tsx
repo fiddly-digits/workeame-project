@@ -1,8 +1,10 @@
+// interface Props extends Partial<Pick<UseFormReturn, 'register'>> {
 interface Props {
   type: 'text' | 'password' | 'email';
   placeholder?: string;
   icon?: string;
 }
+
 export default function Input({ placeholder, icon, type }: Props) {
   return (
     <div
