@@ -67,7 +67,7 @@ export default function Landing() {
           <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-24 justify-evenly bg-secondary">
             <div className="flex flex-col  overflow-hidden bg-white rounded-md shadow-lg font-oswald">
               <img
-                src="https://workeame-bucket.s3.amazonaws.com/hero-1.webp"
+                src="/pictures/person-working-remotely-project 3.webp"
                 alt="card-img"
                 className="object-cover w-full h-80"
               />
@@ -172,11 +172,12 @@ export default function Landing() {
                 </Accordion>
               </div>
             </div>
-            <BottomButtons nextTitle="BUSCA TU WORKER" reference="second" />
+            <BottomButtons nextTitle="BUSCA TU WORKER" reference="fifth" />
           </article>
         </section>
-        <SearchWorker></SearchWorker>
-        {/* <FifthSection /> */}
+        <section id="fifth-section">
+          <SearchWorker></SearchWorker>
+        </section>
         <Footer />
       </main>
     </>

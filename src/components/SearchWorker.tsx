@@ -101,7 +101,7 @@ export default function SearchWorker() {
           <div className="flex w-auto justify-center m-10">
             <WorkerButton
               action="CONVIERTETE EN WORKER"
-              className=" bg-white hover:bg-black shadow-md"
+              className=" bg-white hover:bg-gray-950 shadow-md transition-colors duration-300 ease-in-out"
             />
           </div>
         </div>
