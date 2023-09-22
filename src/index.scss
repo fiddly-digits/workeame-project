@@ -359,6 +359,12 @@ Note: Beware of modifying this element as it can break the animations - you shou
   background-position: bottom center;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.9s;
+  transition-duration: 0.9s;
+  -webkit-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
   background-clip: text;
   color: transparent;
   font-size: 27rem;
@@ -367,15 +373,51 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .bg-clip-text-image-landing-black {
   color: black;
   font-size: 27rem;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.9s;
+  transition-duration: 0.9s;
+  -webkit-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
 }
 
 .bg-clip-text-image-landing-second {
   background-image: url("/pictures/team-working-together-project 6.webp");
-  background-size: auto;
-  background-position: top center;
+  background-size: cover;
+  background-position: center center;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.9s;
+  transition-duration: 0.9s;
+  -webkit-transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in-out;
   background-clip: text;
   color: transparent;
   font-size: 27rem;
+}
+
+/* Text b-clip in first Info */
+.bg-clip-text-image-first {
+  background-image: url("/public/pictures/person-working-remotely-latest.webp");
+  background-size: auto;
+  background-position: bottom center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.4;
+  background-clip: text;
+  color: transparent;
+  font-size: 30rem;
+}
+
+.transition-text {
+  -webkit-transition-property: all;
+  transition-property: all;
+  -webkit-transition-duration: 0.9s;
+  transition-duration: 0.9s;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
 }

@@ -1,8 +1,6 @@
-import { image } from "@nextui-org/react";
-
 export default function CustomCard() {
   return (
-    <div className="flex flex-col overflow-hidden bg-white rounded-md shadow-md font-oswald">
+    <div className="flex flex-col w-80 md:w-auto overflow-hidden bg-white rounded-md shadow-md font-oswald">
       <div className="p-10">
         <h1 className="pb-8 text-2xl subpixel-antialiased font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800 lg:text-5xl">
           QUIENES SOMOS

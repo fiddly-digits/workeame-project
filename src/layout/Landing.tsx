@@ -7,6 +7,7 @@ import SwiperCard from "../components/SwiperCard";
 import CustomCard from "../components/CustomCard";
 import WorkeaTitle from "../components/WorkeaTitle";
 import HeroSection from "../components/HeroSection";
+import WInfo from "../components/WInfo";
 
 export default function Landing() {
   return (
@@ -16,7 +17,7 @@ export default function Landing() {
         <section className="flex items-center justify-center bg-primary">
           <article className="container flex flex-col gap-5 items-center justify-center h-screen min-h-screen px-5 bg-primary grow lg:px-24">
             <WorkeaTitle></WorkeaTitle>
-            <p className="text-center text-xl font-roboto lg:text-3xl">
+            <p className="text-center text-xl font-roboto lg:text-3xl mt-4">
               Somos más que una <span className="font-bold">plataforma</span>;
               somos el enlace entre quienes{" "}
               <span className="font-bold">buscan</span> servicios y aquellos que
@@ -25,35 +26,28 @@ export default function Landing() {
             <BottomButtons nextTitle="QUIENES SOMOS" reference="second" />
           </article>
         </section>
-        <section className="flex flex-col items-center h-auto p-24 bg-primary">
+        <section
+          id="second-section"
+          className="flex flex-col items-center h-auto p-24 bg-primary"
+        >
           <CustomCard />
-          <div></div>
-          <div className="flex flex-col my-24 lg:flex-row lg:items-center lg:max-w-[1200px]">
-            <p className="text-xl text-center font-oswald lg:text-2xl">
-              Lo que nos hace diferentes es que tenemos todas estas herramientas
-              en un solo sitio.
-            </p>
-            <h2 className="font-bold leading-none text-center text-[250px] text-transparent bg-fixed bg-right-bottom bg-no-repeat lg:text-[500px] font-oswald bg-clip-text bg-hero-pattern">
-              W
-            </h2>
-            <p className="text-xl text-center font-oswald lg:text-2xl">
-              Nuestra meta es unir a clientes y proveedores de forma fácil y
-              exitosa.
-            </p>
+
+          <div className="flex flex-col mt-24 mb-7 lg:flex-row lg:items-center lg:max-w-[1200px]">
+            <WInfo></WInfo>
           </div>
-          <h2 className="text-2xl text-center lg:text-5xl font-oswald text-third">
+          <h2 className="text-3xl text-center lg:text-5xl font-oswald text-third font-semibold mb-3">
             ¡Únete y hagamos que las cosas sucedan juntos!
           </h2>
-          <BottomButtons nextTitle="COMO FUNCIONA" reference="second" />
+          <BottomButtons nextTitle="COMO FUNCIONA" reference="third" />
         </section>
 
-        <section className="flex justify-center bg-third">
+        <section id="third-section" className="flex justify-center bg-third">
           <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-24 justify-evenly bg-third">
             <h1 className="text-5xl subpixel-antialiased font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800">
               COMO FUNCIONA
             </h1>
             <div className="absolute">
-              <h1 className="hidden relative text-[380px] translate-x-0 md:hidden text-center font-oswald font-bold leading-none text-secondary lg:block">
+              <h1 className="hidden relative bottom-16 text-[400px] translate-x-0 md:hidden text-center font-oswald font-bold leading-none text-secondary lg:block">
                 Workea
               </h1>
             </div>
