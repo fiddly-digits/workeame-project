@@ -68,7 +68,7 @@ export default function Landing() {
               <img
                 src="https://workeame-bucket.s3.amazonaws.com/hero-1.webp"
                 alt="card-img"
-                className="object-cover w-full h-96"
+                className="object-cover w-full h-80"
               />
               <div className="p-10">
                 <h1 className="pb-8 text-2xl subpixel-antialiased font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800 lg:text-7xl">
@@ -76,6 +76,7 @@ export default function Landing() {
                 </h1>
                 <Accordion variant="light" selectionMode="multiple">
                   <AccordionItem
+                    className="md:w-96 lg:w-[50rem]"
                     key="1"
                     aria-label="Accordion 1"
                     title={
@@ -98,6 +99,7 @@ export default function Landing() {
                     </p>
                   </AccordionItem>
                   <AccordionItem
+                    className="md:w-96 lg:w-[50rem]"
                     key="2"
                     aria-label="Accordion 2"
                     title={
@@ -121,6 +123,7 @@ export default function Landing() {
                     </p>
                   </AccordionItem>
                   <AccordionItem
+                    className="md:w-96 lg:w-[50rem]"
                     key="3"
                     aria-label="Accordion 3"
                     title={
@@ -143,6 +146,7 @@ export default function Landing() {
                     </p>
                   </AccordionItem>
                   <AccordionItem
+                    className="md:w-96 lg:w-[50rem]"
                     key="4"
                     aria-label="Accordion 4"
                     title={
