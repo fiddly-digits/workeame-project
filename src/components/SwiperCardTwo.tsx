@@ -10,7 +10,7 @@ interface Props {
   left?: boolean;
 }
 
-export default function SwiperCard({ left }: Props) {
+export default function SwiperCardTwo({ left }: Props) {
   return (
     <div className="flex flex-col items-center lg:max-h-80 overflow-hidden bg-white rounded-md shadow-md font-oswald lg:flex-row">
       <div
@@ -21,9 +21,9 @@ export default function SwiperCard({ left }: Props) {
           }
         )}
       >
-        <div className="flex flex-col justify-center w-80 p-3 lg:w-[30rem] lg:p-5 lg:ml-32">
-          <h3 className="text-2xl font-bold font-oswald lg:text-2xl tracking-wider">
-            ¿Quieres <span className="text-third">buscar</span> un{" "}
+        <div className="flex flex-col items-center justify-center w-80 p-3 lg:w-[30rem] lg:p-5">
+          <h3 className="text-2xl  font-oswald font-bold lg:text-2xl tracking-wider">
+            ¿Quieres <span className="text-third">ser</span> un{" "}
             <span className="font-bold">WORKER</span>?
           </h3>
           <Swiper
@@ -40,45 +40,45 @@ export default function SwiperCard({ left }: Props) {
             <SwiperSlide>
               <SliderOnThird
                 step={1}
-                text=" donde quieras y comienza a Workear"
-                callout={["Comparte este enlace"]}
+                text="Crea tu perfil ingresando algunos detalles básicos."
+                callout={["Registrate."]}
               />
             </SwiperSlide>
             <SwiperSlide>
               <SliderOnThird
                 step={2}
-                text=" adecuado para tí"
-                callout={["Identifica al Worker"]}
+                text="Personalízalo para mostrar tus servicios como prefieras"
+                callout={["Crea tu Sitio."]}
               />
             </SwiperSlide>
             <SwiperSlide>
               <SliderOnThird
                 step={3}
-                text="¡Prepárate para conectar y colaborar!"
-                callout={["Registrate para contactar a tu Worker "]}
+                text="y sube algunas fotos de tus trabajos más recientes. Es la manera perfecta de mostrar lo que haces y responder a posibles dudas de tus clientes"
+                callout={["Cuéntanos sobre tus servicios."]}
               />
             </SwiperSlide>
             <SwiperSlide>
               <SliderOnThird
                 step={4}
-                text=", si tienes preguntas. Luego, elige tu cita y paga un adelanto con el método de pago que te convenga. Simplificamos todo para ti."
-                callout={["Chatea con tu Worker"]}
+                text="Aquí puedes establecer tus horarios disponibles para tus servicios. Es una manera eficiente de organizar tu tiempo y estar listo para tus clientes"
+                callout={["Define tu calendario."]}
               />
             </SwiperSlide>
             <SwiperSlide>
               <SliderOnThird
                 step={5}
-                text="y prepárate para recibir un excelente servicio. Asegurar tu cita es clave para disfrutar de una experiencia genial. Estamos aquí para ofrecerte lo mejor."
-                callout={["Confirma tu cita "]}
+                text=" donde quieras y comienza a Workear"
+                callout={["Comparte este enlace"]}
               />
             </SwiperSlide>
           </Swiper>
         </div>
       </div>
-      <div className="w-auto h-full lg:min-h-80">
+      <div className="w-full h-full lg:min-h-80">
         <img
-          className="object-cover lg:object-fill h-full"
-          src="/pictures/team-working-together-project 6.webp"
+          className="object-cover w-screen h-full "
+          src="/pictures/team_work_last.webp"
           alt="card-img"
         />
       </div>

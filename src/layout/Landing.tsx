@@ -6,8 +6,8 @@ import BottomButtons from "../components/BottomButtons";
 import SwiperCard from "../components/SwiperCard";
 import CustomCard from "../components/CustomCard";
 import WorkeaTitle from "../components/WorkeaTitle";
-import HeroSection from "../components/HeroSection";
 import WInfo from "../components/WInfo";
+import SwiperCardTwo from "../components/SwiperCardTwo";
 
 export default function Landing() {
   return (
@@ -51,15 +51,18 @@ export default function Landing() {
                 Workea
               </h1>
             </div>
-            <div className="relative flex flex-col gap-5 py-10 w-fit grow lg:gap-72">
-              <SwiperCard />
+            <div className="relative flex flex-col gap-5 py-10 w-fit grow lg:gap-40">
+              <SwiperCardTwo />
               <SwiperCard left />
             </div>
-            <BottomButtons nextTitle="PORQUE NOSOTROS" reference="second" />
+            <BottomButtons nextTitle="PORQUE NOSOTROS" reference="fourth" />
           </article>
         </section>
 
-        <section className="flex justify-center bg-secondary">
+        <section
+          id="fourth-section"
+          className="flex justify-center bg-secondary"
+        >
           <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-24 justify-evenly bg-secondary">
             <div className="flex flex-col overflow-hidden bg-white rounded-md shadow-md font-oswald">
               <img
