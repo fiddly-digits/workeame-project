@@ -1,13 +1,14 @@
 import Header from "../components/Header";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import Footer from "../components/Footer";
-import FifthSection from "../components/FifthSection";
+
 import BottomButtons from "../components/BottomButtons";
 import SwiperCard from "../components/SwiperCard";
 import CustomCard from "../components/CustomCard";
 import WorkeaTitle from "../components/WorkeaTitle";
 import WInfo from "../components/WInfo";
 import SwiperCardTwo from "../components/SwiperCardTwo";
+import SearchWorker from "../components/SearchWorker";
 
 export default function Landing() {
   return (
@@ -64,7 +65,7 @@ export default function Landing() {
           className="flex justify-center bg-secondary"
         >
           <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-24 justify-evenly bg-secondary">
-            <div className="flex flex-col overflow-hidden bg-white rounded-md shadow-md font-oswald">
+            <div className="flex flex-col  overflow-hidden bg-white rounded-md shadow-lg font-oswald">
               <img
                 src="https://workeame-bucket.s3.amazonaws.com/hero-1.webp"
                 alt="card-img"
@@ -174,7 +175,8 @@ export default function Landing() {
             <BottomButtons nextTitle="BUSCA TU WORKER" reference="second" />
           </article>
         </section>
-        <FifthSection />
+        <SearchWorker></SearchWorker>
+        {/* <FifthSection /> */}
         <Footer />
       </main>
     </>
