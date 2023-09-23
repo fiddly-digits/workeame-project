@@ -5,6 +5,7 @@ const { VITE_SITE_URL } = import.meta.env;
 interface BaseProps {
   path: string;
   start: boolean;
+  headers?: object;
 }
 
 type GetProps = {
@@ -37,7 +38,13 @@ function getUrl(path: string) {
   return staticURL + path;
 }
 
-export function useFetch({ path, method, data, start }: Props): FetchReturn {
+export function useFetch({
+  path,
+  method,
+  data,
+  headers,
+  start
+}: Props): FetchReturn {
   const [result, setResult] = useState<object>();
   const [loading, setLoading] = useState(false);
   const [statusCode, setCode] = useState(-1);
@@ -52,7 +59,8 @@ export function useFetch({ path, method, data, start }: Props): FetchReturn {
     const staticURL = getUrl(path);
 
     const response = await fetch(staticURL, {
-      headers: data === undefined ? {} : { 'Content-Type': 'application/json' },
+      headers:
+        headers === undefined ? {} : { 'Content-Type': 'application/json' },
       body: JSON.stringify(data === undefined ? {} : data),
       method: method
     });
@@ -68,7 +76,7 @@ export function useFetch({ path, method, data, start }: Props): FetchReturn {
     }
 
     setLoading(false);
-  }, [data, loading, method, path]);
+  }, [data, loading, method, headers, path]);
 
   useEffect(() => {
     if (start) {

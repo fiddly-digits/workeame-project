@@ -1,12 +1,10 @@
 //import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ButtonBlack from '../components/ButtonBlack';
 import { useForm } from 'react-hook-form';
-import { RegistrationData } from '../utils/common.types';
 import * as Yup from 'yup';
 import { Input } from '@nextui-org/react';
-import { usePost } from '../hooks/UseFetch';
-import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 import {
   Modal,
   ModalContent,
@@ -31,62 +29,57 @@ const schema = Yup.object().shape({
     .matches(/[!@#$%^&*]/, 'Debe contener al menos un cáracter especial'),
   repeatPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
-    .required('La contraseña es requerida')
+    .required('La contraseña es requerida'),
+  photo: Yup.mixed().test('required', 'La foto es requerida', (photo) => {
+    if (!photo) return false;
+    return true;
+  })
 });
 
 export default function Register() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [selectedImage, setSelectedImage] = useState();
+  //const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<RegistrationData>({
+  } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
-  const [data, setData] = useState<object>();
-  const [start, setStart] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  async function onSubmit(data: RegistrationData) {
-    console.log(data);
+  async function onSubmit(data) {
     const userInfo = {
       name: data.name,
       lastName: data.lastName,
       email: data.email,
       password: data.password,
-      photo: 'this is a test'
+      photo: selectedImage[0]
     };
-    setData(userInfo);
-    setStart(true);
+    console.log(userInfo);
+    axios
+      .post('http://localhost:8080/api/v1/user/register', userInfo, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      .then((response) => {
+        console.log('Aqui tendria que redirigirte', response);
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.message);
+        setShowModal(true);
+      });
   }
 
-  const postResult = usePost({
-    path: '/user/register',
-    start,
-    data
-  });
-
-  useEffect(() => {
-    if (!postResult) return;
-    console.log(postResult);
-    console.log((postResult as { message?: string }[])[0]?.message ?? 'Error');
-    if (
-      !postResult[0] ||
-      (postResult as { success?: boolean }[])[0]?.success === true
-    ) {
-      setShowModal(false);
-      setErrorMessage('Error');
-    } else {
-      setErrorMessage(
-        (postResult as { message?: string }[])[0]?.message ?? 'Error'
-      );
-      setShowModal(true);
+  async function onChange(event) {
+    if (event.target.files && event.target.files.length > 0) {
+      const imageFile = event.target.files;
+      setSelectedImage(imageFile);
     }
-    setStart(false);
-  }, [onOpenChange, postResult]);
+  }
 
   return (
     <div className='bg-fourth'>
@@ -100,12 +93,19 @@ export default function Register() {
           Regístrate para empezar a{' '}
           <span className='mx-1 font-bold md:mx-2'>WORKEAR</span>
         </h2>
+        <h3 className='flex justify-center m-5 text-md font-oswald'>
+          {' '}
+          Ya tienes una cuenta?{' '}
+          <a className='mx-1 font-bold md:mx-2' href='/Login'>
+            INGRESA
+          </a>
+        </h3>
         <form
           className='flex flex-col gap-[20px] justify-center mx-auto'
-          onSubmit={(event) => void handleSubmit(onSubmit)(event)}
+          onSubmit={handleSubmit(onSubmit)}
         >
           <section className='flex flex-col items-center gap-3'>
-            <div className='flex flex-col justify-between gap-3 mx-auto md:w-full'>
+            <div className='flex flex-col justify-between gap-3 mx-auto border w-96 md:w-96'>
               <Input
                 type='text'
                 label='Nombre'
@@ -162,20 +162,44 @@ export default function Register() {
             </div>
           </section>
           <div className='flex flex-col gap-8 items-center w-[100%]'>
-            <div className='w-[241px] h-[300px] bg-slate-300 rounded-t-[20px] mb-10'>
-              <img
-                src='/pictures/mujer1.jpg'
-                alt='woman'
-                className='h-fill rounded-t-md w-fill'
-              />
+            <div className='max-w-[241px] max-h-[300px] overflow-hidden'>
+              {selectedImage && (
+                <img
+                  src={URL.createObjectURL(selectedImage[0])}
+                  alt='preview'
+                  className='max-w-full min-w-full rounded-full shrink-0'
+                />
+              )}
             </div>
 
-            <ButtonBlack
-              type='button'
-              icon='upload'
-              action='Subir foto'
-              reference=''
-            ></ButtonBlack>
+            <div className='flex flex-col items-center gap-2'>
+              <input
+                accept='image/*'
+                type='file'
+                hidden
+                id='file-uploader'
+                {...register('photo', {
+                  onChange: onChange
+                })}
+              />
+              <label
+                htmlFor='file-uploader'
+                className='bg-wkablack rounded-md max-w-[240px] h-[48px] flex justify-center items-center gap-3 px-5 text-white font-oswald shadow-md hover:bg-[#525252] duration-300 hover:cursor-pointer'
+              >
+                <img src='/upload.svg' alt='upload' className='w-6 h-6' />
+                Selecciona una Foto
+              </label>
+              {selectedImage && (
+                <label className='text-sm text-slate-500 text-clip'>
+                  {selectedImage[0].name}
+                </label>
+              )}
+              {errors.photo && (
+                <label className='text-sm text-slate-500'>
+                  {errors.photo.message}
+                </label>
+              )}
+            </div>
           </div>
           <div className='flex justify-center m-10 '>
             <Button

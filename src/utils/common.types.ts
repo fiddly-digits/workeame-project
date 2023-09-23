@@ -4,6 +4,7 @@ export type RegistrationData = {
   repeatPassword: string;
   name: string;
   lastName: string;
+  photo: File;
 };
 
 export type AuthResponse = {

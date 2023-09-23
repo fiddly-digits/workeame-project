@@ -7,6 +7,8 @@ import './index.scss';
 import Landing from './layout/Landing';
 import App from './layout/App';
 import Register from './pages/Register';
+import Login from './pages/Login';
+import Verify from './pages/Verify';
 
 const router = createBrowserRouter([
   {
@@ -15,13 +17,21 @@ const router = createBrowserRouter([
     errorElement: <div>404</div>
   },
   {
-    path: '/register',
+    path: '/',
     element: <App />,
     errorElement: <div>404</div>,
     children: [
       {
         path: '/register',
         element: <Register />
+      },
+      {
+        path: '/login',
+        element: <Login />
+      },
+      {
+        path: '/verify/:token',
+        element: <Verify />
       }
     ]
   }
