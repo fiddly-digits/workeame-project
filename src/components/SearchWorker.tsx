@@ -119,10 +119,10 @@ export default function SearchWorker() {
               ))}
             </div>
           </ScrollShadow>
-          <div className="flex w-auto justify-center m-10">
+          <div className="flex w-auto justify-center mt-5 mb-20">
             <WorkerButton
               action="CONVIERTETE EN WORKER"
-              className=" bg-white hover:bg-gray-950 shadow-md transition-colors duration-300 ease-in-out"
+              className="border-hidden text-lg h-16 bg-white hover:bg-gray-950 shadow-md transition-colors duration-700 ease-in"
             />
           </div>
         </div>

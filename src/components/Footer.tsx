@@ -1,50 +1,88 @@
+/* interface Props {
+  nextTitle?: string;
+  reference: string;
+  button?: boolean;
+}
+
+export default function BottomButtons({ nextTitle, reference, button }: Props) {
+  return (
+    <div className='flex flex-wrap self-start gap-5 py-12 lg:order-last lg:px-28'>
+      <a
+        href={`#${reference}-section`}
+
+
+ */
+
 export default function Footer() {
   return (
-    <footer className='relative z-10 flex flex-col gap-3 p-24 overflow-hidden lg:block bg-fourth'>
-      <div className='flex flex-col gap-3 font-roboto'>
-        <p className='text-lg'>
+    <footer className="relative z-10 flex flex-col gap-3 p-5 md:px-10  overflow-hidden lg:block bg-fourth">
+      <div className="flex flex-col gap-3 font-roboto">
+        <p className="text-md lg:text-lg">
           Calle 345 10. Del. Azcapotzalco 56672. Ciudad de México, México
         </p>
-        <div className='flex flex-col gap-4 text-lg lg:flex-row'>
+        <div className="flex  gap-4 text-md lg:text-lg flex-row">
           <p>+525532423221</p>
-          <span className='hidden lg:block'>|</span>
-          <p>contacto@workea.me</p>
+          <span className="">|</span>
+          <p className="hover:text-secondary hover:font-bold ">
+            contacto@workea.me
+          </p>
         </div>
-        <h3 className='text-xl font-bold'>Navegacion</h3>
-        <div className='flex flex-col gap-4 text-lg lg:flex-row'>
-          <a href='/'>Quienes Somos</a>
-          <span className='hidden lg:block'>|</span>
-          <a href='/'>Como Funciona</a>
-          <a className='hidden lg:block'>|</a>
-          <a href='/'>Porque Nosotros</a>
-          <span className='hidden lg:block'>|</span>
-          <a href='/'>Busca tu Worker</a>
+        <h3 className="text-xl font-bold">Navegacion</h3>
+        <div className="flex flex-col gap-4 text-md lg:text-lg lg:flex-row ">
+          <a
+            href="#second-section"
+            className="hover:text-secondary hover:font-bold"
+          >
+            Quienes Somos
+          </a>
+          <span className="hidden lg:block">|</span>
+          <a
+            href="#third-section"
+            className="hover:text-secondary hover:font-bold"
+          >
+            Como Funciona
+          </a>
+          <a className="hidden lg:block">|</a>
+          <a
+            href="#fourth-section"
+            className="hover:text-secondary hover:font-bold"
+          >
+            Porque Nosotros
+          </a>
+          <span className="hidden lg:block">|</span>
+          <a
+            href="#fifth-section"
+            className="hover:text-secondary hover:font-bold"
+          >
+            Busca tu Worker
+          </a>
         </div>
-        <h3 className='text-xl font-bold'>Recursos</h3>
-        <div className='flex flex-col gap-4 text-lg lg:flex-row'>
-          <a href='/'>Contactanos</a>
-          <span className='hidden lg:block'>|</span>
-          <a href='/'>Beneficios</a>
+        <h3 className="text-xl font-bold">Recursos</h3>
+        <div className="flex  gap-4 text-md lg:text-lg flex-row">
+          <a href="/">Contactanos</a>
+          <span>|</span>
+          <a href="/">Beneficios</a>
         </div>
       </div>
-      <div className='flex flex-col gap-3 lg:items-end lg:justify-between font-roboto lg:flex-row text-secondary'>
-        <p className='text-sm lg:text-md lg:order-1'>
+      <div className="flex flex-col gap-3 lg:items-end lg:justify-between font-roboto lg:flex-row text-secondary">
+        <p className="text-sm lg:text-md lg:order-1">
           © 2023 Team Workea.me. All Rights Reserved
         </p>
-        <div className='flex items-center order-last lg:order-2'>
-          <img src='/linked.svg' alt='linked' className='w-10 h-10' />
-          <img src='/facebook.svg' alt='facebook' className='w-10 h-10' />
-          <img src='/twitterx.svg' alt='twitterx' className='w-10 h-10' />
+        <div className="flex items-center order-last lg:order-2">
+          <img src="/linked.svg" alt="linked" className="w-10 h-10" />
+          <img src="/facebook.svg" alt="facebook" className="w-10 h-10" />
+          <img src="/twitterx.svg" alt="twitterx" className="w-10 h-10" />
         </div>
-        <p className='text-sm lg:text-md lg:order-3'>
-          Consulta nuestra{' '}
-          <span className='underline'>Política de Privacidad</span> y{' '}
-          <span className='underline'>Términos del Servicio</span>
+        <p className="text-sm lg:text-md lg:order-3">
+          Consulta nuestra{" "}
+          <span className="underline">Política de Privacidad</span> y{" "}
+          <span className="underline">Términos del Servicio</span>
         </p>
       </div>
-      <div className='absolute'>
-        <h1 className='hidden relative text-[380px] bottom-96 -z-10 md:hidden text-center font-oswald font-bold leading-none text-white lg:block'>
-          Workea
+      <div className="relative">
+        <h1 className="absolute bottom-8  lg:bottom-0  text-[35rem] lg:text-[23rem] -z-10 text-center font-oswald font-bold leading-none text-white ">
+          <span className="md:hidden">W</span>
+          <span className="hidden md:block lg:tracking-wider">Workea</span>
         </h1>
       </div>
     </footer>
