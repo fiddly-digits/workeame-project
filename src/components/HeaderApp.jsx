@@ -7,11 +7,7 @@ import {
   DropdownTrigger
 } from '@nextui-org/react';
 
-type Props = {
-  userData?: object;
-};
-
-export default function HeaderApp({ userData }: Props) {
+export default function HeaderApp({ userData }) {
   console.log(userData);
   return (
     <header className='sticky top-0 z-50 flex items-center justify-between h-20 px-5 bg-fourth grow lg:justify-evenly lg:px-24'>
