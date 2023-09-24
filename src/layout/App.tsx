@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <>
-      {userData ? <HeaderApp userData={userData} /> : <HeaderApp />}
+      <HeaderApp userData={userData} />
       <Outlet />
       <Footer />
     </>
