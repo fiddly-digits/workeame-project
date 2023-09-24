@@ -30,11 +30,15 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
+        path: '/resend/',
+        element: <div>Resend</div>
+      },
+      {
         path: '/verify/:token',
         element: <Verify />
       },
       {
-        path: 'dashboard',
+        path: '/dashboard',
         element: <div>Dashboard</div>
       }
     ]
