@@ -1,6 +1,7 @@
 import Input from "./Input";
 import WorkerButton from "./WorkerButton";
 import WorkerCardFlip from "./WorkerCardFlip";
+import { ScrollShadow } from "@nextui-org/react";
 
 const workers = [
   {
@@ -65,6 +66,18 @@ const workers = [
   },
 ];
 
+//Aleatorizar Workers Cards
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1)); //genera un número entero aleatorio j
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; //intercambia la posición de i y j
+  }
+  return newArray;
+}
+// Aleatoriza el orden de las cards
+const shuffledWorkersCards = shuffleArray(workers);
+
 export default function SearchWorker() {
   return (
     <>
@@ -85,19 +98,27 @@ export default function SearchWorker() {
             />
             <Input type={"text"} placeholder="Localidad" icon="map-icon" />
           </form>
-          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10 justify-items-center ">
-            {workers.map((worker) => (
-              <WorkerCardFlip
-                key={worker.key}
-                name={worker.name}
-                job={worker.job}
-                picture={worker.picture}
-                adress={worker.adress}
-                description={worker.description}
-                position={worker.position}
-              ></WorkerCardFlip>
-            ))}
-          </div>
+          <ScrollShadow
+            hideScrollBar
+            size={5}
+            offset={100}
+            orientation="vertical"
+            className="w-auto max-h-[35rem] my-10"
+          >
+            <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 my-10 justify-items-center ">
+              {shuffledWorkersCards.map((card) => (
+                <WorkerCardFlip
+                  key={card.key}
+                  name={card.name}
+                  job={card.job}
+                  picture={card.picture}
+                  adress={card.adress}
+                  description={card.description}
+                  position={card.position}
+                ></WorkerCardFlip>
+              ))}
+            </div>
+          </ScrollShadow>
           <div className="flex w-auto justify-center m-10">
             <WorkerButton
               action="CONVIERTETE EN WORKER"
