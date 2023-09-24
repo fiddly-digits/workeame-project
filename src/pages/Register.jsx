@@ -1,4 +1,4 @@
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -14,6 +14,8 @@ import {
   Button,
   useDisclosure
 } from '@nextui-org/react';
+
+const { VITE_API_URL, VITE_USER_REGISTER } = import.meta.env;
 
 const schema = Yup.object().shape({
   name: Yup.string().required('El nombre es requerido'),
@@ -39,7 +41,7 @@ const schema = Yup.object().shape({
 export default function Register() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedImage, setSelectedImage] = useState();
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -62,11 +64,12 @@ export default function Register() {
     };
     console.log(userInfo);
     axios
-      .post('http://localhost:8080/api/v1/user/register', userInfo, {
+      .post(VITE_API_URL + VITE_USER_REGISTER, userInfo, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then((response) => {
         console.log('Aqui tendria que redirigirte', response);
+        navigate('/login');
       })
       .catch((error) => {
         setErrorMessage(error.response.data.message);

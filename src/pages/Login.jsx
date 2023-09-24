@@ -4,6 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const { VITE_API_URL, VITE_AUTH_LOGIN } = import.meta.env;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -27,13 +30,17 @@ export default function Login() {
     resolver: yupResolver(schema)
   });
   const [errorMessage, setErrorMessage] = useState();
+  const navigate = useNavigate();
 
   async function onSubmit(data) {
     console.log(data);
     axios
-      .post('http://localhost:8080/api/v1/auth/login', data)
+      .post(VITE_API_URL + VITE_AUTH_LOGIN, data)
       .then((res) => {
         console.log(res.data.token);
+        sessionStorage.setItem('token', res.data?.token);
+        navigate('/dashboard');
+        location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -42,7 +49,7 @@ export default function Login() {
   }
 
   return (
-    <div className='bg-fourth'>
+    <div className='flex items-center h-screen bg-fourth'>
       <div className='absolute inset-0 z-0 right-[40rem] top-[45rem] md:top-32 '>
         <h1 className=' text-primary/50 -rotate-90 font-oswald  text-[380px] font-bold '>
           Workea

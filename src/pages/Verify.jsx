@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+const { VITE_API_URL, VITE_AUTH_CONFIRM } = import.meta.env;
+
 const schema = Yup.object().shape({
   email: Yup.string()
     .email('El email no es válido')
@@ -29,7 +31,7 @@ export default function Verify() {
   async function onSubmit(data) {
     console.log(data);
     axios
-      .post(`http://localhost:8080/api/v1/auth/confirmation/${token}`, data)
+      .post(`${VITE_API_URL}${VITE_AUTH_CONFIRM}${token}`, data)
       .then((res) => {
         console.log(res.data);
         navigate('/login');

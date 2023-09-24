@@ -32,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/verify/:token',
         element: <Verify />
+      },
+      {
+        path: 'dashboard',
+        element: <div>Dashboard</div>
       }
     ]
   }
