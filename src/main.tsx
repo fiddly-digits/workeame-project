@@ -9,6 +9,7 @@ import App from './layout/App';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Verify from './pages/Verify';
+import Resend from './pages/Resend';
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/resend/',
-        element: <div>Resend</div>
+        element: <Resend />
       },
       {
         path: '/verify/:token',
