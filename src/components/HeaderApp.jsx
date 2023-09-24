@@ -1,51 +1,108 @@
-import DualButton from './DualButton';
 import {
-  Avatar,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenuToggle,
+  Link,
+  Button,
   Dropdown,
+  DropdownTrigger,
+  Avatar,
   DropdownMenu,
-  DropdownItem,
-  DropdownTrigger
+  DropdownItem
 } from '@nextui-org/react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function HeaderApp({ userData }) {
-  console.log(userData);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // Validar si la userdata esta correcta
   return (
-    <header className='sticky top-0 z-50 flex items-center justify-between h-20 px-5 bg-fourth grow lg:justify-evenly lg:px-24'>
-      <h1 className='text-5xl font-bold w-fit h-fit font-oswald'>
-        W<span className='lg:hidden'>ORKEA</span>
-      </h1>
-      <nav className='items-center hidden gap-5 lg:flex'></nav>
+    <Navbar
+      className='bg-transparent'
+      shouldHideOnScroll
+      onMenuOpenChange={setIsMenuOpen}
+    >
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          className='sm:hidden'
+        />
+        <NavbarBrand>
+          <Link
+            className='text-4xl font-bold text-wkablack w-fit h-fit font-oswald'
+            href='/'
+          >
+            W<span className='lg:hidden'>orkea</span>
+          </Link>
+        </NavbarBrand>
+      </NavbarContent>
       {userData ? (
-        <Dropdown placement='bottom-end'>
-          <DropdownTrigger>
-            <Avatar
-              src={userData?.photo}
-              size='md'
-              as='button'
-              isBordered
-              showFallback
-            />
-          </DropdownTrigger>
-          <DropdownMenu aria-label='Profile Actions' variant='flat'>
-            <DropdownItem key='profile' className='gap-2 h-14'>
-              <p className='font-semibold font-roboto'>Bienvenido</p>
-              <p className='font-semibold font-roboto'>{`${userData.name} ${userData.lastName}`}</p>
-            </DropdownItem>
-            <DropdownItem key='settings'>My Settings</DropdownItem>
-            <DropdownItem key='team_settings'>Team Settings</DropdownItem>
-            <DropdownItem key='analytics'>Analytics</DropdownItem>
-            <DropdownItem key='system'>System</DropdownItem>
-            <DropdownItem key='configurations'>Configurations</DropdownItem>
-            <DropdownItem key='help_and_feedback'>Help & Feedback</DropdownItem>
-            <DropdownItem key='logout' color='danger'>
-              Log Out
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+        <NavbarContent as='div' justify='end'>
+          <Dropdown placement='bottom-end'>
+            <DropdownTrigger>
+              <Avatar
+                isBordered
+                showFallback
+                as='button'
+                className='transition-transform'
+                color='secondary'
+                size='sm'
+                src={userData.photo}
+              />
+            </DropdownTrigger>
+            <DropdownMenu aria-label='Profile Actions' variant='flat'>
+              <DropdownItem
+                key='profile'
+                className='gap-2 h-14'
+                textValue='profile'
+              >
+                <p className='font-semibold font-roboto'>Bienvenido(a)</p>
+                <p className='font-semibold font-roboto'>{`${userData.name} ${userData.lastName}`}</p>
+              </DropdownItem>
+              <DropdownItem
+                key='logout'
+                color='danger'
+                textValue='logout'
+                className='font-semibold font-oswald'
+                onClick={() => {
+                  sessionStorage.removeItem('token');
+                  navigate('/login');
+                  location.reload();
+                }}
+              >
+                SALIR
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </NavbarContent>
       ) : (
-        <DualButton />
+        <NavbarContent justify='end'>
+          <NavbarItem className='hidden lg:flex'>
+            <Button
+              as={Link}
+              className='bg-transparent text-wkablack font-oswald'
+              href='/login'
+              variant='solid'
+            >
+              INGRESA
+            </Button>
+          </NavbarItem>
+          <NavbarItem>
+            <Button
+              as={Link}
+              className='font-bold border-wkablack text-wkablack font-oswald hover:bg-wkablack hover:text-white'
+              href='/register'
+              variant='bordered'
+            >
+              REGISTRATE
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
       )}
-      {/* <DualButton /> */}
-    </header>
+    </Navbar>
   );
 }
