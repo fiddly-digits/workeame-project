@@ -65,8 +65,9 @@ export default function Header() {
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
           <Button
-            onPress={() => location.replace('/login')}
+            as={Link}
             className='bg-transparent text-wkablack font-oswald'
+            href='/login'
             variant='solid'
           >
             INGRESA
@@ -74,8 +75,9 @@ export default function Header() {
         </NavbarItem>
         <NavbarItem>
           <Button
-            onPress={() => location.replace('/register')}
+            as={Link}
             className='font-bold border-wkablack text-wkablack font-oswald hover:bg-wkablack hover:text-white'
+            href='/register'
             variant='bordered'
           >
             REGISTRATE
