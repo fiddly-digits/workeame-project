@@ -68,12 +68,15 @@
 //   }
 // }
 
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+html {
+  scroll-behavior: smooth;
+}
 
 /* Position and sizing of burger button */
 .bm-burger-button {
@@ -145,7 +148,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 .clippedText {
-  background-image: url("https://workeame-bucket.s3.amazonaws.com/hero-1.webp");
+  background-image: url('https://workeame-bucket.s3.amazonaws.com/hero-1.webp');
   background-repeat: repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -205,7 +208,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
   position: relative;
   text-decoration: none;
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     display: block;
     width: 100%;
@@ -299,7 +302,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Text b-clip in search worker */
 .bg-clip-text-image {
-  background-image: url("/pictures/team-working-together-project-reduced.png");
+  background-image: url('/pictures/team-working-together-project-reduced.png');
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -354,7 +357,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* Texts bg-clip in Landing Page */
 
 .bg-clip-text-image-landing-first {
-  background-image: url("/pictures/team-last.webp");
+  background-image: url('/pictures/team-last.webp');
   background-size: auto;
   background-position: bottom center;
   -webkit-background-clip: text;
@@ -382,7 +385,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 .bg-clip-text-image-landing-second {
-  background-image: url("/pictures/team-working-together-project 6.webp");
+  background-image: url('/pictures/team-working-together-project 6.webp');
   background-size: cover;
   background-position: center center;
   -webkit-background-clip: text;
@@ -400,7 +403,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Text b-clip in first Info */
 .bg-clip-text-image-first {
-  background-image: url("/pictures/person-working-remotely-latest.webp");
+  background-image: url('/pictures/person-working-remotely-latest.webp');
   background-size: auto;
   background-position: bottom center;
   -webkit-background-clip: text;

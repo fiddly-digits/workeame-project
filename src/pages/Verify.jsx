@@ -43,7 +43,7 @@ export default function Verify() {
   }
 
   return (
-    <div className='bg-fourth'>
+    <div className='items-center h-screen bg-fourth'>
       <div className='absolute inset-0 z-0 right-[40rem] top-[45rem] md:top-32 '>
         <h1 className=' text-primary/50 -rotate-90 font-oswald  text-[380px] font-bold '>
           Workea
