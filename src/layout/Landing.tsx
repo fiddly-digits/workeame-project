@@ -1,7 +1,6 @@
 import Header from "../components/Header";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import Footer from "../components/Footer";
-
 import BottomButtons from "../components/BottomButtons";
 import SwiperCard from "../components/SwiperCard";
 import CustomCard from "../components/CustomCard";
@@ -43,7 +42,7 @@ export default function Landing() {
         </section>
 
         <section id="third-section" className="flex justify-center bg-third">
-          <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-24 justify-evenly bg-third">
+          <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-16 justify-evenly bg-third">
             <h1 className="text-5xl subpixel-antialiased font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800">
               COMO FUNCIONA
             </h1>
@@ -64,7 +63,7 @@ export default function Landing() {
           id="fourth-section"
           className="flex justify-center bg-secondary"
         >
-          <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-24 justify-evenly bg-secondary">
+          <article className="container relative flex flex-col items-center h-auto min-h-screen p-10 py-16 justify-evenly bg-secondary">
             <div className="flex flex-col  overflow-hidden bg-white rounded-md shadow-lg font-oswald">
               <img
                 src="/pictures/person-working-remotely-project 3.webp"

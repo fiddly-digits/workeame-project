@@ -83,7 +83,7 @@ export default function SearchWorker() {
     <>
       <div className=" bg-fourth">
         <div className="container w-auto m-auto flex flex-col gap-2 justify-center ">
-          <h1 className=" text-5xl mt-20 font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800 my-3">
+          <h1 className=" text-5xl mt-10 font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800 my-3">
             BUSCA TU{" "}
             <span className={`text-5xl font-bold ${"bg-clip-text-image"}`}>
               WORKER
