@@ -31,7 +31,7 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
-        path: '/resend/',
+        path: '/resend',
         element: <Resend />
       },
       {

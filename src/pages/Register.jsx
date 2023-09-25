@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -25,7 +25,7 @@ const schema = Yup.object().shape({
     .required('El email es requerido'),
   password: Yup.string()
     .required('La contraseña es requerida')
-    .matches(/^[a-zA-Z0-9!@#$%^&*]{8,}$/, 'Debe contener al menos 8 caracteres')
+    .length(8, 'Debe contener al menos 8 caracteres')
     .matches(/[A-Z]/, 'Debe contener al menos una mayúscula')
     .matches(/[0-9]/, 'Debe contener al menos un número')
     .matches(/[!@#$%^&*]/, 'Debe contener al menos un cáracter especial'),
@@ -39,9 +39,14 @@ const schema = Yup.object().shape({
 });
 
 export default function Register() {
+  const userData = useOutletContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedImage, setSelectedImage] = useState();
   const navigate = useNavigate();
+
+  if (userData) {
+    navigate('/dashboard');
+  }
 
   const {
     register,

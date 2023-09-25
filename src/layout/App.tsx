@@ -25,7 +25,7 @@ export default function App() {
   return (
     <>
       <HeaderApp userData={userData} />
-      <Outlet />
+      <Outlet context={userData} />
       <Footer />
     </>
   );
