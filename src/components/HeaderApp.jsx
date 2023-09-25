@@ -70,7 +70,7 @@ export default function HeaderApp({ userData }) {
                 className='font-semibold font-oswald'
                 onClick={() => {
                   sessionStorage.removeItem('token');
-                  navigate('/login');
+                  navigate('/');
                   location.reload();
                 }}
               >
