@@ -4,18 +4,25 @@ import {
   NavbarContent,
   NavbarItem,
   NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
   Link,
-  Button
+  Button,
+  Dropdown,
+  DropdownTrigger,
+  Avatar,
+  DropdownMenu,
+  DropdownItem
 } from '@nextui-org/react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Header() {
+export default function HeaderApp({ userData }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  // ! Validar si la userdata esta correcta
   return (
     <Navbar
-      className='bg-primary'
+      className='bg-transparent'
       shouldHideOnScroll
       onMenuOpenChange={setIsMenuOpen}
     >
@@ -33,75 +40,69 @@ export default function Header() {
           </Link>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
-        <NavbarItem>
-          <Link
-            color='foreground'
-            href='#second-section'
-            className=' line font-oswald'
-          >
-            QUIENES SOMOS
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            href='#third-section'
-            color='foreground'
-            className='line font-oswald'
-          >
-            COMO FUNCIONA
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link
-            color='foreground'
-            href='#fourth-section'
-            className='line font-oswald'
-          >
-            PORQUE NOSOTROS
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarContent justify='end'>
-        <NavbarItem className='hidden lg:flex'>
-          <Button
-            as={Link}
-            className='bg-transparent text-wkablack font-oswald'
-            href='/login'
-            variant='solid'
-          >
-            INGRESA
-          </Button>
-        </NavbarItem>
-        <NavbarItem>
-          <Button
-            as={Link}
-            className='font-bold border-wkablack text-wkablack font-oswald hover:bg-wkablack hover:text-white'
-            href='/register'
-            variant='bordered'
-          >
-            REGISTRATE
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarMenu>
-        <NavbarMenuItem>
-          <Link color='foreground' href='#' className=' line font-oswald'>
-            QUIENES SOMOS
-          </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <Link href='#' color='foreground' className='line font-oswald'>
-            COMO FUNCIONA
-          </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <Link color='foreground' href='#' className='line font-oswald'>
-            PORQUE NOSOTROS
-          </Link>
-        </NavbarMenuItem>
-      </NavbarMenu>
+      {userData ? (
+        <NavbarContent as='div' justify='end'>
+          <Dropdown placement='bottom-end'>
+            <DropdownTrigger>
+              <Avatar
+                isBordered
+                showFallback
+                as='button'
+                className='transition-transform'
+                color='secondary'
+                size='sm'
+                src={userData.photo}
+              />
+            </DropdownTrigger>
+            <DropdownMenu aria-label='Profile Actions' variant='flat'>
+              <DropdownItem
+                key='profile'
+                className='gap-2 h-14'
+                textValue='profile'
+              >
+                <p className='font-semibold font-roboto'>Bienvenido(a)</p>
+                <p className='font-semibold font-roboto'>{`${userData.name} ${userData.lastName}`}</p>
+              </DropdownItem>
+              <DropdownItem
+                key='logout'
+                color='danger'
+                textValue='logout'
+                className='font-semibold font-oswald'
+                onClick={() => {
+                  sessionStorage.removeItem('token');
+                  navigate('/');
+                  location.reload();
+                }}
+              >
+                SALIR
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </NavbarContent>
+      ) : (
+        <NavbarContent justify='end'>
+          <NavbarItem className='hidden lg:flex'>
+            <Button
+              as={Link}
+              className='bg-transparent text-wkablack font-oswald'
+              href='/login'
+              variant='solid'
+            >
+              INGRESA
+            </Button>
+          </NavbarItem>
+          <NavbarItem>
+            <Button
+              as={Link}
+              className='font-bold border-wkablack text-wkablack font-oswald hover:bg-wkablack hover:text-white'
+              href='/register'
+              variant='bordered'
+            >
+              REGISTRATE
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      )}
     </Navbar>
   );
 }
-
