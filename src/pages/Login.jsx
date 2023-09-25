@@ -1,3 +1,4 @@
+
 import { Input, Button } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,8 +11,8 @@ const { VITE_API_URL, VITE_AUTH_LOGIN } = import.meta.env;
 
 const schema = Yup.object().shape({
   email: Yup.string()
-    .email('El email no es válido')
-    .required('El email es requerido'),
+    .email("El email no es válido")
+    .required("El email es requerido"),
   password: Yup.string()
     .required('La contraseña es requerida')
     .length(8, 'Debe contener al menos 8 caracteres')
@@ -25,10 +26,10 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm({
-    mode: 'onBlur',
-    resolver: yupResolver(schema)
+    mode: "onBlur",
+    resolver: yupResolver(schema),
   });
   const [errorMessage, setErrorMessage] = useState();
   const navigate = useNavigate();
@@ -43,8 +44,8 @@ export default function Login() {
       .post(VITE_API_URL + VITE_AUTH_LOGIN, data)
       .then((res) => {
         console.log(res.data.token);
-        sessionStorage.setItem('token', res.data?.token);
-        navigate('/dashboard');
+        sessionStorage.setItem("token", res.data?.token);
+        navigate("/dashboard");
         location.reload();
       })
       .catch((err) => {
@@ -54,54 +55,57 @@ export default function Login() {
   }
 
   return (
-    <div className='flex items-center h-screen bg-fourth'>
-      <div className='absolute inset-0 z-0 right-[40rem] top-[45rem] md:top-32 '>
-        <h1 className=' text-primary/50 -rotate-90 font-oswald  text-[380px] font-bold '>
+    <div className="flex items-center h-screen md:max-h-[50rem] bg-fourth">
+      <div className="absolute inset-0 z-0 right-[20rem] lg:right-[30rem] lg:top-[5rem] top-[36rem] md:top-[28rem] ">
+        <h1 className=" text-primary/40 -rotate-90 font-oswald  text-[15rem] font-bold ">
           Workea
         </h1>
       </div>
-      <main className='container relative z-10 py-5 mx-auto'>
-        <h2 className='flex justify-center m-5 text-2xl font-oswald'>
-          Ingresa para empezar a{' '}
-          <span className='mx-1 font-bold md:mx-2'>WORKEAR</span>
+      <main className="flex flex-col h-full py-32 z-10  mx-auto ">
+        <h2 className="flex justify-center  text-2xl md:text-3xl font-oswald">
+          Ingresa para empezar a{" "}
+          <span className="mx-1 font-bold md:mx-2">WORKEAR</span>
         </h2>
-        <h3 className='flex justify-center m-5 text-md font-oswald'>
-          {' '}
-          Aun no tienes una cuenta?{' '}
-          <a className='mx-1 font-bold md:mx-2' href='/register'>
+        <h3 className="flex justify-center m-8 text-lg font-oswald">
+          {" "}
+          Aun no tienes una cuenta?{" "}
+          <a className="mx-1 font-bold md:mx-2" href="/register">
             REGISTRATE
           </a>
         </h3>
         <form
-          className='flex flex-col gap-[20px] justify-center mx-auto'
+          className="flex flex-col mt-8 gap-[30px] justify-center mx-auto w-[20rem] md:max-w-[30rem] "
           onSubmit={handleSubmit(onSubmit)}
         >
           <Input
-            type='email'
-            label='Email'
-            size='sm'
+            type="email"
+            label="Email"
+            size="sm"
             isRequired
             isClearable
-            variant='bordered'
+            className="font-roboto"
+            variant="bordered"
             errorMessage={errors.email?.message}
             isInvalid={!!errors.email}
-            {...register('email')}
+            {...register("email")}
           />
           <Input
-            type='password'
-            label='Contraseña'
-            size='sm'
+            type="password"
+            label="Contraseña"
+            size="sm"
+            className="font-roboto"
             isRequired
-            variant='bordered'
+            variant="bordered"
             errorMessage={errors.password?.message}
             isInvalid={!!errors.password}
-            {...register('password')}
+            {...register("password")}
           />
           {errorMessage && (
-            <div className='flex justify-center text-red-400 font-roboto'>
+            <div className="flex justify-center text-red-400 font-roboto">
               {errorMessage}
             </div>
           )}
+
           <h3 className='flex justify-center m-5 text-md font-oswald'>
             {' '}
             Problemas para verificar tu correo?{' '}
@@ -111,11 +115,11 @@ export default function Login() {
           </h3>
           <div className='flex justify-center m-10 '>
             <Button
-              size='lg'
-              radius='md'
-              type='submit'
-              className='text-white bg-wkablack font-oswald hover:cursor-pointer'
-              startContent={<img src='/arrow-right.svg' alt='next' />}
+              size="lg"
+              radius="md"
+              type="submit"
+              className="text-white bg-wkablack font-oswald hover:cursor-pointer"
+              startContent={<img src="/arrow-right.svg" alt="next" />}
             >
               INGRESA
             </Button>
