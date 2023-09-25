@@ -4,10 +4,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
-const { VITE_API_URL, VITE_AUTH_CONFIRM } = import.meta.env;
+const { VITE_API_URL, VITE_AUTH_RESEND } = import.meta.env;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -15,7 +14,7 @@ const schema = Yup.object().shape({
     .required('El email es requerido')
 });
 
-export default function Verify() {
+export default function Resend() {
   const userData = useOutletContext();
 
   const {
@@ -27,7 +26,7 @@ export default function Verify() {
     resolver: yupResolver(schema)
   });
   const [errorMessage, setErrorMessage] = useState();
-  const { token } = useParams();
+  const [successMessage, setSuccessMessage] = useState();
   const navigate = useNavigate();
 
   if (userData) {
@@ -37,10 +36,15 @@ export default function Verify() {
   async function onSubmit(data) {
     console.log(data);
     axios
-      .post(`${VITE_API_URL}${VITE_AUTH_CONFIRM}${token}`, data)
+      .post(`${VITE_API_URL}${VITE_AUTH_RESEND}`, data)
       .then((res) => {
         console.log(res.data);
-        navigate('/login');
+        setSuccessMessage(
+          'Se ha enviado un nuevo correo de verificación, seras redirigido al login'
+        );
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
@@ -57,8 +61,8 @@ export default function Verify() {
       </div>
       <main className='container relative z-10 py-5 mx-auto'>
         <h2 className='flex justify-center m-5 text-2xl font-oswald'>
-          Verifica tu correo para empezar a{' '}
-          <span className='mx-1 font-bold md:mx-2'>WORKEAR</span>
+          Compártenos el correo que registraste en{' '}
+          <span className='mx-1 font-bold md:mx-2'>WORKEA</span>
         </h2>
         <form
           className='flex flex-col gap-[20px] justify-center mx-auto'
@@ -80,6 +84,12 @@ export default function Verify() {
               {errorMessage}
             </div>
           )}
+          {successMessage && (
+            <div className='flex justify-center text-wkablack/40 font-roboto'>
+              {successMessage}
+            </div>
+          )}
+
           <div className='flex justify-center m-10 '>
             <Button
               size='lg'
@@ -88,7 +98,7 @@ export default function Verify() {
               className='text-white bg-wkablack font-oswald hover:cursor-pointer'
               startContent={<img src='/arrow-right.svg' alt='next' />}
             >
-              VERIFICA
+              REENVIA
             </Button>
           </div>
         </form>

@@ -1,10 +1,11 @@
-import { Input, Button } from "@nextui-org/react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
-import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { Input, Button } from '@nextui-org/react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import axios from 'axios';
+import { useState } from 'react';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 const { VITE_API_URL, VITE_AUTH_LOGIN } = import.meta.env;
 
@@ -13,14 +14,15 @@ const schema = Yup.object().shape({
     .email("El email no es válido")
     .required("El email es requerido"),
   password: Yup.string()
-    .required("La contraseña es requerida")
-    .matches(/^[a-zA-Z0-9!@#$%^&*]{8,}$/, "Debe contener al menos 8 caracteres")
-    .matches(/[A-Z]/, "Debe contener al menos una mayúscula")
-    .matches(/[0-9]/, "Debe contener al menos un número")
-    .matches(/[!@#$%^&*]/, "Debe contener al menos un cáracter especial"),
+    .required('La contraseña es requerida')
+    .length(8, 'Debe contener al menos 8 caracteres')
+    .matches(/[A-Z]/, 'Debe contener al menos una mayúscula')
+    .matches(/[0-9]/, 'Debe contener al menos un número')
+    .matches(/[!@#$%^&*]/, 'Debe contener al menos un cáracter especial')
 });
 
 export default function Login() {
+  const userData = useOutletContext();
   const {
     register,
     handleSubmit,
@@ -31,6 +33,10 @@ export default function Login() {
   });
   const [errorMessage, setErrorMessage] = useState();
   const navigate = useNavigate();
+
+  if (userData) {
+    navigate('/dashboard');
+  }
 
   async function onSubmit(data) {
     console.log(data);
@@ -99,7 +105,15 @@ export default function Login() {
               {errorMessage}
             </div>
           )}
-          <div className="flex justify-center m-10 ">
+
+          <h3 className='flex justify-center m-5 text-md font-oswald'>
+            {' '}
+            Problemas para verificar tu correo?{' '}
+            <a className='mx-1 font-bold md:mx-2' href='/resend'>
+              SOLICITA UN NUEVO CORREO DE VERIFICACIÓN
+            </a>
+          </h3>
+          <div className='flex justify-center m-10 '>
             <Button
               size="lg"
               radius="md"
