@@ -72,7 +72,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 .clippedText {
-  background-image: url('https://workeame-bucket.s3.amazonaws.com/hero-1.webp');
+  background-image: url("https://workeame-bucket.s3.amazonaws.com/hero-1.webp");
   background-repeat: repeat;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -132,7 +132,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
   position: relative;
   text-decoration: none;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     display: block;
     width: 100%;
@@ -226,7 +226,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Text b-clip in search worker */
 .bg-clip-text-image {
-  background-image: url('/pictures/team-working-together-project-reduced.png');
+  background-image: url("/pictures/team-working-together-project-reduced.png");
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

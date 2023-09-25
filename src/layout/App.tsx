@@ -1,15 +1,15 @@
-import HeaderApp from '../components/HeaderApp';
-import Footer from '../components/Footer';
-import { Outlet } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import HeaderApp from "../components/HeaderApp";
+import Footer from "../components/Footer";
+import { Outlet } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [userData, setUserData] = useState<object>();
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem("token");
     if (token) {
-      const payload: string = token.split('.')[1];
+      const payload: string = token.split(".")[1];
       const plainPayload = JSON.parse(atob(payload));
       axios
         .get(`http://localhost:8080/api/v1/user/${plainPayload.id}`)
