@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 const { VITE_API_URL, VITE_AUTH_CONFIRM } = import.meta.env;
 
@@ -16,6 +16,8 @@ const schema = Yup.object().shape({
 });
 
 export default function Verify() {
+  const userData = useOutletContext();
+
   const {
     register,
     handleSubmit,
@@ -27,6 +29,10 @@ export default function Verify() {
   const [errorMessage, setErrorMessage] = useState();
   const { token } = useParams();
   const navigate = useNavigate();
+
+  if (userData) {
+    navigate('/dashboard');
+  }
 
   async function onSubmit(data) {
     console.log(data);
