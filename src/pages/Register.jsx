@@ -113,7 +113,7 @@ export default function Register() {
           onSubmit={handleSubmit(onSubmit)}
         >
           <section className="flex flex-col items-center gap-3">
-            <div className="flex flex-col justify-between gap-3 mx-auto w-96 md:w-96">
+            <div className="flex flex-col justify-between gap-3 mx-auto w-96 ">
               <Input
                 type="text"
                 label="Nombre"
