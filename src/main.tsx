@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Verify from './pages/Verify';
 import Resend from './pages/Resend';
+import Dashboard from './pages/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <div>Dashboard</div>
+        element: <Dashboard />
       }
     ]
   }
