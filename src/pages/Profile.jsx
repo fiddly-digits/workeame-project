@@ -3,9 +3,10 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import { Pagination, Navigation } from "swiper/modules";
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Accordion, AccordionItem, Button } from "@nextui-org/react";
 import OfferSticker from "../components/OfferSticker";
 import CommentCard from "../components/CommentCard";
+import ButtonBlack from "../components/ButtonBlack";
 
 let photos = [
   { key: 1, image: "/pictures/flowers.png", alt: "flowers" },
@@ -189,6 +190,13 @@ export default function Profile() {
                 </SwiperSlide>
               </Swiper>
             </div>
+            <Button
+              radius="sm"
+              size="lg"
+              className="bg-black h-8 text-white font-oswald hover:bg-[#434140]"
+            >
+              Agregar Comentario{" "}
+            </Button>
           </section>
         </main>
       </div>
