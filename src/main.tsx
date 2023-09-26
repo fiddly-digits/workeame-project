@@ -1,52 +1,57 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 //import App from './App.tsx';
-import { NextUIProvider } from '@nextui-org/react';
-import './index.scss';
-import Landing from './layout/Landing';
-import App from './layout/App';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import Verify from './pages/Verify';
-import Resend from './pages/Resend';
+import { NextUIProvider } from "@nextui-org/react";
+import "./index.scss";
+import Landing from "./layout/Landing";
+import App from "./layout/App";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Verify from "./pages/Verify";
+import Resend from "./pages/Resend";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Landing />,
-    errorElement: <div>404</div>
+    errorElement: <div>404</div>,
   },
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <div>404</div>,
     children: [
       {
-        path: '/register',
-        element: <Register />
+        path: "/register",
+        element: <Register />,
       },
       {
-        path: '/login',
-        element: <Login />
+        path: "/login",
+        element: <Login />,
       },
       {
-        path: '/resend',
-        element: <Resend />
+        path: "/resend",
+        element: <Resend />,
       },
       {
-        path: '/verify/:token',
-        element: <Verify />
+        path: "/verify/:token",
+        element: <Verify />,
       },
       {
-        path: '/dashboard',
-        element: <div>Dashboard</div>
-      }
-    ]
-  }
+        path: "/dashboard",
+        element: <div>Dashboard</div>,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
+    ],
+  },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <NextUIProvider>
       <RouterProvider router={router} />
