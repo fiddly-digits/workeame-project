@@ -2,9 +2,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
-import { EffectCoverflow, Pagination } from "swiper/modules";
+import { Pagination, Navigation } from "swiper/modules";
 import { Accordion, AccordionItem } from "@nextui-org/react";
 import OfferSticker from "../components/OfferSticker";
+import CommentCard from "../components/CommentCard";
+
+let photos = [
+  { key: 1, image: "/pictures/flowers.png", alt: "flowers" },
+  { key: 2, image: "/pictures/flowers3.png", alt: "flowers" },
+  { key: 3, image: "/pictures/flowers4.png", alt: "flowers" },
+];
 
 let services = [
   {
@@ -102,48 +109,29 @@ export default function Profile() {
                 Algunos Proyectos
               </h3>
             </div>
-            <div className="w-80 shadow-md">
+            <div className="w-80 flex justify-center my-5">
               <Swiper
-                effect={"coverflowEffect"}
                 grabCursor={true}
-                centeredSlides={true}
-                slidesPerView={"auto"}
-                coverflowEffect={{
-                  stretch: 0,
-                  depth: 100,
-                  modifier: 1,
-                  slideShadows: true,
-                }}
+                spaceBetween={20}
                 pagination={{
                   dynamicBullets: true,
+                  clickable: true,
                 }}
-                modules={[EffectCoverflow, Pagination]}
+                modules={[Pagination]}
                 className="mySwiper"
               >
-                <SwiperSlide>
-                  <div className="flex h-72 w-96">
-                    <img
-                      src="https://swiperjs.com/demos/images/nature-1.jpg"
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className="flex  h-72 w-80">
-                    <img
-                      src="https://swiperjs.com/demos/images/nature-1.jpg"
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </SwiperSlide>
-                <SwiperSlide>
-                  <div className="flex  h-72 w-80">
-                    <img
-                      src="https://swiperjs.com/demos/images/nature-1.jpg"
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                </SwiperSlide>
+                {photos.map((photo) => (
+                  <SwiperSlide>
+                    <div className="w-80 h-72 ">
+                      <img
+                        key={photo.key}
+                        src={photo.image}
+                        alt={photo.alt}
+                        className="object-cover h-full w-full shadow-lg"
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </div>
           </section>
@@ -158,11 +146,7 @@ export default function Profile() {
                     key={service.key}
                     className="md:w-96 lg:w-[50rem] font-roboto"
                     startContent={
-                      <img
-                        src="public/circle.svg"
-                        alt="circle"
-                        className="h-8"
-                      ></img>
+                      <img src="/circle.svg" alt="circle" className="h-8"></img>
                     }
                     title={service.name}
                   >
@@ -181,6 +165,29 @@ export default function Profile() {
                   </AccordionItem>
                 ))}
               </Accordion>
+            </div>
+          </section>
+          <section className="border border-orange-600 w-full flex flex-col gap-4 mx-auto items-center">
+            <h3 className="font-oswald font-semibold text-2xl tracking-wider">
+              Sus clientes opinan...
+            </h3>
+            <div className="w-[27rem]">
+              <Swiper
+                navigation={true}
+                modules={[Navigation]}
+                className="mySwiper"
+              >
+                <SwiperSlide>
+                  <div className=" flex justify-center py-5 w-full">
+                    <CommentCard></CommentCard>
+                  </div>
+                </SwiperSlide>
+                <SwiperSlide>
+                  <div className=" flex justify-center py-5 w-full">
+                    <CommentCard></CommentCard>
+                  </div>
+                </SwiperSlide>
+              </Swiper>
             </div>
           </section>
         </main>
