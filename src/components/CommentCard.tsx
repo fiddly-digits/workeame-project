@@ -8,21 +8,19 @@ import {
 
 export default function CommentCard() {
   return (
-    <Card className="max-w-[340px]">
+    <Card className="w-60 md:max-w-[340px]">
       <CardHeader className="justify-between">
         <div className="flex gap-5">
-          <Avatar isBordered radius="full" size="md" src="/pictures/man.png" />
-          <div className="flex flex-col gap-1 items-start justify-center">
+          <Avatar isBordered radius="full" size="sm" src="/pictures/man.png" />
+          <div className="flex flex-col items-start justify-center">
             <h4 className="text-small font-semibold leading-none text-default-600">
               Alex R.
             </h4>
-            <h5 className="text-small tracking-tight text-default-400">
-              @alexr
-            </h5>
+            <h5 className="text-xs tracking-tight text-default-400">@alexr</h5>
           </div>
         </div>
       </CardHeader>
-      <CardBody className="px-3 py-0 text-small text-default-400">
+      <CardBody className="px-3 py-0 text-xs text-default-400">
         <p>
           ¡La mejor florista! Trabajo de calidad, a precio justo y puntual. ¡La
           recomiento altamente! 💖🌺
