@@ -11,6 +11,7 @@ import Login from './pages/Login';
 import Verify from './pages/Verify';
 import Resend from './pages/Resend';
 import Dashboard from './pages/Dashboard';
+import CompleteProfile from './pages/CompleteProfile';
 
 const router = createBrowserRouter([
   {
@@ -41,7 +42,17 @@ const router = createBrowserRouter([
       },
       {
         path: '/dashboard',
-        element: <Dashboard />
+        element: <Dashboard />,
+        children: [
+          {
+            path: 'complete',
+            element: <CompleteProfile />
+          },
+          {
+            path: 'worker',
+            element: <div>Settings</div>
+          }
+        ]
       }
     ]
   }

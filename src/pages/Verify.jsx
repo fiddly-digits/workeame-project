@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
@@ -30,9 +30,11 @@ export default function Verify() {
   const { token } = useParams();
   const navigate = useNavigate();
 
-  if (userData) {
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (userData) {
+      navigate('/dashboard');
+    }
+  }, [navigate, userData]);
 
   async function onSubmit(data) {
     console.log(data);

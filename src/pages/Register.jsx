@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { Input } from '@nextui-org/react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Modal,
   ModalContent,
@@ -44,9 +44,11 @@ export default function Register() {
   const [selectedImage, setSelectedImage] = useState();
   const navigate = useNavigate();
 
-  if (userData) {
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (userData) {
+      navigate('/dashboard');
+    }
+  }, [navigate, userData]);
 
   const {
     register,

@@ -11,7 +11,7 @@ export default function Menu() {
         <h1 className='my-3 text-3xl font-bold tracking-wider text-center font-oswald'>
           WORKEA
         </h1>
-        <h3 className='font-roboto text-sm text-start my-3 tracking-[2px] text-gray-500'>
+        <h3 className='font-roboto text-center text-sm my-3 tracking-[2px] text-gray-500'>
           General
         </h3>
         <ul className='flex flex-col items-center gap-3'>
@@ -20,7 +20,7 @@ export default function Menu() {
               icon='presentation.svg'
               action='Visita el sitio'
               reference=''
-              customClassName='rounded-t-xl'
+              position='top'
             ></MenuItem>
           </li>
           <li>
@@ -56,11 +56,11 @@ export default function Menu() {
               icon='cog.svg'
               action='Configuración'
               reference=''
-              customClassName='rounded-b-xl'
+              position='bottom'
             ></MenuItem>
           </li>
         </ul>
-        <h3 className='font-roboto text-sm text-start my-3 tracking-[2px] text-gray-500'>
+        <h3 className='font-roboto text-sm text-center my-3 tracking-[2px] text-gray-500'>
           Cuenta
         </h3>
         <ul className='flex flex-col items-center gap-3'>
@@ -69,7 +69,7 @@ export default function Menu() {
               icon='presentation.svg'
               action='Datos de la Cuenta'
               reference=''
-              customClassName='rounded-t-xl'
+              position='top'
             ></MenuItem>
           </li>
           <li>
@@ -84,7 +84,7 @@ export default function Menu() {
               icon='sign-out.svg'
               action='Salir'
               reference=''
-              customClassName='rounded-b-xl'
+              position='bottom'
             ></MenuItem>
           </li>
         </ul>

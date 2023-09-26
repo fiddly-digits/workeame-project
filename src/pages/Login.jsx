@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
+//import Protected from '../utils/protected';
 
 const { VITE_API_URL, VITE_AUTH_LOGIN } = import.meta.env;
 
@@ -33,9 +34,11 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState();
   const navigate = useNavigate();
 
-  if (userData) {
-    navigate('/dashboard');
-  }
+  useEffect(() => {
+    if (userData) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [navigate, userData]);
 
   async function onSubmit(data) {
     console.log(data);
