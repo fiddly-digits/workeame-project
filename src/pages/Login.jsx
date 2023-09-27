@@ -3,9 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-//import Protected from '../utils/protected';
 
 const { VITE_API_URL, VITE_AUTH_LOGIN } = import.meta.env;
 
@@ -15,10 +14,13 @@ const schema = Yup.object().shape({
     .required('El email es requerido'),
   password: Yup.string()
     .required('La contraseña es requerida')
-    .length(8, 'Debe contener al menos 8 caracteres')
+    .min(8, 'Debe contener al menos 8 caracteres')
     .matches(/[A-Z]/, 'Debe contener al menos una mayúscula')
     .matches(/[0-9]/, 'Debe contener al menos un número')
-    .matches(/[!@#$%^&*]/, 'Debe contener al menos un cáracter especial')
+    .matches(
+      /[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/,
+      'Debe contener al menos un cáracter especial'
+    )
 });
 
 export default function Login() {
@@ -34,12 +36,6 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (userData) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [navigate, userData]);
-
   async function onSubmit(data) {
     console.log(data);
     axios
@@ -47,7 +43,7 @@ export default function Login() {
       .then((res) => {
         console.log(res.data.token);
         sessionStorage.setItem('token', res.data?.token);
-        navigate('/dashboard');
+        navigate('/dashboard', { replace: true }, { state: userData });
         location.reload();
       })
       .catch((err) => {

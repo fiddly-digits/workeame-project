@@ -5,13 +5,14 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { NextUIProvider } from '@nextui-org/react';
 import './index.scss';
 import Landing from './layout/Landing';
-import App from './layout/App';
+import Auth from './layout/Auth';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Verify from './pages/Verify';
 import Resend from './pages/Resend';
-import Dashboard from './pages/Dashboard';
+import Dashboard from './layout/Dashboard';
 import CompleteProfile from './pages/CompleteProfile';
+import BecomeWorker from './pages/UpgradeToWorker';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <App />,
+    element: <Auth />,
     errorElement: <div>404</div>,
     children: [
       {
@@ -39,20 +40,20 @@ const router = createBrowserRouter([
       {
         path: '/verify/:token',
         element: <Verify />
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    element: <Dashboard />,
+    children: [
+      {
+        path: 'complete',
+        element: <CompleteProfile />
       },
       {
-        path: '/dashboard',
-        element: <Dashboard />,
-        children: [
-          {
-            path: 'complete',
-            element: <CompleteProfile />
-          },
-          {
-            path: 'worker',
-            element: <div>Settings</div>
-          }
-        ]
+        path: 'become-worker',
+        element: <BecomeWorker />
       }
     ]
   }

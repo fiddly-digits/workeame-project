@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const { VITE_API_URL, VITE_AUTH_RESEND } = import.meta.env;
 
@@ -15,8 +15,6 @@ const schema = Yup.object().shape({
 });
 
 export default function Resend() {
-  const userData = useOutletContext();
-
   const {
     register,
     handleSubmit,
@@ -28,12 +26,6 @@ export default function Resend() {
   const [errorMessage, setErrorMessage] = useState();
   const [successMessage, setSuccessMessage] = useState();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (userData) {
-      navigate('/dashboard');
-    }
-  }, [navigate, userData]);
 
   async function onSubmit(data) {
     console.log(data);

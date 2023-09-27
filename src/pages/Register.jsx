@@ -1,10 +1,10 @@
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { Input } from '@nextui-org/react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Modal,
   ModalContent,
@@ -25,10 +25,13 @@ const schema = Yup.object().shape({
     .required('El email es requerido'),
   password: Yup.string()
     .required('La contraseña es requerida')
-    .length(8, 'Debe contener al menos 8 caracteres')
+    .min(8, 'Debe contener al menos 8 caracteres')
     .matches(/[A-Z]/, 'Debe contener al menos una mayúscula')
     .matches(/[0-9]/, 'Debe contener al menos un número')
-    .matches(/[!@#$%^&*]/, 'Debe contener al menos un cáracter especial'),
+    .matches(
+      /[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/,
+      'Debe contener al menos un cáracter especial'
+    ),
   repeatPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
     .required('La contraseña es requerida'),
@@ -39,16 +42,9 @@ const schema = Yup.object().shape({
 });
 
 export default function Register() {
-  const userData = useOutletContext();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedImage, setSelectedImage] = useState();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (userData) {
-      navigate('/dashboard');
-    }
-  }, [navigate, userData]);
 
   const {
     register,
