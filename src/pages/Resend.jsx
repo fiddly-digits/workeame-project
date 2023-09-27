@@ -48,18 +48,18 @@ export default function Resend() {
 
   return (
     <div className='items-center h-screen bg-fourth'>
-      <div className='absolute inset-0 z-0 right-[40rem] top-[45rem] md:top-32 '>
-        <h1 className=' text-primary/50 -rotate-90 font-oswald  text-[380px] font-bold '>
+      <div className='absolute inset-0 z-0 right-[20rem] lg:right-[30rem] lg:top-[3rem] top-[32rem] md:top-[28rem] '>
+        <h1 className=' text-primary/40 -rotate-90 font-oswald  text-[15rem] font-bold '>
           Workea
         </h1>
       </div>
       <main className='container relative z-10 py-5 mx-auto'>
-        <h2 className='flex justify-center m-5 text-2xl font-oswald'>
+        <h2 className='flex justify-center m-5 mt-20 text-2xl font-oswald'>
           Compártenos el correo que registraste en{' '}
           <span className='mx-1 font-bold md:mx-2'>WORKEA</span>
         </h2>
         <form
-          className='flex flex-col gap-[20px] justify-center mx-auto'
+          className='flex flex-col gap-[20px] justify-center mx-auto w-96 my-10'
           onSubmit={handleSubmit(onSubmit)}
         >
           <Input
