@@ -1,11 +1,13 @@
 import HeaderApp from "../components/HeaderApp";
 import Footer from "../components/Footer";
+import ServicesDetail from "../components/ServicesDetail";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
 import { Button, Textarea, Select, SelectItem } from "@nextui-org/react";
+import { useState } from "react";
 
 let images = [
   { key: 1, img: "/pictures/flowers.png", alt: "image 01" },
@@ -30,6 +32,19 @@ let experience = [
 ];
 
 export default function ProfileSettings() {
+  const [service, setService] = useState([0]); // Estado para almacenar los componentes
+
+  // Función para agregar un nuevo componente
+  const addService = () => {
+    setService([...service, <ServicesDetail key={service.length} />]);
+  };
+
+  // Función para quitar el último componente
+  const deleteService = () => {
+    const newsServices = [...service];
+    newsServices.pop();
+    setService(newsServices);
+  };
   return (
     <>
       <div className="bg-fourth">
@@ -91,7 +106,7 @@ export default function ProfileSettings() {
               {/* textarea "about me" */}
               <div className="flex justify-center my-4 w-full md:max-w-xl">
                 <Textarea
-                  variant="faded"
+                  variant="bordered"
                   placeholder="Cuéntanos sobre ti..."
                   description="Esta información aparecerá en tu descripción, asegúrate de que sea breve."
                   className="font-roboto w-full max-w-xl"
@@ -119,6 +134,32 @@ export default function ProfileSettings() {
                     </SelectItem>
                   ))}
                 </Select>
+              </div>
+            </section>
+            {/* services details */}
+            <section className="flex flex-col gap-3 mx-10  my-8 items-center">
+              <div className="flex flex-col items-center w-full ">
+                {service.map((index) => (
+                  <div key={index} className="flex justify-center w-full">
+                    <ServicesDetail></ServicesDetail>
+                  </div>
+                ))}
+              </div>
+              <div className="flex flex-row gap-16 my-10 ">
+                <Button
+                  radius="sm"
+                  className="bg-transparent border border-black text-black font-oswald hover:bg-wkablack hover:text-white w-auto px-8"
+                  onClick={addService}
+                >
+                  Agregar Servicio
+                </Button>
+                <Button
+                  radius="sm"
+                  className="bg-transparent border border-black text-black font-oswald hover:bg-wkablack hover:text-white w-auto px-8"
+                  onClick={deleteService}
+                >
+                  Eliminar Servicio
+                </Button>
               </div>
             </section>
           </form>
