@@ -162,6 +162,15 @@ export default function ProfileSettings() {
                 </Button>
               </div>
             </section>
+            <div className="flex justify-center">
+              <Button
+                radius="sm"
+                className="bg-black text-white font-oswald hover:bg-zinc-700 w-60 px-8"
+              >
+                <img src="/arrow-right.svg" alt="arrow" className="w-6 h-6" />
+                Siguiente
+              </Button>
+            </div>
           </form>
         </main>
         <Footer></Footer>

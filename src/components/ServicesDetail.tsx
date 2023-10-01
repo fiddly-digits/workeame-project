@@ -5,8 +5,8 @@ export default function ServicesDetail() {
   return (
     <>
       <div className="w-full md:max-w-xl">
-        <h2 className="flex justify-center font-roboto text-base my-4">
-          Detalla tu servicio
+        <h2 className="flex justify-center font-oswald my-4">
+          Detalla tu Servicio
         </h2>
         <div className="flex flex-col justify-center w-full md:max-w-xl gap-3">
           <Input
