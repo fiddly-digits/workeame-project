@@ -5,12 +5,28 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
-import { Button } from "@nextui-org/react";
+import { Button, Textarea, Select, SelectItem } from "@nextui-org/react";
 
 let images = [
   { key: 1, img: "/pictures/flowers.png", alt: "image 01" },
   { key: 2, img: "/pictures/flowers3.png", alt: "image 02" },
   { key: 3, img: "/pictures/flowers4.png", alt: "image 03" },
+];
+let categories = [
+  { label: "Salud", value: "health" },
+  { label: "Belleza", value: "beauty" },
+  { label: "Arte", value: "arts" },
+  { label: "Ingenieria", value: "engineering" },
+  { label: "Educación", value: "education" },
+  { label: "Social", value: "social" },
+];
+
+let experience = [
+  { label: "1-2", value: "1-2" },
+  { label: "2-3", value: "2-3" },
+  { label: "3-4", value: "3-4" },
+  { label: "4-5", value: "4-5" },
+  { label: "Más de 5", value: "mas de 5" },
 ];
 
 export default function ProfileSettings() {
@@ -24,7 +40,7 @@ export default function ProfileSettings() {
               <h2 className="flex justify-center text-center font-oswald  text-3xl">
                 ¡Muestra tu trabajo al mundo!
               </h2>
-              <div className="my-2">
+              <div className="mt-10">
                 <p className="flex justify-center text-center font-roboto text-gray-500 text-lg">
                   Agrega unas fotos de tu trabajo, ¡Elige tu diseño!
                 </p>
@@ -63,6 +79,46 @@ export default function ProfileSettings() {
                   <img src="/upload.svg" alt="upload" className="w-6 h-6" />
                   Añadir Imagen
                 </Button>
+              </div>
+            </section>
+            <section className="flex flex-col gap-3 mx-10 md:mx-40 my-8 items-center">
+              <p className="flex justify-center font-oswald text-lg">
+                Cuéntale a tus clientes de qué va tu trabajo{" "}
+              </p>
+              <p className="flex justify-center font-oswald font-bold text-2xl">
+                ¡Queremos acercarlos a tí!
+              </p>
+              {/* textarea "about me" */}
+              <div className="flex justify-center my-4 w-full md:max-w-xl">
+                <Textarea
+                  variant="faded"
+                  placeholder="Cuéntanos sobre ti..."
+                  description="Esta información aparecerá en tu descripción, asegúrate de que sea breve."
+                  className="font-roboto w-full max-w-xl"
+                ></Textarea>
+              </div>
+              {/* select class and years */}
+              <div className=" flex w-full md:max-w-xl flex-wrap md:flex-nowrap gap-6 font-roboto justify-center">
+                <Select
+                  label="Categoria"
+                  className="w-full md:w-1/2 font-roboto"
+                >
+                  {categories.map((category) => (
+                    <SelectItem key={category.value} value={category.value}>
+                      {category.label}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Select
+                  label="Años de experiencia"
+                  className="w-full md:w-1/2 font-roboto"
+                >
+                  {experience.map((years) => (
+                    <SelectItem key={years.value} value={years.value}>
+                      {years.label}
+                    </SelectItem>
+                  ))}
+                </Select>
               </div>
             </section>
           </form>
