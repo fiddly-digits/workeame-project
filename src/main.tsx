@@ -57,12 +57,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  //RUTA DE PRUEBA PARA LAS PAGINAS FALTANTES
-  /* {
-    path: "/settings",
-    element: <ProfileSettings />,
-    errorElement: <div>404</div>,
-  }, */
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
