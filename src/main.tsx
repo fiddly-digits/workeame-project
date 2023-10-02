@@ -12,7 +12,6 @@ import Resend from "./pages/Resend";
 import Dashboard from "./layout/Dashboard";
 import CompleteProfile from "./pages/CompleteProfile";
 import BecomeWorker from "./pages/UpgradeToWorker";
-import ProfileSettings from "./pages/ProfileSettings";
 
 const router = createBrowserRouter([
   {
