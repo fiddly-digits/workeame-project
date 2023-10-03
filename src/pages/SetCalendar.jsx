@@ -8,6 +8,7 @@ import {
   SelectItem,
   RadioGroup,
   Radio,
+  Button,
 } from "@nextui-org/react";
 import InputHours from "../components/InputHours";
 import TableStatus from "../components/TableStatus";
@@ -88,7 +89,7 @@ export default function SetCalendar() {
                 <InputHours label="Término"></InputHours>
               </div>
             </section>
-            <section className="flex flex-col items-center mx-10 md:mx-40">
+            <section className="flex flex-col items-center mx-10 md:mx-40 my-10">
               <p className="font-roboto text-md ">
                 ¿Tienes horas inactivas entre el inicio y el fin del horario?
               </p>
@@ -111,6 +112,14 @@ export default function SetCalendar() {
             </section>
             <div className="flex justify-center ">
               {showComponent && <TableStatus />}
+            </div>
+            <div className="flex justify-center my-10">
+              <Button
+                radius="sm"
+                className="bg-black text-white font-semibold tracking-widest font-oswald hover:bg-zinc-700 w-60 px-8"
+              >
+                GUARDAR
+              </Button>
             </div>
           </form>
         </main>
