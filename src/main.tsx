@@ -12,6 +12,7 @@ import Resend from "./pages/Resend";
 import Dashboard from "./layout/Dashboard";
 import CompleteProfile from "./pages/CompleteProfile";
 import BecomeWorker from "./pages/UpgradeToWorker";
+import SetCalendar from "./pages/SetCalendar";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
         element: <BecomeWorker />,
       },
     ],
+  },
+  {
+    path: "/setcalendar",
+    element: <SetCalendar />,
+    errorElement: <div>404</div>,
   },
 ]);
 
