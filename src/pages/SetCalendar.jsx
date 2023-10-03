@@ -6,9 +6,11 @@ import {
   Checkbox,
   Select,
   SelectItem,
-  Input,
+  RadioGroup,
+  Radio,
 } from "@nextui-org/react";
 import InputHours from "../components/InputHours";
+import TableStatus from "../components/TableStatus";
 
 let days = [
   { label: "Lunes", value: "monday" },
@@ -21,6 +23,13 @@ let days = [
 ];
 
 export default function SetCalendar() {
+  const [selectedOption, setSelectedOption] = useState("hide");
+  const [showComponent, setShowComponent] = useState(false);
+
+  const handleRadioChange = (e) => {
+    setSelectedOption(e.target.value);
+    setShowComponent(e.target.value === "show");
+  };
   return (
     <>
       <div className="bg-fourth">
@@ -79,6 +88,30 @@ export default function SetCalendar() {
                 <InputHours label="Término"></InputHours>
               </div>
             </section>
+            <section className="flex flex-col items-center mx-10 md:mx-40">
+              <p className="font-roboto text-md ">
+                ¿Tienes horas inactivas entre el inicio y el fin del horario?
+              </p>
+              <RadioGroup
+                name="options"
+                onChange={handleRadioChange}
+                value={selectedOption}
+                orientation="horizontal"
+                color="secondary"
+                size="md"
+                className="flex font-roboto my-5 items-center"
+              >
+                <Radio value="hide" className="mx-5">
+                  No
+                </Radio>
+                <Radio value="show" className="mx-5">
+                  Si
+                </Radio>
+              </RadioGroup>
+            </section>
+            <div className="flex justify-center ">
+              {showComponent && <TableStatus />}
+            </div>
           </form>
         </main>
         <Footer></Footer>
