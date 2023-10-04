@@ -4,7 +4,7 @@ import { Card, CardBody } from '@nextui-org/react';
 import MenuItem from '../components/MenuItem';
 import HeaderApp from '../components/HeaderApp';
 import Footer from '../components/Footer';
-import axios from 'axios';
+import { fetchUser } from '../utils/fetch';
 //import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
@@ -25,22 +25,30 @@ export default function Dashboard() {
   //     navigate('/');
   //   }
 
+  // const fetchData = async () => {
+  //   const token = sessionStorage.getItem('token');
+  //   if (token) {
+  //     const payload = token.split('.')[1];
+  //     const plainPayload = JSON.parse(atob(payload));
+  //     var options = {
+  //       method: 'GET',
+  //       url: `http://localhost:8080/api/v1/user/${plainPayload.id}`,
+  //       headers: { accept: 'application/json' }
+  //     };
+  //     let data = await axios.request(options);
+  //     setUserData(data.data.data);
+  //   }
+  // };
+
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      const payload = token.split('.')[1];
-      const plainPayload = JSON.parse(atob(payload));
-      axios
-        .get(`http://localhost:8080/api/v1/user/${plainPayload.id}`)
-        .then((res) => {
-          setUserData(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    fetchUser('GET', { accept: 'application/json' })
+      .then((res) => {
+        setUserData(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-  console.log(userData);
 
   return (
     <div className='bg-fourth'>
@@ -73,7 +81,7 @@ export default function Dashboard() {
             <aside className='hidden md:flex'>
               <Card
                 shadow='sm'
-                className='m-2 p-5 w-80 min-h-auto max-h-[46rem] rounded-xl'
+                className='m-2 p-5 w-80 min-h-auto max-h-[48rem] rounded-xl'
               >
                 <CardBody className='flex p-0 overflow-visible shadow-sm '>
                   <a
@@ -88,7 +96,7 @@ export default function Dashboard() {
                   <ul className='flex flex-col items-center gap-3'>
                     {!userData.isProfileComplete && (
                       <MenuItem
-                        icon='presentation.svg'
+                        icon='/presentation.svg'
                         action='Completa tu perfil'
                         reference='complete'
                         position='top'
@@ -96,7 +104,7 @@ export default function Dashboard() {
                     )}
                     {userData.type === 'user' && (
                       <MenuItem
-                        icon='receipt-tax.svg'
+                        icon='/receipt-tax.svg'
                         action='Quiero ser Worker'
                         reference='become-worker'
                         position={!userData.isComplete ? 'top' : 'bottom'}
@@ -105,40 +113,37 @@ export default function Dashboard() {
                     {userData.type === 'worker' && (
                       <>
                         <MenuItem
-                          icon='presentation.svg'
-                          action='Configura tu Micrositio'
+                          icon='/presentation.svg'
+                          action='Configura tu Sitio'
                           reference=''
                           position='top'
                         />
                         <MenuItem
-                          icon='presentation.svg'
+                          icon='/presentation.svg'
                           action='Configura tu Semana'
                           reference=''
                         />
                         <MenuItem
-                          icon='presentation.svg'
-                          action='Configura tus Servicios'
+                          icon='/presentation.svg'
+                          action='Configura tu Servicio'
                           reference=''
                         />
                       </>
                     )}
                     <MenuItem
-                      icon='check-circle-t.svg'
+                      icon='/check-circle-t.svg'
                       action='Busca Workers'
                       reference=''
-                      isDisabled={!userData.isProfileComplete}
-                      //position={!userData.type === 'worker' ? 'top' : null}
                     />
                     <MenuItem
-                      icon='chat-alt.svg'
+                      icon='/chat-alt.svg'
                       action='Chats'
                       isDisabled={true}
                     />
                     <MenuItem
-                      icon='check-circle-t.svg'
+                      icon='/check-circle-t.svg'
                       action='Mis citas'
                       reference=''
-                      isDisabled={!userData.isProfileComplete}
                       position={'bottom'}
                     />
                   </ul>
@@ -147,18 +152,29 @@ export default function Dashboard() {
                   </h3>
                   <ul className='flex flex-col items-center gap-3'>
                     <MenuItem
-                      icon='calendar.svg'
-                      action='Datos de la cuenta'
-                      reference=''
-                      isDisabled={!userData.isProfileComplete}
+                      icon='/calendar.svg'
+                      action='Modifica tu perfil'
+                      reference='account'
                       position={'top'}
-                      onPress={() => console.log('hola')}
                     />
                     <MenuItem
-                      icon='cog.svg'
+                      icon='/calendar.svg'
+                      action='Cambia tu correo'
+                      reference='mail'
+                    />
+                    <MenuItem
+                      icon='/calendar.svg'
+                      action='Cambia tu password'
+                      reference='password'
+                    />
+                    <MenuItem
+                      icon='/cog.svg'
                       action='Salir'
-                      reference=''
+                      reference='/login'
                       position='bottom'
+                      onClick={() => {
+                        sessionStorage.removeItem('token');
+                      }}
                     />
                   </ul>
                 </CardBody>
