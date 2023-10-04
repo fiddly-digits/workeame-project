@@ -84,7 +84,7 @@ export default function Account() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
-    fetchUser('GET', { accept: 'multipart/form-data' })
+    fetchUser('GET', { accept: 'application/json' })
       .then((res) => {
         setUserData(res);
       })
