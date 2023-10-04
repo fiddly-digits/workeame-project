@@ -12,7 +12,6 @@ import Resend from "./pages/Resend";
 import Dashboard from "./layout/Dashboard";
 import CompleteProfile from "./pages/CompleteProfile";
 import BecomeWorker from "./pages/UpgradeToWorker";
-import RegisteredProfile from "./pages/RegisteredProfile";
 
 const router = createBrowserRouter([
   {
@@ -56,11 +55,6 @@ const router = createBrowserRouter([
         element: <BecomeWorker />,
       },
     ],
-  },
-  {
-    path: "/registeredprofile",
-    element: <RegisteredProfile />,
-    errorElement: <div>404</div>,
   },
 ]);
 
