@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
+import { EyeAlt, EyeClose } from 'iconoir-react';
 
 const { VITE_API_URL, VITE_AUTH_LOGIN } = import.meta.env;
 
@@ -34,8 +35,11 @@ export default function Login() {
     resolver: yupResolver(schema)
   });
   const [errorMessage, setErrorMessage] = useState();
+  const [isVisible, setIsVisible] = useState(false);
+
   const navigate = useNavigate();
 
+  const toggleVisibility = () => setIsVisible(!isVisible);
   async function onSubmit(data) {
     console.log(data);
     axios
@@ -88,7 +92,7 @@ export default function Login() {
             {...register('email')}
           />
           <Input
-            type='password'
+            type={isVisible ? 'text' : 'password'}
             label='Contraseña'
             size='sm'
             className='font-roboto'
@@ -96,6 +100,19 @@ export default function Login() {
             variant='bordered'
             errorMessage={errors.password?.message}
             isInvalid={!!errors.password}
+            endContent={
+              <button
+                className='focus:outline-none'
+                type='button'
+                onClick={toggleVisibility}
+              >
+                {isVisible ? (
+                  <EyeAlt strokeWidth={1} />
+                ) : (
+                  <EyeClose strokeWidth={1} />
+                )}
+              </button>
+            }
             {...register('password')}
           />
           {errorMessage && (
