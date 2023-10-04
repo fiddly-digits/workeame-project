@@ -21,7 +21,7 @@ export default function RegisteredProfile() {
     <>
       <div className="bg-fourth">
         <HeaderApp></HeaderApp>
-        <main className="flex flex-col h-full w-auto md:px-10 py-10 m-auto gap-5 ">
+        <main className="flex flex-col h-full w-auto md:px-10 py-10 m-auto">
           <div className="flex flex-row gap-2 justify-center ">
             <img
               src="/check-circle.svg"
@@ -32,7 +32,7 @@ export default function RegisteredProfile() {
               ¡Tu perfil está registrado!
             </h2>
           </div>
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center">
             {workerCard.map((card) => (
               <WorkerCardFlip
                 key={card.key}
