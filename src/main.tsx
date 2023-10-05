@@ -12,6 +12,10 @@ import Resend from "./pages/Resend";
 import Dashboard from "./layout/Dashboard";
 import CompleteProfile from "./pages/CompleteProfile";
 import BecomeWorker from "./pages/UpgradeToWorker";
+import Account from "./pages/Account";
+import Mail from "./pages/Mail";
+import Password from "./pages/Password";
+
 
 const router = createBrowserRouter([
   {
@@ -53,6 +57,18 @@ const router = createBrowserRouter([
       {
         path: "become-worker",
         element: <BecomeWorker />,
+      },
+      {
+        path: "account",
+        element: <Account />,
+      },
+      {
+        path: "mail",
+        element: <Mail />,
+      },
+      {
+        path: "password",
+        element: <Password />,
       },
     ],
   },
