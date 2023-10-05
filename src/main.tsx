@@ -15,7 +15,7 @@ import BecomeWorker from './pages/UpgradeToWorker';
 import Account from './pages/Account';
 import Mail from './pages/Mail';
 import Password from './pages/Password';
-
+import MicrositeConfiguration from './pages/MicrositeConfig';
 
 const router = createBrowserRouter([
   {
@@ -69,12 +69,20 @@ const router = createBrowserRouter([
       {
         path: 'password',
         element: <Password />
+      },
+      {
+        path: 'microsite-config',
+        element: <MicrositeConfiguration />
+      },
+      {
+        path: 'schedule',
+        element: <div>schedule</div>
       }
     ]
   }
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <NextUIProvider>
       <RouterProvider router={router} />

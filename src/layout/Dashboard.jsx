@@ -81,7 +81,7 @@ export default function Dashboard() {
             <aside className='hidden md:flex'>
               <Card
                 shadow='sm'
-                className='m-2 p-5 w-80 min-h-auto max-h-[48rem] rounded-xl'
+                className='m-2 p-5 w-80 min-h-auto max-h-[52rem] rounded-xl'
               >
                 <CardBody className='flex p-0 overflow-visible shadow-sm '>
                   <a
@@ -112,12 +112,28 @@ export default function Dashboard() {
                     )}
                     {userData.type === 'worker' && (
                       <>
-                        <MenuItem
-                          icon='/presentation.svg'
-                          action='Configura tu Sitio'
-                          reference=''
-                          position='top'
-                        />
+                        {!userData.isMicrositeCreated ? (
+                          <MenuItem
+                            icon='/presentation.svg'
+                            action='Configura tu Sitio'
+                            reference='microsite-config'
+                            position='top'
+                          />
+                        ) : (
+                          <>
+                            <MenuItem
+                              icon='/presentation.svg'
+                              action='Visita tu Sitio'
+                              reference=''
+                              position='top'
+                            />
+                            <MenuItem
+                              icon='/presentation.svg'
+                              action='Modifica tu Sitio'
+                              reference=''
+                            />
+                          </>
+                        )}
                         <MenuItem
                           icon='/presentation.svg'
                           action='Configura tu Semana'
