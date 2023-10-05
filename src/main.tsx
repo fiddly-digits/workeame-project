@@ -16,6 +16,7 @@ import Account from "./pages/Account";
 import Mail from "./pages/Mail";
 import Password from "./pages/Password";
 
+
 const router = createBrowserRouter([
   {
     path: "/",
