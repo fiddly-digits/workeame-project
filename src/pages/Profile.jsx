@@ -8,6 +8,10 @@ import OfferSticker from "../components/OfferSticker";
 import CommentCard from "../components/CommentCard";
 import { Checkbox } from "@nextui-org/react";
 import { useState } from "react";
+/* import DescriptionOfService from "../components/ContactTheWorker/DescriptionOfService"; */
+import DateAndTime from "../components/ContactTheWorker/DateAndTime";
+import HeaderApp from "../components/HeaderApp";
+import Footer from "../components/Footer";
 
 let photos = [
   { key: 1, image: "/pictures/flowers.png", alt: "flowers" },
@@ -56,6 +60,7 @@ export default function Profile() {
   };
   return (
     <>
+      <HeaderApp></HeaderApp>
       <div className="flex items-center h-auto  bg-fourth mx-auto">
         <div className="absolute inset-0 z-0 left-[100px] top-[25rem] md:-left-[38rem] md:-top-[6rem]  lg:right-[18rem] lg:-top-[9rem] ">
           <h1 className="text-secondary/30 leading-none -rotate-90 font-oswald text-[12rem]  md:text-[14rem] lg:text-[18rem] font-bold ">
@@ -236,7 +241,11 @@ export default function Profile() {
               <div className="mt-5 mb-10">
                 {showSection && (
                   <div>
-                    <div className="bg-white h-[28rem] w-full rounded-2xl shadow-[0px_0px_5px_0px_rgba(0,0,0,0.1)]"></div>
+                    <div className="bg-white h-[28rem] w-full rounded-2xl shadow-[0px_0px_5px_0px_rgba(0,0,0,0.1)]">
+                      {/* Name of bd */}
+                      {/* <DescriptionOfService name="karen"></DescriptionOfService> */}
+                      <DateAndTime></DateAndTime>
+                    </div>
                   </div>
                 )}
               </div>
@@ -244,6 +253,7 @@ export default function Profile() {
           </section>
         </main>
       </div>
+      <Footer></Footer>
     </>
   );
 }
