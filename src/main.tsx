@@ -15,7 +15,6 @@ import BecomeWorker from "./pages/UpgradeToWorker";
 import Account from "./pages/Account";
 import Mail from "./pages/Mail";
 import Password from "./pages/Password";
-import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -71,12 +70,6 @@ const router = createBrowserRouter([
         element: <Password />,
       },
     ],
-  },
-  /* Ruta de prueba */
-  {
-    path: "/profile",
-    element: <Profile />,
-    errorElement: <div>404</div>,
   },
 ]);
 
