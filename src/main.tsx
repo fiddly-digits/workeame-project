@@ -1,79 +1,88 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { NextUIProvider } from "@nextui-org/react";
-import "./index.scss";
-import Landing from "./layout/Landing";
-import Auth from "./layout/Auth";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
-import Verify from "./pages/Verify";
-import Resend from "./pages/Resend";
-import Dashboard from "./layout/Dashboard";
-import CompleteProfile from "./pages/CompleteProfile";
-import BecomeWorker from "./pages/UpgradeToWorker";
-import Account from "./pages/Account";
-import Mail from "./pages/Mail";
-import Password from "./pages/Password";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { NextUIProvider } from '@nextui-org/react';
+import './index.scss';
+import Landing from './layout/Landing';
+import Auth from './layout/Auth';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Verify from './pages/Verify';
+import Resend from './pages/Resend';
+import Dashboard from './layout/Dashboard';
+import CompleteProfile from './pages/CompleteProfile';
+import BecomeWorker from './pages/UpgradeToWorker';
+import Account from './pages/Account';
+import Mail from './pages/Mail';
+import Password from './pages/Password';
+import MicrositeConfiguration from './pages/MicrositeConfig';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Landing />,
-    errorElement: <div>404</div>,
+    errorElement: <div>404</div>
   },
   {
-    path: "/",
+    path: '/',
     element: <Auth />,
     errorElement: <div>404</div>,
     children: [
       {
-        path: "/register",
-        element: <Register />,
+        path: '/register',
+        element: <Register />
       },
       {
-        path: "/login",
-        element: <Login />,
+        path: '/login',
+        element: <Login />
       },
       {
-        path: "/resend",
-        element: <Resend />,
+        path: '/resend',
+        element: <Resend />
       },
       {
-        path: "/verify/:token",
-        element: <Verify />,
-      },
-    ],
+        path: '/verify/:token',
+        element: <Verify />
+      }
+    ]
   },
   {
-    path: "/dashboard",
+    path: '/dashboard',
     element: <Dashboard />,
     children: [
       {
-        path: "complete",
-        element: <CompleteProfile />,
+        path: 'complete',
+        element: <CompleteProfile />
       },
       {
-        path: "become-worker",
-        element: <BecomeWorker />,
+        path: 'become-worker',
+        element: <BecomeWorker />
       },
       {
-        path: "account",
-        element: <Account />,
+        path: 'account',
+        element: <Account />
       },
       {
-        path: "mail",
-        element: <Mail />,
+        path: 'mail',
+        element: <Mail />
       },
       {
-        path: "password",
-        element: <Password />,
+        path: 'password',
+        element: <Password />
       },
-    ],
-  },
+      {
+        path: 'microsite-config',
+        element: <MicrositeConfiguration />
+      },
+      {
+        path: 'schedule',
+        element: <div>schedule</div>
+      }
+    ]
+  }
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <NextUIProvider>
       <RouterProvider router={router} />

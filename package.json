@@ -15,6 +15,7 @@
     "@types/react-burger-menu": "^2.8.3",
     "axios": "^1.5.0",
     "clsx": "^2.0.0",
+    "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
     "iconoir-react": "^6.11.0",
     "react": "^18.2.0",
