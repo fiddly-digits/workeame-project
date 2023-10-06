@@ -3,7 +3,14 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
-import { Button, Textarea, Input, Checkbox, Spinner } from '@nextui-org/react';
+import {
+  Button,
+  Textarea,
+  Input,
+  Checkbox,
+  Spinner,
+  ScrollShadow
+} from '@nextui-org/react';
 import { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import * as Yup from 'yup';
@@ -11,6 +18,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Trash } from 'iconoir-react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { arrayRange } from '../utils/utils';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import DayJSUtc from 'dayjs/plugin/utc';
+import DayJSTimezone from 'dayjs/plugin/timezone';
+
+dayjs.locale('es');
+dayjs.extend(DayJSUtc);
+dayjs.extend(DayJSTimezone);
 
 const schema = Yup.object().shape({
   aboutMe: Yup.string()
@@ -22,18 +38,8 @@ const schema = Yup.object().shape({
     return true;
   }),
   'service-1': Yup.string().required('El servicio es requerido'),
-  'service-2': Yup.string()
-    .notOneOf([''], 'El servicio es requerido')
-    .notOneOf(
-      [Yup.ref('service-1')],
-      'El servicio debe ser diferente a los anteriores'
-    ),
-  'service-3': Yup.string()
-    .notOneOf([''], 'El servicio es requerido')
-    .notOneOf(
-      [Yup.ref('service-1'), Yup.ref('service-2')],
-      'El servicio debe ser diferente a los anteriores'
-    ),
+  'service-2': Yup.string().notOneOf([''], 'El servicio es requerido'),
+  'service-3': Yup.string().notOneOf([''], 'El servicio es requerido'),
   'description-1': Yup.string().required('La descripción es requerida'),
   'description-2': Yup.string().notOneOf([''], 'La descripción es requerida'),
   'description-3': Yup.string().notOneOf([''], 'La descripción es requerida'),
@@ -49,10 +55,21 @@ const schema = Yup.object().shape({
 });
 
 export default function MicrositeConfiguration() {
+  const days = [
+    dayjs().format('dddd'),
+    dayjs().add(1, 'day').format('dddd'),
+    dayjs().add(2, 'day').format('dddd'),
+    dayjs().add(3, 'day').format('dddd'),
+    dayjs().add(4, 'day').format('dddd'),
+    dayjs().add(5, 'day').format('dddd'),
+    dayjs().add(6, 'day').format('dddd')
+  ];
+  const hours = arrayRange(0, 23, 1);
   const {
     register,
     handleSubmit,
     control,
+    watch,
     unregister,
     formState: { errors }
   } = useForm({
@@ -66,6 +83,8 @@ export default function MicrositeConfiguration() {
   const [errorMessage, setErrorMessage] = useState('');
   const [showSpinner, setShowSpinner] = useState(false);
   const [fetchStatus, setFetchStatus] = useState('');
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [themeError, setThemeError] = useState('');
 
   //Función para agregar un nuevo componente
   const addService = () => {
@@ -84,17 +103,17 @@ export default function MicrositeConfiguration() {
   };
 
   const onSubmit = async (data) => {
-    setShowSpinner(true);
     console.log(data);
     const token = sessionStorage.getItem('token');
-    //console.log(selectedImages);
+    if (selectedTheme === 0) {
+      setThemeError('Debes seleccionar un tema');
+      return;
+    }
     if (selectedImages.length < 1) {
       setErrorMessage('Debes subir al menos una imagen');
+      return;
     }
-    //console.log(selectedTheme);
-    if (selectedTheme === 0) {
-      console.log('Debes seleccionar un tema');
-    }
+    setShowSpinner(true);
     const micrositeInfo = {
       about: data.aboutMe,
       carousel: selectedImages,
@@ -134,6 +153,14 @@ export default function MicrositeConfiguration() {
       }
     }
 
+    console.log(days);
+    let schedules = [];
+    days.forEach((day, index) => {
+      schedules = [...schedules, createSchedule(day, data, index)];
+    });
+
+    console.log('Schedules', schedules);
+
     console.log(data);
     let responses = [];
     if (Object.keys(micrositeInfo).length !== 0)
@@ -144,41 +171,34 @@ export default function MicrositeConfiguration() {
       responses.push(servicePost(serviceInfo2, token));
     if (Object.keys(serviceInfo3).length !== 0)
       responses.push(servicePost(serviceInfo3, token));
+    schedules.forEach((schedule) => {
+      responses.push(schedulePost(schedule, token));
+    });
+
+    console.log('responses', responses);
 
     console.log('responses', responses);
 
     Promise.all(responses)
-      .then((responses) => {
-        console.log(responses);
+      .then((res) => {
+        console.log('res', res);
+        if (res) setFetchStatus('Tu micrositio ha sido creado con éxito');
         setShowSpinner(false);
-        setFetchStatus('Tu micrositio y servicios han sido creados');
         setTimeout(() => {
-          navigate('/dashboard/schedule');
-        }, 5000);
-      })
-      .catch((error) => {
-        console.log(error);
-        setShowSpinner(false);
-        setFetchStatus(error.response.data.message);
-        setTimeout(() => {
+          navigate('/dashboard', { replace: true });
           location.reload();
         }, 5000);
+      })
+      .catch((err) => {
+        console.log(err);
+        setFetchStatus(
+          'Hubo un error al crear tu micrositio, esto no deberia pasar. contactanos en contacto@workea.me'
+        );
+        setShowSpinner(false);
+        setTimeout(() => {
+          location.reload();
+        }, 10000);
       });
-
-    // axios
-    //   .post('http://localhost:8080/api/v1/ms/create/', micrositeInfo, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       Authorization: `Bearer ${token}`
-    //     }
-    //   })
-    //   .then((response) => {
-    //     console.log('Aqui tendria que redirigirte', response);
-    //     navigate('/dashboard/service-config');
-    //   })
-    //   .catch((error) => {
-    //     setErrorMessage(error.response.data.message);
-    //   });
   };
 
   function micrositePost(micrositeInfo, token) {
@@ -205,6 +225,39 @@ export default function MicrositeConfiguration() {
         }
       }
     );
+  }
+
+  function schedulePost(scheduleInfo, token) {
+    return axios.post(
+      'http://localhost:8080/api/v1/schedule/create/',
+      scheduleInfo,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+  }
+
+  function createSchedule(day, data, index) {
+    const timezoneName = 'America/Mexico_City';
+
+    let schedule = {
+      date: dayjs()
+        .add(index, 'day')
+        .tz(timezoneName)
+        .subtract(1, 'hour')
+        .toISOString(),
+      activeHours: []
+    };
+    for (let i = 0; i <= 23; i++) {
+      const fieldName = `${day}-${i}`;
+      if (data[fieldName]) {
+        schedule.activeHours.push(i);
+      }
+    }
+    return schedule;
   }
 
   async function onChange(event) {
@@ -261,6 +314,11 @@ export default function MicrositeConfiguration() {
               ) : (
                 <p className='font-bold text-center text-l font-roboto'>
                   Selecciona un Tema
+                </p>
+              )}
+              {themeError && (
+                <p className='font-bold text-center text-red-400 text-l font-roboto'>
+                  {themeError}
                 </p>
               )}
 
@@ -463,6 +521,85 @@ export default function MicrositeConfiguration() {
                   </Button>
                 )}
               </div>
+              <fieldset className='flex flex-col gap-3'>
+                <h2 className='flex justify-center text-3xl text-center font-oswald'>
+                  ¡Configura tu horario!
+                </h2>
+                <div className='flex flex-col gap-5'>
+                  <div className='flex gap-5'>
+                    {days.map((day) => (
+                      <Controller
+                        name={day}
+                        key={day}
+                        control={control}
+                        defaultValue={false}
+                        render={({ field }) => (
+                          <Checkbox
+                            color='secondary'
+                            {...field}
+                            onChange={(event) => {
+                              field.onChange(event.target.checked);
+                              if (!selectedDays.includes(day)) {
+                                setSelectedDays([...selectedDays, day]);
+                              } else {
+                                const newDays = [...selectedDays];
+                                newDays.splice(newDays.indexOf(day), 1);
+                                setSelectedDays(newDays);
+                                {
+                                  hours.map((hour) => {
+                                    unregister(`${day}-${hour}`);
+                                  });
+                                }
+                              }
+                            }}
+                          >
+                            <span className='text-sm font-roboto whitespace-nowrap'>
+                              {day}
+                            </span>
+                          </Checkbox>
+                        )}
+                      />
+                    ))}
+                  </div>
+                  <p className='text-center text-gray-500 font-roboto'>
+                    Selecciona las Horas que trabajaras por dia!
+                  </p>
+                  <p className='text-center text-gray-500 font-roboto'>
+                    No te preocupes, podrás actualizarlas mas tarde
+                  </p>
+                  <div className='flex justify-center'>
+                    {selectedDays.map((day) => (
+                      <div className='flex-col' key={`${day}-scroll`}>
+                        <p className='text-sm text-center font-roboto'>{day}</p>
+                        <ScrollShadow
+                          hideScrollBar
+                          className='h-[200px] w-[95px] flex flex-col items-center'
+                        >
+                          {hours.map((hour) => (
+                            <Controller
+                              name={`${day}-${hour}`}
+                              key={`${day}-${hour}`}
+                              control={control}
+                              defaultValue={false}
+                              render={({ field }) => (
+                                <Checkbox
+                                  size='md'
+                                  {...field}
+                                  disabled={!watch(day)}
+                                  onChange={(event) => {
+                                    console.log(field.name);
+                                    field.onChange(event.target.checked);
+                                  }}
+                                >{`${hour}:00`}</Checkbox>
+                              )}
+                            />
+                          ))}
+                        </ScrollShadow>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </fieldset>
             </section>
             <div className='flex flex-col items-center justify-center gap-3'>
               <Button
