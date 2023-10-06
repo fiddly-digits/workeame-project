@@ -130,18 +130,18 @@ export default function Dashboard() {
                             <MenuItem
                               icon='/presentation.svg'
                               action='Modifica tu Sitio'
-                              reference=''
+                              reference='microsite-update'
                             />
                           </>
                         )}
                         <MenuItem
                           icon='/presentation.svg'
-                          action='Configura tu Semana'
+                          action='Configura tu Servicio'
                           reference=''
                         />
                         <MenuItem
                           icon='/presentation.svg'
-                          action='Configura tu Servicio'
+                          action='Configura tu Semana'
                           reference=''
                         />
                       </>
