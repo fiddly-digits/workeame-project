@@ -145,7 +145,11 @@ export default function MicrositeUpdate() {
   }
 
   if (!siteData) {
-    return <p>Loading...</p>;
+    return (
+      <div className='flex items-center justify-center w-full h-full'>
+        <Spinner color='secondary' label='Cargando...' size='lg' />
+      </div>
+    );
   }
 
   return (

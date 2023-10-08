@@ -137,7 +137,7 @@ export default function Dashboard() {
                         <MenuItem
                           icon='/presentation.svg'
                           action='Configura tu Servicio'
-                          reference=''
+                          reference='service-update'
                         />
                         <MenuItem
                           icon='/presentation.svg'

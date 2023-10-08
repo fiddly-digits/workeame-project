@@ -17,6 +17,7 @@ import Mail from './pages/Mail';
 import Password from './pages/Password';
 import MicrositeConfiguration from './pages/MicrositeConfig';
 import MicrositeUpdate from './pages/MicrositeUpdate';
+import ServiceUpdate from './pages/ServicesUpdate';
 
 const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: 'microsite-update',
         element: <MicrositeUpdate />
+      },
+      {
+        path: 'service-update',
+        element: <ServiceUpdate />
       }
     ]
   }

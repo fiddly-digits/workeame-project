@@ -98,7 +98,7 @@ export default function MicrositeConfiguration() {
     unregister(`service-${service.length}`);
     unregister(`description-${service.length}`);
     unregister(`price-${service.length}`);
-    unregister(`isPerHour-${service.length}`);
+    unregister(`isPaymentPerHour-${service.length}`);
     setService(newsServices);
   };
 
@@ -127,28 +127,28 @@ export default function MicrositeConfiguration() {
       const serviceName = data[`service-${service[i]}`];
       const serviceDescription = data[`description-${service[i]}`];
       const servicePrice = data[`price-${service[i]}`];
-      const serviceIsPerHour = data[`isPerHour-${service[i]}`];
+      const serviceIsPerHour = data[`isPaymentPerHour-${service[i]}`];
 
       if (i === 0) {
         serviceInfo = {
           name: serviceName,
           description: serviceDescription,
           price: servicePrice,
-          isPerHour: serviceIsPerHour
+          isPaymentPerHour: serviceIsPerHour
         };
       } else if (i === 1) {
         serviceInfo2 = {
           name: serviceName,
           description: serviceDescription,
           price: servicePrice,
-          isPerHour: serviceIsPerHour
+          isPaymentPerHour: serviceIsPerHour
         };
       } else if (i === 2) {
         serviceInfo3 = {
           name: serviceName,
           description: serviceDescription,
           price: servicePrice,
-          isPerHour: serviceIsPerHour
+          isPaymentPerHour: serviceIsPerHour
         };
       }
     }
@@ -479,7 +479,7 @@ export default function MicrositeConfiguration() {
                         {...register(`price-${index}`)}
                       />
                       <Controller
-                        name={`isPerHour-${index}`}
+                        name={`isPaymentPerHour-${index}`}
                         control={control}
                         defaultValue={false}
                         render={({ field }) => (
@@ -491,7 +491,7 @@ export default function MicrositeConfiguration() {
                               field.onChange(event.target.checked)
                             }
                           >
-                            <span className='text-sm font-roboto whitespace-nowrap'>
+                            <span className='text-sm text-slate-400 font-roboto whitespace-nowrap'>
                               Es por hora
                             </span>
                           </Checkbox>
