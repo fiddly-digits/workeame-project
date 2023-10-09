@@ -124,7 +124,7 @@ export default function Dashboard() {
                             <MenuItem
                               icon='/presentation.svg'
                               action='Visita tu Sitio'
-                              reference=''
+                              reference={`/ms/${userData._id}`}
                               position='top'
                             />
                             <MenuItem
@@ -141,8 +141,8 @@ export default function Dashboard() {
                         />
                         <MenuItem
                           icon='/presentation.svg'
-                          action='Configura tu Semana'
-                          reference=''
+                          action='Configura tu Agenda'
+                          reference='schedule-update'
                         />
                       </>
                     )}
@@ -151,11 +151,11 @@ export default function Dashboard() {
                       action='Busca Workers'
                       reference=''
                     />
-                    <MenuItem
+                    {/* <MenuItem
                       icon='/chat-alt.svg'
                       action='Chats'
                       isDisabled={true}
-                    />
+                    /> */}
                     <MenuItem
                       icon='/check-circle-t.svg'
                       action='Mis citas'

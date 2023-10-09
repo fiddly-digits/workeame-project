@@ -109,3 +109,28 @@ export const deleteService = async (serviceID) => {
   let data = await axios.request(options);
   return data;
 };
+
+export const fetchSchedule = async (method, headers) => {
+  const plainPayload = handleToken();
+  var options = {
+    method,
+    url: `http://localhost:8080/api/v1/schedule/${plainPayload.id}`,
+    headers
+  };
+  let data = await axios.request(options);
+  return data.data.data;
+};
+
+export const patchSchedule = async (scheduleID, body) => {
+  const token = sessionStorage.getItem('token');
+  var options = {
+    method: 'PATCH',
+    url: `http://localhost:8080/api/v1/schedule/update/${scheduleID}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};

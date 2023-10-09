@@ -7,8 +7,6 @@ import {
   Button
 } from '@nextui-org/react';
 
-//TODO: Create another modal for deletion confirmation
-
 export default function ModalOnCall({
   status,
   shouldOpenModal,
@@ -29,7 +27,10 @@ export default function ModalOnCall({
               size='small'
               onClick={() => {
                 setShouldOpenModal(false);
-                if (status.message === 'Service deleted successfully')
+                if (
+                  status.message === 'Service deleted successfully' ||
+                  status.message === 'Agenda Actualizada Correctamente'
+                )
                   window.location.reload();
               }}
             >

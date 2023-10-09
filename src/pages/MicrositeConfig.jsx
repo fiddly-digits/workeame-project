@@ -244,11 +244,13 @@ export default function MicrositeConfiguration() {
     const timezoneName = 'America/Mexico_City';
 
     let schedule = {
+      // FIXME: The day is not being saved correctly
       date: dayjs()
         .add(index, 'day')
         .tz(timezoneName)
-        .subtract(1, 'hour')
+        //.subtract(1, 'hour')
         .toISOString(),
+      availability: data[day],
       activeHours: []
     };
     for (let i = 0; i <= 23; i++) {
@@ -590,7 +592,9 @@ export default function MicrositeConfiguration() {
                                     console.log(field.name);
                                     field.onChange(event.target.checked);
                                   }}
-                                >{`${hour}:00`}</Checkbox>
+                                >{`${hour
+                                  .toString()
+                                  .padStart(2, '0')}:00`}</Checkbox>
                               )}
                             />
                           ))}

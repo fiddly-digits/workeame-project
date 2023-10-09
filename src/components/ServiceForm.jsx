@@ -63,8 +63,8 @@ export default function ServiceForm({ element, setService, index }) {
     };
 
     if (Object.keys(dataToSubmit).length === 0) {
-      // ! HERE IS GOING TO BE AN ERROR STATUS for this component
-      console.log('No has hecho alguna modificación');
+      setStatus({ success: false, message: 'No has hecho ningún cambio' });
+      setShouldOpenModal(true);
       return;
     }
 

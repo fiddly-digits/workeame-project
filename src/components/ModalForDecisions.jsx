@@ -7,8 +7,6 @@ import {
   Button
 } from '@nextui-org/react';
 
-//TODO: Create another modal for deletion confirmation
-
 export default function ModalForDecisions({
   shouldOpenDecisionsModal,
   setShouldOpenDecisionsModal,
