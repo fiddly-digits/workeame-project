@@ -98,7 +98,7 @@ export default function MicrositeConfiguration() {
     unregister(`service-${service.length}`);
     unregister(`description-${service.length}`);
     unregister(`price-${service.length}`);
-    unregister(`isPerHour-${service.length}`);
+    unregister(`isPaymentPerHour-${service.length}`);
     setService(newsServices);
   };
 
@@ -127,28 +127,28 @@ export default function MicrositeConfiguration() {
       const serviceName = data[`service-${service[i]}`];
       const serviceDescription = data[`description-${service[i]}`];
       const servicePrice = data[`price-${service[i]}`];
-      const serviceIsPerHour = data[`isPerHour-${service[i]}`];
+      const serviceIsPerHour = data[`isPaymentPerHour-${service[i]}`];
 
       if (i === 0) {
         serviceInfo = {
           name: serviceName,
           description: serviceDescription,
           price: servicePrice,
-          isPerHour: serviceIsPerHour
+          isPaymentPerHour: serviceIsPerHour
         };
       } else if (i === 1) {
         serviceInfo2 = {
           name: serviceName,
           description: serviceDescription,
           price: servicePrice,
-          isPerHour: serviceIsPerHour
+          isPaymentPerHour: serviceIsPerHour
         };
       } else if (i === 2) {
         serviceInfo3 = {
           name: serviceName,
           description: serviceDescription,
           price: servicePrice,
-          isPerHour: serviceIsPerHour
+          isPaymentPerHour: serviceIsPerHour
         };
       }
     }
@@ -244,11 +244,13 @@ export default function MicrositeConfiguration() {
     const timezoneName = 'America/Mexico_City';
 
     let schedule = {
+      // FIXME: The day is not being saved correctly
       date: dayjs()
         .add(index, 'day')
         .tz(timezoneName)
-        .subtract(1, 'hour')
+        //.subtract(1, 'hour')
         .toISOString(),
+      availability: data[day],
       activeHours: []
     };
     for (let i = 0; i <= 23; i++) {
@@ -479,7 +481,7 @@ export default function MicrositeConfiguration() {
                         {...register(`price-${index}`)}
                       />
                       <Controller
-                        name={`isPerHour-${index}`}
+                        name={`isPaymentPerHour-${index}`}
                         control={control}
                         defaultValue={false}
                         render={({ field }) => (
@@ -491,7 +493,7 @@ export default function MicrositeConfiguration() {
                               field.onChange(event.target.checked)
                             }
                           >
-                            <span className='text-sm font-roboto whitespace-nowrap'>
+                            <span className='text-sm text-slate-400 font-roboto whitespace-nowrap'>
                               Es por hora
                             </span>
                           </Checkbox>
@@ -590,7 +592,9 @@ export default function MicrositeConfiguration() {
                                     console.log(field.name);
                                     field.onChange(event.target.checked);
                                   }}
-                                >{`${hour}:00`}</Checkbox>
+                                >{`${hour
+                                  .toString()
+                                  .padStart(2, '0')}:00`}</Checkbox>
                               )}
                             />
                           ))}

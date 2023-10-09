@@ -17,6 +17,9 @@ import Mail from './pages/Mail';
 import Password from './pages/Password';
 import MicrositeConfiguration from './pages/MicrositeConfig';
 import MicrositeUpdate from './pages/MicrositeUpdate';
+import ServiceUpdate from './pages/ServicesUpdate';
+import ScheduleUpdate from './pages/ScheduleUpdate';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -82,8 +85,21 @@ const router = createBrowserRouter([
       {
         path: 'microsite-update',
         element: <MicrositeUpdate />
+      },
+      {
+        path: 'service-update',
+        element: <ServiceUpdate />
+      },
+      {
+        path: 'schedule-update',
+        element: <ScheduleUpdate />
       }
     ]
+  },
+  {
+    path: 'ms/:id',
+    element: <Profile />,
+    errorElement: <div>404</div>
   }
 ]);
 
