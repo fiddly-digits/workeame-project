@@ -63,7 +63,7 @@ export default function Mail() {
         Modifica tu Mail
       </h2>
       <form
-        className="flex flex-col items-center gap-3"
+        className="flex flex-col items-center gap-5"
         onSubmit={handleSubmit(onSubmit)}
       >
         <p className="text-gray-500 font-roboto">

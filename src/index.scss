@@ -424,3 +424,18 @@ Note: Beware of modifying this element as it can break the animations - you shou
   -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
 }
+
+/* Change text in UpgradeWorker */
+.animated-text {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 0.5s, transform 0.5s;
+  &.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  &.hide {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
