@@ -89,7 +89,7 @@ export default function Password() {
         className="flex flex-col items-center gap-5"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <p className="text-gray-500 font-roboto">
+        <p className="text-gray-500 font-roboto m-8">
           {" "}
           Al modificar tu Password tendras que volver a ingresar con el nuevo
           password.
@@ -151,7 +151,7 @@ export default function Password() {
           size="lg"
           radius="md"
           type="submit"
-          className="text-white bg-wkablack font-oswald hover:cursor-pointer"
+          className="text-white bg-wkablack font-oswald hover:cursor-pointer mt-5"
           {...(!errors.oldPassword && !errors.newPassword
             ? { isDisabled: false }
             : { isDisabled: true })}
