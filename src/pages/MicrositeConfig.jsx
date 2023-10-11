@@ -567,7 +567,7 @@ export default function MicrositeConfiguration() {
                     ))}
                   </div>
                   <p className="text-center font-roboto">
-                    Selecciona las Horas que trabajaras por día:
+                    Selecciona las Horas que trabajarás por día:
                   </p>
                   <p className="flex items-center justify-center text-sm text-center text-gray-400 tracking-wide font-light font-roboto">
                     No te preocupes, podrás actualizarlas mas tarde
