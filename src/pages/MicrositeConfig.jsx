@@ -282,29 +282,41 @@ export default function MicrositeConfiguration() {
 
   return (
     <>
-      <div className="bg-fourth">
-        <main className="flex flex-col h-full gap-10 py-10 m-auto md:px-10 ">
+      <div className="rounded-md m-auto">
+        <main className="flex flex-col h-full gap-10 py-10 w-[21rem] md:w-[45rem] lg:w-auto rounded-md justify-center m-auto">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <section className="flex flex-col gap-3 mx-10 md:mx-40">
+            <section className="flex flex-col gap-3  md:mx-40">
               <h2 className="flex justify-center text-3xl text-center font-oswald tracking-wider">
                 ¡Muestra tu trabajo al mundo!
               </h2>
               <p className="flex justify-center text-2xl text-center font-oswald mt-4">
                 Elige tu diseño favorito
               </p>
-              <div className="flex items-center justify-center gap-5 my-4">
+              <div className="flex items-center justify-center gap-8 my-8">
                 <button
-                  className="w-24 h-24 border-4 rounded-full bg-primary border-secondary"
+                  className={`w-20 h-20 md:w-24 md:h-24 border-4 rounded-full bg-third border-secondary ${
+                    selectedTheme === 1
+                      ? "shadow-[0_0px_40px_-2px_rgba(0,0,0,0.7)] shadow-secondary scale-110 transition-all duration-500 ease-in-out"
+                      : ""
+                  }`}
                   type="button"
                   onClick={() => setSelectedTheme(1)}
                 />
                 <button
-                  className="w-24 h-24 border-4 rounded-full bg-secondary border-third"
+                  className={`w-20 h-20 md:w-24 md:h-24 border-4 rounded-full bg-secondary border-third ${
+                    selectedTheme === 2
+                      ? "shadow-[0_0px_40px_-4px_rgba(0,0,0,0.5)] shadow-third scale-110 transition-all duration-500 ease-in-out"
+                      : ""
+                  }`}
                   type="button"
                   onClick={() => setSelectedTheme(2)}
                 />
                 <button
-                  className="w-24 h-24 border-4 rounded-full bg-fourth border-primary"
+                  className={`w-20 h-20 md:w-24 md:h-24 border-4 rounded-full bg-fourth border-secondary ${
+                    selectedTheme === 3
+                      ? "shadow-[0_0px_40px_-4px_rgba(0,0,0,0.5)] shadow-secondary scale-110 transition-all duration-500 ease-in-out"
+                      : ""
+                  }`}
                   type="button"
                   onClick={() => setSelectedTheme(3)}
                 />
@@ -324,7 +336,7 @@ export default function MicrositeConfiguration() {
                 </p>
               )}
 
-              <div className="mt-10">
+              <div className="mt-6">
                 <p className="flex items-center justify-center text-lg text-center font-medium font-roboto">
                   Agrega unas fotos de tu trabajo.
                 </p>
@@ -332,7 +344,7 @@ export default function MicrositeConfiguration() {
                   No te preocupes si no tienes más de una, podrás modificarlas
                   mas tarde.
                 </p>
-                <div className="flex justify-center w-full my-5 font-roboto md:px-8 lg:px-20">
+                <div className="flex justify-center my-5 w-full max-w-80 md:max-w-xl font-roboto md:px-8 lg:px-20">
                   <Swiper
                     pagination={{
                       type: "fraction",
@@ -344,7 +356,7 @@ export default function MicrositeConfiguration() {
                     {selectedImages.map((image) => (
                       <SwiperSlide key={image.name}>
                         <div className="flex justify-center w-full">
-                          <div className="p-10 w-80 h-80 md:w-96 md:h-96">
+                          <div className="p-10 w-80 h-80 lg:w-[25rem] lg:h-[25rem]">
                             <img
                               src={URL.createObjectURL(image)}
                               alt={image.name}
@@ -370,18 +382,19 @@ export default function MicrositeConfiguration() {
                 />
                 <label
                   htmlFor="file-uploader"
-                  className="bg-wkablack rounded-md max-w-[240px] h-[48px] flex justify-center items-center gap-3 px-5 text-white font-oswald shadow-md hover:bg-[#525252] duration-300 hover:cursor-pointer"
+                  className="bg-wkablack mb-5 rounded-md max-w-[240px] h-[48px] flex justify-center items-center gap-3 px-5 text-white font-oswald shadow-md hover:bg-[#525252] duration-300 hover:cursor-pointer"
                 >
                   <img src="/upload.svg" alt="upload" className="w-6 h-6" />
                   Selecciona una Foto
                 </label>
                 {selectedImages.map((image, index) => (
                   <label
-                    className="flex gap-3 text-sm text-slate-500 text-clip"
+                    className="flex w-72 md:auto justify-between gap-5 text-sm text-gray-300 text-clip "
                     key={index}
                   >
                     {image.name}{" "}
                     <button
+                      className="text-gray-400 hover:animate-bounce transition-all duration-200"
                       type="button"
                       onClick={() => {
                         OnDeleteImage(index);
@@ -403,13 +416,13 @@ export default function MicrositeConfiguration() {
                   </label>
                 )} */}
                 {errors.photos && (
-                  <label className="text-sm text-slate-500">
+                  <label className="text-sm text-gray-500">
                     {errors.photos.message}
                   </label>
                 )}
               </div>
             </section>
-            <section className="flex flex-col items-center gap-3 mx-10 my-8 md:mx-40">
+            <section className="flex flex-col items-center gap-3 my-10 md:mx-40">
               <p className="flex justify-center text-lg font-oswald">
                 Cuéntale a tus clientes de qué va tu trabajo{" "}
               </p>
@@ -430,7 +443,7 @@ export default function MicrositeConfiguration() {
               </div>
             </section>
             {/* services details */}
-            <section className="flex flex-col items-center gap-3 mx-10">
+            <section className="flex flex-col items-center gap-3 ">
               <div className="flex flex-col items-center w-full gap-3 ">
                 <h2 className="flex justify-center text-2xl text-center font-oswald">
                   ¡Ofrece tus servicios!
@@ -441,11 +454,16 @@ export default function MicrositeConfiguration() {
                 {service.map((index) => (
                   <fieldset
                     key={index}
-                    className="flex flex-col justify-center w-full gap-3 "
+                    className="flex flex-col items-center w-full gap-3 "
                   >
-                    <h4 className="font-roboto mt-4">
-                      Detalles del Servicio #{index}
+                    <h4 className="font-roboto font-medium mt-4 w-full max-w-xl">
+                      Detalles del Servicio{" "}
+                      <span className="text-secondary font-bold">
+                        {" "}
+                        #{index}
+                      </span>
                     </h4>
+
                     <Input
                       size="sm"
                       label="Servicio"
