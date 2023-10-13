@@ -38,6 +38,8 @@ const schema = Yup.object().shape({
     })
 });
 
+//TODO: HANDLE ERRORS WITH MODAL
+
 export default function CompleteProfile() {
   const [selectedState, setSelectedState] = useState('');
   const navigate = useNavigate();

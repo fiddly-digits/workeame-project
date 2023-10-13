@@ -6,10 +6,10 @@ const handleToken = () => {
   return JSON.parse(atob(payload));
 };
 
-export const fetchUser = async (method, headers) => {
-  const plainPayload = handleToken();
+export const fetchUser = async (headers, params) => {
+  const plainPayload = params || handleToken();
   var options = {
-    method,
+    method: 'GET',
     url: `http://localhost:8080/api/v1/user/${plainPayload.id}`,
     headers
   };
@@ -32,10 +32,10 @@ export const patchUser = async (method, headers, body) => {
   return data;
 };
 
-export const fetchMS = async (method, headers) => {
-  const plainPayload = handleToken();
+export const fetchMS = async (headers, params) => {
+  const plainPayload = params || handleToken();
   var options = {
-    method,
+    method: 'GET',
     url: `http://localhost:8080/api/v1/ms/${plainPayload.id}`,
     headers
   };
@@ -126,6 +126,20 @@ export const patchSchedule = async (scheduleID, body) => {
   var options = {
     method: 'PATCH',
     url: `http://localhost:8080/api/v1/schedule/update/${scheduleID}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
+
+export const createBooking = async (body, serviceID) => {
+  const token = sessionStorage.getItem('token');
+  var options = {
+    method: 'POST',
+    url: `http://localhost:8080/api/v1/booking/create/${serviceID}`,
     headers: {
       Authorization: `Bearer ${token}`
     },

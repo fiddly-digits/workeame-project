@@ -28,7 +28,7 @@ export default function Mail() {
   const [errorMessage, setErrorMessage] = useState();
 
   useEffect(() => {
-    fetchUser('GET', { accept: 'application/json' })
+    fetchUser({ accept: 'application/json' })
       .then((res) => {
         setUserData(res);
       })

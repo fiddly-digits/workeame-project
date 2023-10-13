@@ -1,98 +1,235 @@
-import { Select, SelectItem, Button } from "@nextui-org/react";
-import { SelectorIcon } from "./SelectorIcon";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import {
+  Select,
+  SelectItem,
+  Button,
+  RadioGroup,
+  Radio
+} from '@nextui-org/react';
+import { SelectorIcon } from './SelectorIcon';
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import DayJSUtc from 'dayjs/plugin/utc';
+import DayJSTimezone from 'dayjs/plugin/timezone';
+import { getNumbersInRange } from '../../utils/utils';
+import { createBooking } from '../../utils/fetch';
 
-let availableHours = [
-  { hour: "07:00 - 08:00", available: "true" },
-  { hour: "08:00 - 09:00", available: "true" },
-  { hour: "10:00 - 11:00", available: "true" },
-  { hour: "11:00 - 12:00", available: "false" },
-  { hour: "12:00 - 13:00", available: "false" },
-  { hour: "13:00 - 14:00", available: "true" },
-  { hour: "14:00 - 15:00", available: "true" },
-  { hour: "15:00 - 16:00", available: "false" },
-  { hour: "16:00 - 17:00", available: "false" },
-  { hour: "17:00 - 18:00", available: "true" },
-  { hour: "18:00 - 19:00", available: "true" },
-  { hour: "19:00 - 20:00", available: "true" },
-  { hour: "20:00 - 21:00", available: "false" },
-  { hour: "21:00 - 22:00", available: "false" },
-  { hour: "22:00 - 23:00", available: "true" },
-  { hour: "23:00 - 24:00", available: "false" },
-];
+dayjs.locale('es');
+dayjs.extend(DayJSUtc);
+dayjs.extend(DayJSTimezone);
 
-export default function DateAndTime() {
+export default function DateAndTime({ schedule, services }) {
   const [selectedHour, setSelectedHour] = useState(null);
+  const [selectedEndHour, setSelectedEndHour] = useState(null);
+  const [dayEndHours, setDayEndHours] = useState(null);
+  const [dayAvailableHours, setDayAvailableHours] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [bookingStatus, setBookingStatus] = useState(null);
 
-  const disabledKeys = availableHours
-    .filter((hourData) => hourData.available === "false")
-    .map((hourData) => hourData.hour);
+  function onSubmit() {
+    if (selectedService === null) {
+      setBookingStatus('Debes de seleccionar un servicio');
+      return;
+    }
+    if (selectedDate === null) {
+      setBookingStatus('Debes de seleccionar una fecha');
+      return;
+    }
+    if (selectedHour === null || selectedEndHour === null) {
+      setBookingStatus('Debes de seleccionar un rango de horas');
+      return;
+    }
+
+    setBookingStatus(null);
+
+    console.log(selectedService);
+
+    const data = {
+      date: selectedDate,
+      start: dayjs(selectedDate).hour(selectedHour).toISOString(),
+      end: dayjs(selectedDate).hour(selectedEndHour).toISOString()
+    };
+
+    console.log(data);
+
+    createBooking(data, selectedService)
+      .then((res) => {
+        console.log(res);
+        setBookingStatus('Cita agendada con exito');
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        setBookingStatus(err.response.data.message);
+      });
+
+    console.log('selected hour', selectedHour);
+    console.log('selected end hour', selectedEndHour);
+    console.log('selected Service', selectedService);
+    console.log('selected Date', selectedDate);
+
+    console.log(
+      'count numbers in range',
+      getNumbersInRange(selectedHour, selectedEndHour)
+    );
+  }
 
   return (
     <>
-      <section className="p-5">
-        <form action="" className="flex flex-col gap-4">
-          <div className="flex flex-row justify-between">
-            <p className="font-roboto font-semibold text-md md:text-lg ">
-              {" "}
-              Elige la fecha y hora de tu cita.
-            </p>
-            <Link to={""}>
-              <img
-                src="/chat-alt.svg"
-                alt="chat"
-                className="h-6 md:hidden md:h-12 md:w-12 hover:font-bold hover:scale-105 transition-all duration-100"
-              />
-            </Link>
+      <section className='p-5'>
+        <form action='' className='flex flex-col gap-4'>
+          <p className='font-semibold font-roboto text-md md:text-lg '>
+            Elige el servicio de tu interés.
+          </p>
+          <Select
+            label='Selecciona tu Servicio'
+            variant='bordered'
+            size='sm'
+            className='max-w-xs'
+            onSelectionChange={(value) => {
+              setSelectedService(value.currentKey);
+            }}
+            onChange={(event) => {
+              if (event.target.value === '') {
+                setSelectedService(null);
+                setSelectedDate(null);
+                setSelectedHour(null);
+                setSelectedEndHour(null);
+                setDayAvailableHours(null);
+                setDayEndHours(null);
+                return;
+              }
+              setSelectedService(event.target.value);
+            }}
+          >
+            {services.map((service) => (
+              <SelectItem key={service._id} value={service}>
+                {service.name}
+              </SelectItem>
+            ))}
+          </Select>
+          {selectedService && (
+            <>
+              <div className='flex flex-row justify-between'>
+                <p className='font-semibold font-roboto text-md md:text-lg '>
+                  Elige el dia de tu interés.
+                </p>
+              </div>
+              <div className='w-auto max-w-1/2 font-roboto'>
+                <RadioGroup
+                  label='Selecciona el dia para tu cita'
+                  onChange={(event) => {
+                    const day = schedule.find(
+                      (day) => day._id === event.target.value
+                    );
+                    console.log(day);
+                    setSelectedDate(day.date);
+                    setSelectedHour(null);
+                    setDayAvailableHours(day.activeHours);
+                  }}
+                >
+                  {schedule.map((day) => {
+                    if (
+                      day.availability &&
+                      dayjs(day.date).isAfter(dayjs(), 'day')
+                    ) {
+                      return (
+                        <Radio value={day._id}>
+                          {dayjs(day.date).format(
+                            'dddd, D [de] MMMM [de] YYYY'
+                          )}
+                        </Radio>
+                      );
+                    }
+                  })}
+                </RadioGroup>
+              </div>
+            </>
+          )}
+          <div className='flex gap-3'>
+            {dayAvailableHours && (
+              <Select
+                variant='bordered'
+                label='Horario de inicio'
+                placeholder='Selecciona horario disponible'
+                labelPlacement='outside'
+                className='max-w-xs font-roboto'
+                onOpenChange={(open) => {
+                  if (open) {
+                    setSelectedEndHour(null);
+                    setDayEndHours(null);
+                  }
+                }}
+                onChange={(event) => {
+                  if (event.target.value === '') {
+                    setSelectedHour(null);
+                    setSelectedEndHour(null);
+                    setDayEndHours(null);
+                    setSelectedEndHour(null);
+                    return;
+                  }
+                  setDayEndHours(
+                    dayAvailableHours.filter(
+                      (hour) => hour >= event.target.value
+                    )
+                  );
+                  setSelectedHour(event.target.value);
+                  setSelectedEndHour(null);
+                }}
+                disableSelectorIconRotation
+                selectorIcon={<SelectorIcon />}
+              >
+                {dayAvailableHours
+                  .sort((a, b) => a - b)
+                  .map((hour) => (
+                    <SelectItem key={hour} value={hour}>
+                      {`${hour.toString().padStart(2, '0')}:00`}
+                    </SelectItem>
+                  ))}
+              </Select>
+            )}
+            {dayEndHours && (
+              <Select
+                variant='bordered'
+                label='Horario de termino'
+                placeholder='Selecciona horario disponible'
+                labelPlacement='outside'
+                className='max-w-xs font-roboto'
+                onChange={(event) => {
+                  if (event.target.value === '') {
+                    setSelectedEndHour(null);
+                    return;
+                  }
+                  setSelectedEndHour(event.target.value);
+                }}
+                disableSelectorIconRotation
+                selectorIcon={<SelectorIcon />}
+              >
+                {dayEndHours.map((hour) => {
+                  return (
+                    <SelectItem key={hour + 1} value={hour + 1}>
+                      {`${(hour + 1).toString().padStart(2, '0')}:00`}
+                    </SelectItem>
+                  );
+                })}
+              </Select>
+            )}
           </div>
-          <div className="h-52 w-auto max-w-1/2 bg-gray-300 font-roboto">
-            CALENDARIO
-          </div>
-          <div>
-            <Select
-              variant="bordered"
-              label="Horario"
-              placeholder="Selecciona horario disponible"
-              labelPlacement="outside"
-              className="max-w-xs font-roboto"
-              value={selectedHour}
-              onChange={(value) => setSelectedHour(value)}
-              disabledKeys={disabledKeys}
-              disableSelectorIconRotation
-              selectorIcon={<SelectorIcon />}
-            >
-              {availableHours.map((hour) => (
-                <SelectItem key={hour.hour}>{hour.hour}</SelectItem>
-              ))}
-            </Select>
-          </div>
-          <div className="flex flex-row justify-between mt-3">
-            <Link to={""} className=" flex items-center">
-              <img
-                src="/arrow.svg"
-                alt="arrow"
-                className="scale-75 rotate-90 md:h-12 md:w-12  hover:scale-[.85] transition-all duration-75 "
-              />
-              <span className="font-oswald hover:underline transition-all duration-400">
-                Regresar
-              </span>
-            </Link>
-            <Link to={""}>
-              <img
-                src="/chat-alt.svg"
-                alt="chat"
-                className="scale-75 hidden md:block md:h-12 md:w-12 hover:font-bold  hover:scale-[.85] transition-all duration-100"
-              />
-            </Link>
+          <div className='flex flex-row justify-around mt-3'>
             <Button
-              radius="md"
-              type="submit"
-              className="text-white bg-wkablack font-oswald hover:cursor-pointer w-40"
+              radius='md'
+              className='w-40 text-white bg-wkablack font-oswald hover:cursor-pointer'
+              onPress={onSubmit}
             >
               AGENDAR
             </Button>
           </div>
+          {bookingStatus ? (
+            <p className='self-center text-center text-red-500 font-roboto'>
+              {bookingStatus}
+            </p>
+          ) : null}
         </form>
       </section>
     </>

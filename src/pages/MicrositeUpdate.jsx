@@ -43,7 +43,7 @@ export default function MicrositeUpdate() {
   });
 
   useEffect(() => {
-    fetchMS('GET', { accept: 'application/json' })
+    fetchMS({ accept: 'application/json' })
       .then((res) => {
         console.log(res);
         setSiteData(res);
