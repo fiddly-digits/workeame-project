@@ -17,45 +17,6 @@ import { useParams } from 'react-router-dom';
 import { handleExpertise } from '../utils/utils';
 import clsx from 'clsx';
 
-// let photos = [
-//   { key: 1, image: '/pictures/flowers.png', alt: 'flowers' },
-//   { key: 2, image: '/pictures/flowers3.png', alt: 'flowers' },
-//   { key: 3, image: '/pictures/flowers4.png', alt: 'flowers' }
-// ];
-
-// let services = [
-//   {
-//     key: 1,
-//     name: 'Arreglo para ocasión especial',
-//     description:
-//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud .',
-//     price: '$300 MXN.',
-//     pricetype: 'Precio/arreglo',
-//     offer: 10,
-//     offerDescription: 'Miembros WORKEA'
-//   },
-//   {
-//     key: 2,
-//     name: 'Arreglos para eventos',
-//     description:
-//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud .',
-//     price: '$300 MXN.',
-//     pricetype: 'Precio/arreglo',
-//     offer: 15,
-//     offerDescription: 'Miembros WORKEA'
-//   },
-//   {
-//     key: 3,
-//     name: 'Flores por docena',
-//     description:
-//       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud .',
-//     price: '$300 MXN.',
-//     pricetype: 'Precio/arreglo',
-//     offer: 10,
-//     offerDescription: 'Miembros WORKEA'
-//   }
-// ];
-
 export default function Profile() {
   const [showSection, setShowSection] = useState(false);
   const [userData, setUserData] = useState({});
@@ -66,7 +27,6 @@ export default function Profile() {
   const [token, setToken] = useState(null);
   const [images, setImages] = useState([]);
 
-  //TODO: Fix how to open site without being logged
   const params = useParams();
   const tokenExists = sessionStorage.getItem('token');
 
