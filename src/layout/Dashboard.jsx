@@ -41,7 +41,8 @@ export default function Dashboard() {
   // };
 
   useEffect(() => {
-    fetchUser("GET", { accept: "application/json" })
+
+    fetchUser({ accept: 'application/json' })
       .then((res) => {
         setUserData(res);
       })

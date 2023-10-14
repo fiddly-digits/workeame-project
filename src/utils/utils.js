@@ -2558,3 +2558,34 @@ export const arrayRange = (start, stop, step) =>
     { length: (stop - start) / step + 1 },
     (value, index) => start + index * step
   );
+
+export function handleExpertise(expertise) {
+  switch (expertise) {
+    case '0-1':
+      return '1 Año de Experiencia';
+    case '1-2':
+      return '2 Años de Experiencia';
+    case '2-3':
+      return '3 Años de Experiencia';
+    case '3-4':
+      return '4 Años de Experiencia';
+    case '4-5':
+      return '5 Años de Experiencia';
+    case '5 o mas':
+      return '+5 Años de Experiencia';
+    default:
+      return 'Nuevo en el Negocio';
+  }
+}
+
+export function getNumbersInRange(a, b) {
+  const min = Math.min(a, b);
+  const max = Math.max(a, b);
+  const numbers = [];
+
+  for (let i = min; i < max; i++) {
+    numbers.push(i);
+  }
+
+  return numbers;
+}
