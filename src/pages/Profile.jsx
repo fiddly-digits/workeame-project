@@ -71,7 +71,7 @@ export default function Profile() {
   const serviceMenuClasses = clsx(
     "flex flex-col items-center w-full gap-4 p-2 mx-auto rounded-md shadow-xl",
     {
-      "bg-third": siteData.theme === 1,
+      "bg-[#FC5826]": siteData.theme === 1,
       "bg-[#7F66E5]": siteData.theme === 2,
       "bg-white": siteData.theme === 3,
     }
@@ -80,7 +80,7 @@ export default function Profile() {
   const workeaFooterClasses = clsx("...", {
     "text-secondary": siteData.theme === 1,
     "text-third": siteData.theme === 2,
-    "text-primary/30": siteData.theme === 3,
+    "text-secondary/90": siteData.theme === 3,
   });
 
   const textsFooterClasses = clsx("...", {
@@ -105,7 +105,7 @@ export default function Profile() {
     <>
       <div className={`flex flex-col ${backgroundClasses}`}>
         <HeaderApp />
-        <div className="absolute inset-0 z-0 left-[150px] top-[25rem] md:-left-[38rem] md:-top-[6rem]  lg:right-[18rem] lg:-top-[9rem] ">
+        <div className="absolute z-0 left-2 top-[18rem] md:-left-[15rem] md:top-[20rem]  lg:right-[45rem] lg:top-[19rem] ">
           <h1 className={workeaClasses}>Workea</h1>
         </div>
         <main className="z-10 flex flex-col h-full gap-10 py-10 m-auto w-80 md:w-auto md:px-10 ">
@@ -178,7 +178,7 @@ export default function Profile() {
                     key={service._id}
                     className="md:w-auto font-roboto"
                     startContent={
-                      <img src="/circle.svg" alt="circle" className="h-8"></img>
+                      <img src="/circle.svg" alt="circle" className="h-6"></img>
                     }
                     title={service.name}
                   >
@@ -211,14 +211,14 @@ export default function Profile() {
             <h3 className="text-2xl font-semibold tracking-wider font-oswald">
               Sus clientes opinan...
             </h3>
-            <div className="w-80 md:w-96">
+            <div className="w-full md:w-96">
               <Swiper
                 navigation={true}
                 modules={[Navigation]}
                 className="mySwiper"
               >
                 <SwiperSlide>
-                  <div className="flex justify-center w-full py-5 ">
+                  <div className="flex justify-center w-full py-5">
                     <CommentCard></CommentCard>
                   </div>
                 </SwiperSlide>
@@ -233,8 +233,8 @@ export default function Profile() {
 
           {!token || token.id === userData._id ? (
             <section className="flex flex-row w-full gap-2 mx-auto my-10 justify-evenly md:gap-14">
-              <div className="flex flex-col items-center justify-between w-auto gap-3 text-sm basis-1/2 font-roboto">
-                <h3 className="text-2xl font-semibold tracking-wider font-oswald">
+              <div className="flex flex-col items-center w-auto gap-3 text-sm basis-1/2 font-roboto">
+                <h3 className="text-2xl font-semibold tracking-wider font-oswald w-80 md:w-96 text-center">
                   {token && token.id === userData._id
                     ? "Te gusta como se ve, compártelo"
                     : `Interesado en los servicios de ${userData.name}`}
