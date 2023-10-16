@@ -20,6 +20,8 @@ import MicrositeUpdate from './pages/MicrositeUpdate';
 import ServiceUpdate from './pages/ServicesUpdate';
 import ScheduleUpdate from './pages/ScheduleUpdate';
 import Profile from './pages/Profile';
+import Bookings from './pages/Bookings';
+import Index from './pages/Index';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,10 @@ const router = createBrowserRouter([
     path: '/dashboard',
     element: <Dashboard />,
     children: [
+      {
+        path: '/dashboard',
+        element: <Index />
+      },
       {
         path: 'complete',
         element: <CompleteProfile />
@@ -93,6 +99,10 @@ const router = createBrowserRouter([
       {
         path: 'schedule-update',
         element: <ScheduleUpdate />
+      },
+      {
+        path: 'bookings',
+        element: <Bookings />
       }
     ]
   },
