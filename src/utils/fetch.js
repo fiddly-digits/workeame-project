@@ -148,3 +148,30 @@ export const createBooking = async (body, serviceID) => {
   let data = await axios.request(options);
   return data;
 };
+
+export const fetchBookings = async (queryParam) => {
+  const token = sessionStorage.getItem('token');
+  var options = {
+    method: 'GET',
+    url: `http://localhost:8080/api/v1/booking/?type=${queryParam}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+  let data = await axios.request(options);
+  return data.data.data;
+};
+
+export const updateBookingStatus = async (bookingID, body) => {
+  const token = sessionStorage.getItem('token');
+  var options = {
+    method: 'PATCH',
+    url: `http://localhost:8080/api/v1/booking/statusUpdate/${bookingID}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};

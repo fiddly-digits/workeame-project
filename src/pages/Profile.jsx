@@ -53,7 +53,7 @@ export default function Profile() {
   console.log("theme", siteData.theme);
   console.log(token);
 
-  const backgroundClasses = clsx("flex items-center h-auto mx-auto", {
+  const backgroundClasses = clsx("flex flex-col items-center h-auto mx-auto", {
     "bg-third/90": siteData.theme === 1,
     "bg-secondary/90": siteData.theme === 2,
     "bg-fourth": siteData.theme === 3,
@@ -77,6 +77,12 @@ export default function Profile() {
     }
   );
 
+  const headerColor = {
+    1: 'primary/50',
+    2: 'secondary/50',
+    3: 'fourth/50'
+  };
+  
   const workeaFooterClasses = clsx("...", {
     "text-secondary": siteData.theme === 1,
     "text-third": siteData.theme === 2,
@@ -88,6 +94,7 @@ export default function Profile() {
     "text-[#020202]": siteData.theme === 2,
     "text-primary/30": siteData.theme === 3,
   });
+
 
   const handleCheckboxChange = (e) => {
     setShowSection(e.target.checked);
@@ -103,8 +110,9 @@ export default function Profile() {
 
   return (
     <>
-      <div className={`flex flex-col ${backgroundClasses}`}>
-        <HeaderApp />
+
+      <div className={backgroundClasses}>
+        <HeaderApp color={headerColor[siteData.theme]} />
         <div className="absolute z-0 left-2 top-[18rem] md:-left-[15rem] md:top-[20rem]  lg:right-[45rem] lg:top-[19rem] ">
           <h1 className={workeaClasses}>Workea</h1>
         </div>

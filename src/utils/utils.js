@@ -2589,3 +2589,17 @@ export function getNumbersInRange(a, b) {
 
   return numbers;
 }
+
+export const bookingStatusDictionary = {
+  pending: 'Pendiente',
+  confirmed: 'Confirmado',
+  cancelled: 'Cancelado',
+  completed: 'Completado'
+};
+
+export const bookingStatusColorDictionary = {
+  pending: '#ff9800',
+  confirmed: '#4caf50',
+  cancelled: '#f44336',
+  completed: '#2196f3'
+};
