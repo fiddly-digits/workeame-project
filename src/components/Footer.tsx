@@ -13,9 +13,17 @@ export default function BottomButtons({ nextTitle, reference, button }: Props) {
 
  */
 
-export default function Footer() {
+interface Props {
+  bg?: string;
+  letters?: string;
+  text?: string;
+}
+
+export default function Footer({ bg, letters, text }: Props) {
   return (
-    <footer className="relative z-10 flex flex-col gap-3 p-5 md:px-10  overflow-hidden lg:block bg-fourth">
+    <footer
+      className={`relative z-10 flex flex-col gap-3 p-5 overflow-hidden lg:block bg-fourth ${bg}`}
+    >
       <div className="flex flex-col gap-3 font-roboto">
         <p className="text-md lg:text-lg">
           Calle 345 10. Del. Azcapotzalco 56672. Ciudad de México, México
@@ -27,7 +35,7 @@ export default function Footer() {
             contacto@workea.me
           </p>
         </div>
-        <h3 className="text-xl font-bold">Navegacion</h3>
+        <h3 className="text-xl tracking-[0.5rem] font-bold">Navegacion</h3>
         <div className="flex flex-col gap-4 text-md lg:text-lg lg:flex-row ">
           <a
             href="#second-section"
@@ -57,32 +65,36 @@ export default function Footer() {
             Busca tu Worker
           </a>
         </div>
-        <h3 className="text-xl font-bold">Recursos</h3>
+        <h3 className="text-xl font-bold tracking-[0.5rem] ">Recursos</h3>
         <div className="flex  gap-4 text-md lg:text-lg flex-row">
           <a href="/">Contactanos</a>
           <span>|</span>
           <a href="/">Beneficios</a>
         </div>
       </div>
-      <div className="flex flex-col gap-3 lg:items-end lg:justify-between font-roboto lg:flex-row text-secondary">
+      <div
+        className={`flex flex-col items-center mt-10 gap-3 lg:items-end lg:justify-between font-roboto lg:flex-row text-secondary ${text}`}
+      >
         <p className="text-sm lg:text-md lg:order-1">
           © 2023 Team Workea.me. All Rights Reserved
         </p>
-        <div className="flex items-center order-last lg:order-2">
+        <div className="flex items-center order-last lg:order-2 lg:hidden">
           <img src="/linked.svg" alt="linked" className="w-10 h-10" />
           <img src="/facebook.svg" alt="facebook" className="w-10 h-10" />
           <img src="/twitterx.svg" alt="twitterx" className="w-10 h-10" />
         </div>
-        <p className="text-sm lg:text-md lg:order-3">
+        <p className="text-center text-sm lg:text-md lg:order-3">
           Consulta nuestra{" "}
           <span className="underline">Política de Privacidad</span> y{" "}
           <span className="underline">Términos del Servicio</span>
         </p>
       </div>
       <div className="relative">
-        <h1 className="absolute bottom-8  lg:bottom-0  text-[35rem] lg:text-[23rem] -z-10 text-center font-oswald font-bold leading-none text-white ">
-          <span className="md:hidden">W</span>
-          <span className="hidden md:block lg:tracking-wider">Workea</span>
+        <h1 className="absolute bottom-8 -left-48 md:-left-[26rem] lg:-left-5 lg:bottom-0  text-[35rem] lg:text-[23rem] -z-10 text-center font-oswald font-bold leading-none text-white ">
+          <span className={`md:hidden ${letters}`}>W</span>
+          <span className={`hidden md:block lg:tracking-wider ${letters}`}>
+            Workea
+          </span>
         </h1>
       </div>
     </footer>
