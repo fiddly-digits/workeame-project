@@ -7,12 +7,12 @@ import WorkeaTitle from '../components/WorkeaTitle';
 import WInfo from '../components/WInfo';
 import SwiperCardTwo from '../components/SwiperCardTwo';
 import SearchWorker from '../components/SearchWorker';
-import Header from '../components/Header';
+import HeaderApp from '../components/HeaderApp';
 
 export default function Landing() {
   return (
     <>
-      <Header />
+      <HeaderApp color={'primary'} />
       <main className='flex flex-col mx-auto overflow-hidden'>
         <section className='flex items-center justify-center bg-primary'>
           <article className='container flex flex-col items-center justify-center h-screen min-h-screen gap-5 px-5 bg-primary grow lg:px-24'>

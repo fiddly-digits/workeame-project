@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Card, CardBody, Spinner } from '@nextui-org/react';
 import MenuItem from '../components/MenuItem';
@@ -6,14 +6,15 @@ import HeaderApp from '../components/HeaderApp';
 import Footer from '../components/Footer';
 import { fetchUser } from '../utils/fetch';
 import dayjs from 'dayjs';
-import withAuth from '../utils/withAuth';
+import { useUser } from '../utils/UserContext';
+import Cookies from 'js-cookie';
 //import { useNavigate } from 'react-router-dom';
 
-function Dashboard() {
+export default function Dashboard() {
   //const userData = useOutletContext();
   //const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
-
+  const { userData, setUserData } = useUser();
+  //const [userData, setUserData] = useState({});
   // const isLogged = () => {
   //   if (userData) {
   //     setUser(userData);
@@ -50,7 +51,7 @@ function Dashboard() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [setUserData]);
 
   const token = sessionStorage.getItem('token');
   const payload = token.split('.')[1];
@@ -64,7 +65,9 @@ function Dashboard() {
   console.log(now);
   if (tokenExpiration.isBefore(now)) {
     sessionStorage.removeItem('token');
+    Cookies.remove('userData');
     window.location.href = '/';
+    window.location.reload();
   }
 
   if (!userData) {
@@ -183,7 +186,7 @@ function Dashboard() {
                     /> */}
                     <MenuItem
                       icon='/check-circle-t.svg'
-                      action='Mis citas'
+                      action='Tus citas'
                       reference='bookings'
                       position={'bottom'}
                     />
@@ -215,6 +218,8 @@ function Dashboard() {
                       position='bottom'
                       onClick={() => {
                         sessionStorage.removeItem('token');
+                        Cookies.remove('userData');
+                        window.location.reload();
                       }}
                     />
                   </ul>
@@ -233,4 +238,4 @@ function Dashboard() {
   );
 }
 
-export default withAuth(Dashboard);
+//export default withAuth(Dashboard);

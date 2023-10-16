@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { fetchBookings } from '../utils/fetch';
 import { Button, ButtonGroup } from '@nextui-org/react';
 import AppointmentData from '../components/Bookings/AppointmentData';
+import dayjs from 'dayjs';
+
+// TODO: Fix how the bookings are listed
 
 export default function Bookings() {
   const [providerBookings, setProviderBookings] = useState([]);
@@ -64,16 +67,33 @@ export default function Bookings() {
       </ButtonGroup>
 
       {isProviderDisabled && (
-        <div className='flex justify-center w-1/2'>
+        <div className='flex flex-col items-center w-1/2 gap-3'>
           {providerBookings.length !== 0 ? (
             providerBookings.map((booking) => {
-              return (
-                <AppointmentData
-                  key={booking._id}
-                  booking={booking}
-                  type='provider'
-                />
-              );
+              if (dayjs(booking.start).isAfter(dayjs())) {
+                return (
+                  <>
+                    <p>Vigente</p>
+                    <AppointmentData
+                      key={booking._id}
+                      booking={booking}
+                      type='provider'
+                    />
+                  </>
+                );
+              } else {
+                return (
+                  <>
+                    <p>Vencida</p>
+                    <AppointmentData
+                      key={booking._id}
+                      booking={booking}
+                      type='provider'
+                      isOverdue
+                    />
+                  </>
+                );
+              }
             })
           ) : (
             <p className='text-center'>No tienes citas como proveedor</p>
@@ -84,13 +104,30 @@ export default function Bookings() {
         <div className='flex justify-center w-1/2'>
           {customerBookings.length != 0 ? (
             customerBookings.map((booking) => {
-              return (
-                <AppointmentData
-                  key={booking._id}
-                  booking={booking}
-                  type='customer'
-                />
-              );
+              if (dayjs(booking.start).isAfter(dayjs())) {
+                return (
+                  <>
+                    <p>Vigente</p>
+                    <AppointmentData
+                      key={booking._id}
+                      booking={booking}
+                      type='provider'
+                    />
+                  </>
+                );
+              } else {
+                return (
+                  <>
+                    <p>Vencida</p>
+                    <AppointmentData
+                      key={booking._id}
+                      booking={booking}
+                      type='provider'
+                      isOverdue
+                    />
+                  </>
+                );
+              }
             })
           ) : (
             <p className='text-center'>No tienes citas como cliente</p>

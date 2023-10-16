@@ -10,9 +10,12 @@ import {
   Button
 } from '@nextui-org/react';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  console.log('mi ubicacion', location.pathname);
   return (
     <Navbar
       className='bg-primary'

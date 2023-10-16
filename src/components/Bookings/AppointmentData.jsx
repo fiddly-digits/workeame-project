@@ -24,7 +24,7 @@ dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
 
-export default function AppointmentData({ booking, type }) {
+export default function AppointmentData({ booking, type, isOverdue }) {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectionError, setSelectionError] = useState('');
   const [responseStatus, setResponseStatus] = useState('');
@@ -40,6 +40,8 @@ export default function AppointmentData({ booking, type }) {
     'text-red-500': booking.clientStatus === 'cancelled',
     'bg-primary-500': booking.clientStatus === 'completed'
   });
+
+  console.log(isOverdue);
 
   function onSubmit() {
     console.log('submit');
@@ -160,8 +162,12 @@ export default function AppointmentData({ booking, type }) {
       </CardBody>
       <Divider />
       <CardFooter className='gap-3 font-roboto'>
-        {booking.workerStatus === 'cancelled' ||
-        booking.clientStatus === 'cancelled' ? (
+        {isOverdue === true ? (
+          <p className='self-center text-center text-red-500 font-roboto'>
+            La cita esta vencida
+          </p>
+        ) : booking.workerStatus === 'cancelled' ||
+          booking.clientStatus === 'cancelled' ? (
           <p className='self-center text-center text-red-500 font-roboto'>
             Esta cita ha sido cancelada
           </p>

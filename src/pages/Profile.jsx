@@ -77,6 +77,12 @@ export default function Profile() {
     }
   );
 
+  const headerColor = {
+    1: 'primary/50',
+    2: 'secondary/50',
+    3: 'fourth/50'
+  };
+
   const handleCheckboxChange = (e) => {
     setShowSection(e.target.checked);
   };
@@ -91,7 +97,7 @@ export default function Profile() {
 
   return (
     <>
-      <HeaderApp />
+      <HeaderApp color={headerColor[siteData.theme]} />
       <div className={backgroundClasses}>
         <div className='absolute inset-0 z-0 left-[100px] top-[25rem] md:-left-[38rem] md:-top-[6rem]  lg:right-[18rem] lg:-top-[9rem] '>
           <h1 className={workeaClasses}>Workea</h1>

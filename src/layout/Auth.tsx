@@ -31,7 +31,7 @@ export default function Auth() {
 
   return (
     <>
-      <HeaderApp userData={null} />
+      <HeaderApp color={'transparent'} />
       <Outlet />
       <Footer />
     </>

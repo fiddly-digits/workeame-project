@@ -10,19 +10,33 @@ import {
   DropdownTrigger,
   Avatar,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  DropdownSection
 } from '@nextui-org/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../utils/UserContext';
+import { useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-export default function HeaderApp({ userData }) {
+export default function HeaderApp({ color }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { userData } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log('mi ubicacion', location.pathname);
+  console.log('userData', userData);
 
-  // ! Validar si la userdata esta correcta
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    Cookies.remove('userData');
+    navigate('/', { replace: true });
+    window.location.reload();
+  };
+
   return (
     <Navbar
-      className='bg-transparent'
+      className={`bg-${color}`}
       shouldHideOnScroll
       onMenuOpenChange={setIsMenuOpen}
     >
@@ -40,6 +54,37 @@ export default function HeaderApp({ userData }) {
           </Link>
         </NavbarBrand>
       </NavbarContent>
+      {location.pathname === '/' && (
+        <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+          <NavbarItem>
+            <Link
+              color='foreground'
+              href='#second-section'
+              className=' line font-oswald'
+            >
+              QUIENES SOMOS
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link
+              href='#third-section'
+              color='foreground'
+              className='line font-oswald'
+            >
+              COMO FUNCIONA
+            </Link>
+          </NavbarItem>
+          <NavbarItem>
+            <Link
+              color='foreground'
+              href='#fourth-section'
+              className='line font-oswald'
+            >
+              PORQUE NOSOTROS
+            </Link>
+          </NavbarItem>
+        </NavbarContent>
+      )}
       {userData ? (
         <NavbarContent as='div' justify='end'>
           <Dropdown placement='bottom-end'>
@@ -63,19 +108,119 @@ export default function HeaderApp({ userData }) {
                 <p className='font-semibold font-roboto'>Bienvenido(a)</p>
                 <p className='font-semibold font-roboto'>{`${userData.name} ${userData.lastName}`}</p>
               </DropdownItem>
-              <DropdownItem
-                key='logout'
-                color='danger'
-                textValue='logout'
-                className='font-semibold font-oswald'
-                onClick={() => {
-                  sessionStorage.removeItem('token');
-                  navigate('/');
-                  location.reload();
-                }}
-              >
-                SALIR
-              </DropdownItem>
+              <DropdownSection title='General'>
+                <DropdownItem
+                  key='dashboard'
+                  color='secondary'
+                  title='Dashboard'
+                  className='font-semibold font-oswald'
+                  onClick={() => navigate('/dashboard')}
+                />
+                {!userData?.isProfileComplete && (
+                  <DropdownItem
+                    key='complete'
+                    color='secondary'
+                    title='Completa tu Perfil'
+                    className='font-semibold font-oswald'
+                    onClick={() => navigate('/dashboard/complete')}
+                  />
+                )}
+                {userData?.type === 'user' && (
+                  <DropdownItem
+                    key='become-worker'
+                    color='secondary'
+                    title='Quiero ser Worker'
+                    className='font-semibold font-oswald'
+                    onClick={() => navigate('/dashboard/become-worker')}
+                  />
+                )}
+
+                {!userData?.isMicrositeCreated && (
+                  <DropdownItem
+                    key='microsite-config'
+                    color='secondary'
+                    title='Configura tu Sitio'
+                    className='font-semibold font-oswald'
+                    onClick={() => navigate('/dashboard/microsite-config')}
+                  />
+                )}
+
+                {userData?.isMicrositeCreated && (
+                  <DropdownItem
+                    key='microsite-visit'
+                    color='secondary'
+                    title='Visita tu Sitio'
+                    className='font-semibold font-oswald'
+                    onClick={() => navigate(`/ms/${userData._id}`)}
+                  />
+                )}
+                {userData?.isMicrositeCreated && (
+                  <DropdownItem
+                    key='microsite-update'
+                    color='secondary'
+                    title='Modifica tu Sitio'
+                    className='font-semibold font-oswald'
+                    onClick={() => navigate('/dashboard/microsite-update')}
+                  />
+                )}
+
+                {userData?.isMicrositeCreated && (
+                  <DropdownItem
+                    key='config-service'
+                    color='secondary'
+                    title='Configura tu Servicio'
+                    onClick={() => navigate('/dashboard/service-update')}
+                    className='font-semibold font-oswald'
+                  />
+                )}
+                {userData?.isMicrositeCreated && (
+                  <DropdownItem
+                    key='schedule-update'
+                    color='secondary'
+                    title='Configura tu Agenda'
+                    onClick={() => navigate('/dashboard/schedule-update')}
+                    className='font-semibold font-oswald'
+                  />
+                )}
+
+                <DropdownItem
+                  key='bookings'
+                  color='secondary'
+                  title='Tus Citas'
+                  className='font-semibold font-oswald'
+                  onClick={() => navigate('/dashboard/bookings')}
+                />
+              </DropdownSection>
+              <DropdownSection title='Cuenta'>
+                <DropdownItem
+                  key='modify-profile'
+                  color='secondary'
+                  title='Modifica tu Perfil'
+                  className='font-semibold font-oswald'
+                  onClick={() => navigate('/dashboard/account')}
+                />
+                <DropdownItem
+                  key='modify-email'
+                  color='secondary'
+                  title='Modifica tu Correo'
+                  className='font-semibold font-oswald'
+                  onClick={() => navigate('/dashboard/mail')}
+                />
+                <DropdownItem
+                  key='modify-password'
+                  color='secondary'
+                  title='Modifica tu Password'
+                  className='font-semibold font-oswald'
+                  onClick={() => navigate('/dashboard/password')}
+                />
+                <DropdownItem
+                  key='logout'
+                  color='danger'
+                  title='Salir'
+                  className='font-semibold font-oswald'
+                  onClick={handleLogout}
+                />
+              </DropdownSection>
             </DropdownMenu>
           </Dropdown>
         </NavbarContent>

@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate
+} from 'react-router-dom';
 import { NextUIProvider } from '@nextui-org/react';
 import './index.scss';
 import Landing from './layout/Landing';
@@ -22,6 +26,9 @@ import ScheduleUpdate from './pages/ScheduleUpdate';
 import Profile from './pages/Profile';
 import Bookings from './pages/Bookings';
 import Index from './pages/Index';
+import { UserProvider } from './utils/UserContext';
+
+const token = sessionStorage.getItem('token');
 
 const router = createBrowserRouter([
   {
@@ -31,7 +38,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <Auth />,
+    element: token ? <Navigate to={'/dashboard'} replace /> : <Auth />,
     errorElement: <div>404</div>,
     children: [
       {
@@ -54,7 +61,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard />,
+    element: !token ? <Navigate to={'/login'} replace /> : <Dashboard />,
     children: [
       {
         path: '/dashboard',
@@ -114,9 +121,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <NextUIProvider>
-      <RouterProvider router={router} />
-    </NextUIProvider>
-  </React.StrictMode>
+  <UserProvider>
+    <React.StrictMode>
+      <NextUIProvider>
+        <RouterProvider router={router} />
+      </NextUIProvider>
+    </React.StrictMode>
+  </UserProvider>
 );
