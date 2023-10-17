@@ -14,10 +14,9 @@ export default function Index() {
       <div className='flex border'>
         <div className='flex items-center justify-center w-1/2'>
           <Image
-            width={200}
             alt='profile-pic'
             src={userData?.photo}
-            className='rounded-full'
+            className='object-contain w-48 h-48 rounded-full '
           />
         </div>
         <div className='flex flex-col w-1/2'>

@@ -2,11 +2,11 @@ import { Input, Button } from '@nextui-org/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useEffect, useState } from 'react';
-import { fetchUser } from '../utils/fetch';
+import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { useUser } from '../utils/UserContext';
 
 const schema = Yup.object().shape({
   email: Yup.lazy((value) =>
@@ -24,19 +24,9 @@ export default function Mail() {
     resolver: yupResolver(schema)
   });
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
+  const { userData } = useUser();
   const [status, setStatus] = useState(false);
   const [errorMessage, setErrorMessage] = useState();
-
-  useEffect(() => {
-    fetchUser({ accept: 'application/json' })
-      .then((res) => {
-        setUserData(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   async function onSubmit(data) {
     console.log(data);

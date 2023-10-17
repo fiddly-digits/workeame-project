@@ -173,7 +173,7 @@ export default function Register() {
                 <img
                   src={URL.createObjectURL(selectedImage[0])}
                   alt='preview'
-                  className='max-w-full min-w-full rounded-full shrink-0'
+                  className='object-cover w-48 h-48 max-w-full min-w-full rounded-full shrink-0'
                 />
               )}
             </div>

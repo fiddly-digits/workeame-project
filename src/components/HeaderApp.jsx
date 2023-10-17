@@ -135,7 +135,7 @@ export default function HeaderApp({ color }) {
                   />
                 )}
 
-                {!userData?.isMicrositeCreated && (
+                {userData?.isMicrositeCreated && (
                   <DropdownItem
                     key='microsite-config'
                     color='secondary'
@@ -192,13 +192,15 @@ export default function HeaderApp({ color }) {
                 />
               </DropdownSection>
               <DropdownSection title='Cuenta'>
-                <DropdownItem
-                  key='modify-profile'
-                  color='secondary'
-                  title='Modifica tu Perfil'
-                  className='font-semibold font-oswald'
-                  onClick={() => navigate('/dashboard/account')}
-                />
+                {userData?.isProfileComplete && (
+                  <DropdownItem
+                    key='modify-profile'
+                    color='secondary'
+                    title='Modifica tu Perfil'
+                    className='font-semibold font-oswald'
+                    onClick={() => navigate('/dashboard/account')}
+                  />
+                )}
                 <DropdownItem
                   key='modify-email'
                   color='secondary'

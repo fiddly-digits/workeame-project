@@ -195,16 +195,19 @@ export default function Dashboard() {
                     Cuenta
                   </h3>
                   <ul className='flex flex-col items-center gap-3'>
-                    <MenuItem
-                      icon='/calendar.svg'
-                      action='Modifica tu perfil'
-                      reference='account'
-                      position={'top'}
-                    />
+                    {userData.isProfileComplete && (
+                      <MenuItem
+                        icon='/calendar.svg'
+                        action='Modifica tu perfil'
+                        reference='account'
+                        position={'top'}
+                      />
+                    )}
                     <MenuItem
                       icon='/calendar.svg'
                       action='Cambia tu correo'
                       reference='mail'
+                      position={!userData.isProfileComplete && 'top'}
                     />
                     <MenuItem
                       icon='/calendar.svg'
