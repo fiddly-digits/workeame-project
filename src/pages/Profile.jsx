@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
-import { Pagination, Navigation } from "swiper/modules";
+import { EffectFade, Pagination, Navigation } from "swiper/modules";
 import { Accordion, Spinner, AccordionItem, Snippet } from "@nextui-org/react";
 //import OfferSticker from '../components/OfferSticker';
 import CommentCard from "../components/CommentCard";
@@ -78,11 +78,11 @@ export default function Profile() {
   );
 
   const headerColor = {
-    1: 'primary/50',
-    2: 'secondary/50',
-    3: 'fourth/50'
+    1: "primary/50",
+    2: "secondary/50",
+    3: "fourth/50",
   };
-  
+
   const workeaFooterClasses = clsx("...", {
     "text-secondary": siteData.theme === 1,
     "text-third": siteData.theme === 2,
@@ -94,7 +94,6 @@ export default function Profile() {
     "text-[#020202]": siteData.theme === 2,
     "text-primary/30": siteData.theme === 3,
   });
-
 
   const handleCheckboxChange = (e) => {
     setShowSection(e.target.checked);
@@ -110,7 +109,6 @@ export default function Profile() {
 
   return (
     <>
-
       <div className={backgroundClasses}>
         <HeaderApp color={headerColor[siteData.theme]} />
         <div className="absolute z-0 left-2 top-[18rem] md:-left-[15rem] md:top-[20rem]  lg:right-[45rem] lg:top-[19rem] ">
@@ -152,16 +150,16 @@ export default function Profile() {
               <Swiper
                 grabCursor={true}
                 spaceBetween={20}
+                effect={"fade"}
                 pagination={{
-                  dynamicBullets: true,
                   clickable: true,
                 }}
-                modules={[Pagination]}
+                modules={[EffectFade, Navigation, Pagination]}
                 className="mySwiper"
               >
                 {images.map((image) => (
                   <SwiperSlide key={image.split("/").pop()}>
-                    <div className="w-80 h-72 lg:w-96 lg:h-80 ">
+                    <div className="w-80 h-72 lg:w-96 lg:h-80 pb-5">
                       <img
                         src={image}
                         alt={image.split("/").pop()}
