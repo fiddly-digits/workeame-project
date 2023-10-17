@@ -47,7 +47,7 @@ export default function ScheduleUpdate() {
             Agenda Actual
           </h2>
         )}
-        <div className="flex flex-wrap items-center h-[28rem] my-5 overflow-auto justify-around gap-10">
+        <div className="flex flex-wrap items-center my-5 h-[25rem] lg:h-full overflow-auto justify-around gap-10">
           {schedule.map((element, index) => {
             if (dayjs(element.date).isAfter(dayjs())) {
               return (

@@ -439,3 +439,13 @@ Note: Beware of modifying this element as it can break the animations - you shou
     transform: translateY(100%);
   }
 }
+
+/* Text b-clip in dashboard */
+.bg-clip-text-image-dashboard {
+  background-image: url("/pictures/team-working-together-project-reduced.png");
+  background-size: cover;
+  background-position: bottom right;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
