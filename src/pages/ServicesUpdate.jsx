@@ -49,11 +49,11 @@ export default function ServiceUpdate() {
       <h2 className="w-full mb-8 text-2xl text-black font-oswald">
         Configura tus Servicios
       </h2>
-      <div className="inline-flex flex-col gap-5">
+      <div className="inline-flex flex-col gap-8">
         {service.map((element, index) => {
           return (
             <Fragment key={`service-${index}`}>
-              <p className="text-xl font-medium text-gray-500 text-center font-roboto">
+              <p className="text-xl font-medium text-zinc-500 text-center font-roboto">
                 {Object.keys(element) != 0 ? "Modifica" : "Agrega"} tu Servicio
               </p>
 
