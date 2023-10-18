@@ -7,6 +7,7 @@ export default function Index() {
   console.log("UserData", userData);
 
   return (
+
     <div className="flex flex-col m-10 ">
       <h1 className="text-4xl font-bold leading-tight tracking-widest font-oswald text-neutral-800 my-3">
         BIENVENIDO A{" "}

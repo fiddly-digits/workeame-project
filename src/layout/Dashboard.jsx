@@ -130,7 +130,8 @@ export default function Dashboard() {
                         position="top"
                       />
                     )}
-                    {userData.type === "user" && (
+
+                    {userData.type === 'user' && userData.isProfileComplete && (
                       <MenuItem
                         icon="/receipt-tax.svg"
                         action="Quiero ser Worker"
@@ -160,18 +161,18 @@ export default function Dashboard() {
                               action="Modifica tu Sitio"
                               reference="microsite-update"
                             />
+                            <MenuItem
+                              icon='/presentation.svg'
+                              action='Configura tu Servicio'
+                              reference='service-update'
+                            />
+                            <MenuItem
+                              icon='/presentation.svg'
+                              action='Configura tu Agenda'
+                              reference='schedule-update'
+                            />
                           </>
                         )}
-                        <MenuItem
-                          icon="/presentation.svg"
-                          action="Configura tu Servicio"
-                          reference="service-update"
-                        />
-                        <MenuItem
-                          icon="/presentation.svg"
-                          action="Configura tu Agenda"
-                          reference="schedule-update"
-                        />
                       </>
                     )}
                     <MenuItem
@@ -194,17 +195,21 @@ export default function Dashboard() {
                   <h3 className="font-roboto text-sm text-center my-3 tracking-[2px] text-gray-500">
                     Cuenta
                   </h3>
-                  <ul className="flex flex-col items-center gap-3">
+
+                  <ul className='flex flex-col items-center gap-3'>
+                    {userData.isProfileComplete && (
+                      <MenuItem
+                        icon='/calendar.svg'
+                        action='Modifica tu perfil'
+                        reference='account'
+                        position={'top'}
+                      />
+                    )}
                     <MenuItem
-                      icon="/calendar.svg"
-                      action="Modifica tu perfil"
-                      reference="account"
-                      position={"top"}
-                    />
-                    <MenuItem
-                      icon="/calendar.svg"
-                      action="Cambia tu correo"
-                      reference="mail"
+                      icon='/calendar.svg'
+                      action='Cambia tu correo'
+                      reference='mail'
+                      position={!userData.isProfileComplete && 'top'}
                     />
                     <MenuItem
                       icon="/calendar.svg"
