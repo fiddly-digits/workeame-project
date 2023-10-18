@@ -196,7 +196,7 @@ export default function MicrositeConfiguration() {
         );
         setShowSpinner(false);
         setTimeout(() => {
-          //window.location.reload();
+          window.location.reload();
         }, 10000);
       });
   };
