@@ -1,9 +1,10 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
-import { Pagination, Navigation } from 'swiper/modules';
-import { Accordion, Spinner, AccordionItem, Snippet } from '@nextui-org/react';
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/pagination";
+import { EffectFade, Pagination, Navigation } from "swiper/modules";
+import { Accordion, Spinner, AccordionItem, Snippet } from "@nextui-org/react";
 //import OfferSticker from '../components/OfferSticker';
 import CommentCard from '../components/CommentCard';
 import { Checkbox } from '@nextui-org/react';
@@ -78,21 +79,21 @@ export default function Profile() {
   );
 
   const headerColor = {
-    1: 'primary/50',
-    2: 'secondary/50',
-    3: 'fourth/50'
+    1: "primary/50",
+    2: "secondary/50",
+    3: "fourth/50",
   };
+
+  const workeaFooterClasses = clsx("...", {
+    "text-secondary": siteData.theme === 1,
+    "text-third": siteData.theme === 2,
+    "text-secondary/90": siteData.theme === 3,
+  });
 
   const workeaFooterClasses = clsx('...', {
     'text-secondary': siteData.theme === 1,
     'text-third': siteData.theme === 2,
     'text-secondary/90': siteData.theme === 3
-  });
-
-  const textsFooterClasses = clsx('...', {
-    'text-wkablack': siteData.theme === 1,
-    'text-[#020202]': siteData.theme === 2,
-    'text-primary/30': siteData.theme === 3
   });
 
   const handleCheckboxChange = (e) => {
@@ -150,16 +151,16 @@ export default function Profile() {
               <Swiper
                 grabCursor={true}
                 spaceBetween={20}
+                effect={"fade"}
                 pagination={{
-                  dynamicBullets: true,
-                  clickable: true
+                  clickable: true,
                 }}
-                modules={[Pagination]}
-                className='mySwiper'
+                modules={[EffectFade, Navigation, Pagination]}
+                className="mySwiper"
               >
                 {images.map((image) => (
-                  <SwiperSlide key={image.split('/').pop()}>
-                    <div className='w-80 h-72 lg:w-96 lg:h-80 '>
+                  <SwiperSlide key={image.split("/").pop()}>
+                    <div className="w-80 h-72 lg:w-96 lg:h-80 pb-5">
                       <img
                         src={image}
                         alt={image.split('/').pop()}

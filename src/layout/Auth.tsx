@@ -1,8 +1,8 @@
-import HeaderApp from '../components/HeaderApp';
-import Footer from '../components/Footer';
-import { Outlet, useNavigate } from 'react-router-dom';
+import HeaderApp from "../components/HeaderApp";
+import Footer from "../components/Footer";
+import { Outlet, useNavigate } from "react-router-dom";
 //import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -22,18 +22,18 @@ export default function Auth() {
   //       });
   //   }
   // }, []);
-  const token = sessionStorage.getItem('token');
+  const token = sessionStorage.getItem("token");
   useEffect(() => {
     if (token) {
-      navigate('/dashboard', { replace: true });
+      navigate("/dashboard", { replace: true });
     }
   }, [navigate, token]);
 
   return (
     <>
-      <HeaderApp color={'transparent'} />
+      <HeaderApp color={"transparent"} />
       <Outlet />
-      <Footer />
+      <Footer letters="relative -right-56" />
     </>
   );
 }

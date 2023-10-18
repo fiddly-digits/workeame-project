@@ -163,25 +163,25 @@ export default function MicrositeUpdate() {
         </h3>
         <div className="flex items-center justify-center gap-8">
           <button
-            className={`w-20 h-20 md:w-24 md:h-24 border-4 rounded-full bg-third border-secondary ${
+            className={`w-20 h-20 md:w-24 md:h-24 rounded-full bg-third ${
               selectedTheme === 1
-                ? "shadow-[0_0px_40px_-2px_rgba(0,0,0,0.7)] shadow-secondary scale-110 transition-all duration-500 ease-in-out"
+                ? "shadow-[0_0px_40px_-2px_rgba(0,0,0,0.8)] shadow-secondary scale-110 transition-all duration-500 ease-in-out"
                 : ""
             }`}
             type="button"
             onClick={() => setSelectedTheme(1)}
           />
           <button
-            className={`w-20 h-20 md:w-24 md:h-24 border-4 rounded-full bg-secondary border-third ${
+            className={`w-20 h-20 md:w-24 md:h-24 rounded-full bg-secondary  ${
               selectedTheme === 2
-                ? "shadow-[0_0px_40px_-4px_rgba(0,0,0,0.5)] shadow-third scale-110 transition-all duration-500 ease-in-out"
+                ? "shadow-[0_0px_40px_-4px_rgba(0,0,0,0.8)] shadow-third scale-110 transition-all duration-500 ease-in-out"
                 : ""
             }`}
             type="button"
             onClick={() => setSelectedTheme(2)}
           />
           <button
-            className={`w-20 h-20 md:w-24 md:h-24 border-4 rounded-full bg-fourth border-secondary ${
+            className={`w-20 h-20 md:w-24 md:h-24 rounded-full bg-fourth ${
               selectedTheme === 3
                 ? "shadow-[0_0px_40px_-4px_rgba(0,0,0,0.5)] shadow-secondary scale-110 transition-all duration-500 ease-in-out"
                 : ""
