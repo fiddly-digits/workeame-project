@@ -11,13 +11,13 @@ import {
   Spinner
 } from '@nextui-org/react';
 import { EditPencil, Edit } from 'iconoir-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { fetchUser } from '../utils/fetch';
+import { useUser } from '../utils/UserContext';
 
 // TODO: Add validation to the different fields
 // TODO: FIX THIS
@@ -78,22 +78,22 @@ export default function Account() {
     resolver: yupResolver(schema)
   });
   const [editable, setEditable] = useState({ editable: {} });
-  const [userData, setUserData] = useState({});
+  const { userData } = useUser();
   const [selectedImage, setSelectedImage] = useState();
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  useEffect(() => {
-    fetchUser({ accept: 'application/json' })
-      .then((res) => {
-        setUserData(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetchUser({ accept: 'application/json' })
+  //     .then((res) => {
+  //       setUserData(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   const onEdit = (id) => {
     setEditable({ ...editable, [id]: !editable[id] });
@@ -133,6 +133,7 @@ export default function Account() {
       })
       .then((response) => {
         setLoading(false);
+        console.log(response);
         setMessage(response.data.message);
       })
       .catch((error) => {

@@ -221,7 +221,6 @@ export default function CompleteProfile() {
           COMPLETA
         </Button>
         {loading && <Spinner color='secondary' label='Cargando...' size='lg' />}
-
         {status && <p className='text-sm text-center text-red-500'>{status}</p>}
       </form>
     </div>

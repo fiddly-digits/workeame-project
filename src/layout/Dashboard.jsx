@@ -130,7 +130,7 @@ export default function Dashboard() {
                         position='top'
                       />
                     )}
-                    {userData.type === 'user' && (
+                    {userData.type === 'user' && userData.isProfileComplete && (
                       <MenuItem
                         icon='/receipt-tax.svg'
                         action='Quiero ser Worker'
@@ -160,18 +160,18 @@ export default function Dashboard() {
                               action='Modifica tu Sitio'
                               reference='microsite-update'
                             />
+                            <MenuItem
+                              icon='/presentation.svg'
+                              action='Configura tu Servicio'
+                              reference='service-update'
+                            />
+                            <MenuItem
+                              icon='/presentation.svg'
+                              action='Configura tu Agenda'
+                              reference='schedule-update'
+                            />
                           </>
                         )}
-                        <MenuItem
-                          icon='/presentation.svg'
-                          action='Configura tu Servicio'
-                          reference='service-update'
-                        />
-                        <MenuItem
-                          icon='/presentation.svg'
-                          action='Configura tu Agenda'
-                          reference='schedule-update'
-                        />
                       </>
                     )}
                     <MenuItem

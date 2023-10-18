@@ -125,23 +125,13 @@ export default function HeaderApp({ color }) {
                     onClick={() => navigate('/dashboard/complete')}
                   />
                 )}
-                {userData?.type === 'user' && (
+                {userData.type === 'user' && userData.isProfileComplete && (
                   <DropdownItem
                     key='become-worker'
                     color='secondary'
                     title='Quiero ser Worker'
                     className='font-semibold font-oswald'
                     onClick={() => navigate('/dashboard/become-worker')}
-                  />
-                )}
-
-                {userData?.isMicrositeCreated && (
-                  <DropdownItem
-                    key='microsite-config'
-                    color='secondary'
-                    title='Configura tu Sitio'
-                    className='font-semibold font-oswald'
-                    onClick={() => navigate('/dashboard/microsite-config')}
                   />
                 )}
 
@@ -155,6 +145,16 @@ export default function HeaderApp({ color }) {
                   />
                 )}
                 {userData?.isMicrositeCreated && (
+                  <DropdownItem
+                    key='microsite-config'
+                    color='secondary'
+                    title='Configura tu Sitio'
+                    className='font-semibold font-oswald'
+                    onClick={() => navigate('/dashboard/microsite-config')}
+                  />
+                )}
+
+                {userData?.type === 'worker' && (
                   <DropdownItem
                     key='microsite-update'
                     color='secondary'

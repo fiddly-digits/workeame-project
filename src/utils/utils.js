@@ -2523,7 +2523,22 @@ export const states = {
   ]
 };
 
-export const categories = ['Medicina', 'Tatuajes', 'Entretenimiento'];
+export const categories = [
+  'Belleza y Salud',
+  'Educación',
+  'Tecnología',
+  'Construcción y Remodelación',
+  'Servicios Profesionales',
+  'Cuidado de Mascotas',
+  'Cuidado de Personas',
+  'Deportes y Fitness',
+  'Eventos',
+  'Instalaciones',
+  'Salud',
+  'Transporte',
+  'Limpieza y Hogar',
+  'Freelance y Otros Servicios'
+];
 export const expertise = ['0-1', '1-2', '2-3', '3-4', '4-5', '5 o mas'];
 
 export function CURPValidator(curp) {
