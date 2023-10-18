@@ -144,7 +144,7 @@ export default function HeaderApp({ color }) {
                     onClick={() => navigate(`/ms/${userData._id}`)}
                   />
                 )}
-                {userData?.isMicrositeCreated && (
+                {!userData?.isMicrositeCreated && (
                   <DropdownItem
                     key='microsite-config'
                     color='secondary'
