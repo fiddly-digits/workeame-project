@@ -8,7 +8,7 @@ const handleToken = () => {
 
 export const fetchUser = async (headers, params) => {
   const plainPayload = params || handleToken();
-  var options = {
+  const options = {
     method: 'GET',
     url: `http://localhost:8080/api/v1/user/${plainPayload.id}`,
     headers
@@ -19,7 +19,7 @@ export const fetchUser = async (headers, params) => {
 
 export const patchUser = async (method, headers, body) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method,
     url: `http://localhost:8080/api/v1/user/update/`,
     headers: {
@@ -34,7 +34,7 @@ export const patchUser = async (method, headers, body) => {
 
 export const fetchMS = async (headers, params) => {
   const plainPayload = params || handleToken();
-  var options = {
+  const options = {
     method: 'GET',
     url: `http://localhost:8080/api/v1/ms/${plainPayload.id}`,
     headers
@@ -45,7 +45,7 @@ export const fetchMS = async (headers, params) => {
 
 export const patchMS = async (headers, body) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'PATCH',
     url: `http://localhost:8080/api/v1/ms/update/`,
     headers: {
@@ -60,7 +60,7 @@ export const patchMS = async (headers, body) => {
 
 export const fetchServices = async (method, headers) => {
   const plainPayload = handleToken();
-  var options = {
+  const options = {
     method,
     url: `http://localhost:8080/api/v1/service/${plainPayload.id}`,
     headers
@@ -71,7 +71,7 @@ export const fetchServices = async (method, headers) => {
 
 export const patchService = async (serviceID, body) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'PATCH',
     url: `http://localhost:8080/api/v1/service/update/${serviceID}`,
     headers: {
@@ -85,7 +85,7 @@ export const patchService = async (serviceID, body) => {
 
 export const createService = async (body) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'POST',
     url: `http://localhost:8080/api/v1/service/create`,
     headers: {
@@ -99,7 +99,7 @@ export const createService = async (body) => {
 
 export const deleteService = async (serviceID) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'DELETE',
     url: `http://localhost:8080/api/v1/service/delete/${serviceID}`,
     headers: {
@@ -112,7 +112,7 @@ export const deleteService = async (serviceID) => {
 
 export const fetchSchedule = async (method, headers) => {
   const plainPayload = handleToken();
-  var options = {
+  const options = {
     method,
     url: `http://localhost:8080/api/v1/schedule/${plainPayload.id}`,
     headers
@@ -123,7 +123,7 @@ export const fetchSchedule = async (method, headers) => {
 
 export const patchSchedule = async (scheduleID, body) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'PATCH',
     url: `http://localhost:8080/api/v1/schedule/update/${scheduleID}`,
     headers: {
@@ -137,7 +137,7 @@ export const patchSchedule = async (scheduleID, body) => {
 
 export const createBooking = async (body, serviceID) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'POST',
     url: `http://localhost:8080/api/v1/booking/create/${serviceID}`,
     headers: {
@@ -151,7 +151,7 @@ export const createBooking = async (body, serviceID) => {
 
 export const fetchBookings = async (queryParam) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'GET',
     url: `http://localhost:8080/api/v1/booking/?type=${queryParam}`,
     headers: {
@@ -164,7 +164,7 @@ export const fetchBookings = async (queryParam) => {
 
 export const updateBookingStatus = async (bookingID, body) => {
   const token = sessionStorage.getItem('token');
-  var options = {
+  const options = {
     method: 'PATCH',
     url: `http://localhost:8080/api/v1/booking/statusUpdate/${bookingID}`,
     headers: {
@@ -174,4 +174,15 @@ export const updateBookingStatus = async (bookingID, body) => {
   };
   let data = await axios.request(options);
   return data;
+};
+
+export const fetchWorkersData = async (query) => {
+  const options = {
+    method: 'GET',
+    url: query
+      ? 'http://localhost:8080/api/v1/ms/'
+      : 'http://localhost:8080/api/v1/ms'
+  };
+  let data = await axios.request(options);
+  return data.data.data;
 };

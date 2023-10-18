@@ -27,6 +27,7 @@ import Profile from './pages/Profile';
 import Bookings from './pages/Bookings';
 import Index from './pages/Index';
 import { UserProvider } from './utils/UserContext';
+import SearchWorkerPage from './pages/SearchWorkerPage';
 
 const token = sessionStorage.getItem('token');
 
@@ -116,6 +117,11 @@ const router = createBrowserRouter([
   {
     path: 'ms/:id',
     element: <Profile />,
+    errorElement: <div>404</div>
+  },
+  {
+    path: 'search',
+    element: <SearchWorkerPage />,
     errorElement: <div>404</div>
   }
 ]);
