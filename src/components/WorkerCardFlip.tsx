@@ -1,4 +1,5 @@
 import { Card, CardBody, CardFooter } from '@nextui-org/card';
+import { Link } from 'react-router-dom';
 
 interface Props {
   name: string;
@@ -7,6 +8,7 @@ interface Props {
   address: string;
   description: string;
   position: string;
+  route: string;
 }
 
 export default function WorkerCardFlip({
@@ -15,8 +17,10 @@ export default function WorkerCardFlip({
   picture,
   address,
   description,
-  position
+  position,
+  route
 }: Props) {
+  console.log(route);
   return (
     <div className='flip-card'>
       <div className='flip-card-inner max-h-[28rem]'>
@@ -67,8 +71,8 @@ export default function WorkerCardFlip({
               </p>
             </CardBody>
             <CardFooter className='flex-col font-roboto text-md'>
-              <a
-                href='.'
+              <Link
+                to={`/ms/${route}`}
                 className='flex items-center gap-2 bottom-buttons-container'
               >
                 {' '}
@@ -83,7 +87,7 @@ export default function WorkerCardFlip({
                   alt='logo'
                   className='-rotate-90 swing'
                 />
-              </a>
+              </Link>
             </CardFooter>
           </Card>
         </div>

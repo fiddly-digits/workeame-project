@@ -176,13 +176,29 @@ export const updateBookingStatus = async (bookingID, body) => {
   return data;
 };
 
-export const fetchWorkersData = async (query) => {
-  const options = {
-    method: 'GET',
-    url: query
-      ? 'http://localhost:8080/api/v1/ms/'
-      : 'http://localhost:8080/api/v1/ms'
-  };
-  let data = await axios.request(options);
-  return data.data.data;
+export const fetchWorkersData = async (filters) => {
+  if (filters) {
+    const { category, state } = filters;
+    let query = '';
+    if (category && state) {
+      query = `?category=${category}&state=${state}}`;
+    } else if (category) {
+      query = `?category=${category}`;
+    } else if (state) {
+      query = `?state=${state}`;
+    }
+    const options = {
+      method: 'GET',
+      url: `http://localhost:8080/api/v1/ms/${query}`
+    };
+    let data = await axios.request(options);
+    return data.data.data;
+  } else {
+    const options = {
+      method: 'GET',
+      url: 'http://localhost:8080/api/v1/ms/'
+    };
+    let data = await axios.request(options);
+    return data.data.data;
+  }
 };

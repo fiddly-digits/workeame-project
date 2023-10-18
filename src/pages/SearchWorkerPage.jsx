@@ -1,6 +1,6 @@
 import Footer from '../components/Footer';
 import HeaderApp from '../components/HeaderApp';
-import { Button, Select, SelectItem } from '@nextui-org/react';
+import { Button, Select, SelectItem, Spinner } from '@nextui-org/react';
 import WorkerCardFlip from '../components/WorkerCardFlip';
 import { states, categories } from '../utils/utils';
 import { useEffect, useState } from 'react';
@@ -10,19 +10,44 @@ export default function SearchWorkerPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedState, setSelectedState] = useState('');
   const [fetchedSites, setFetchedSites] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchWorkersData()
       .then((res) => {
         setFetchedSites(res);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   }, []);
 
   console.log(selectedState, selectedCategory);
 
+  const onSearch = () => {
+    setFetchedSites([]);
+    const searchTerms = { category: selectedCategory, state: selectedState };
+    setLoading(true);
+    fetchWorkersData(searchTerms)
+      .then((res) => {
+        setFetchedSites(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  // if (loading) {
+  //   return (
+  //     <div className='flex flex-col items-center justify-center w-screen h-screen'>
+  //       <Spinner size='large' />
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <div className=' bg-fourth'>
@@ -64,11 +89,21 @@ export default function SearchWorkerPage() {
                 type='button'
                 size='lg'
                 className='text-white bg-wkablack font-oswald hover:cursor-pointer'
+                onPress={onSearch}
               >
                 Buscar
               </Button>
             </form>
             <div className='grid grid-cols-1 my-10 md:grid-cols-2 lg:grid-cols-3 justify-items-center'>
+              {loading && (
+                <Spinner
+                  color='secondary'
+                  label='Cargando...'
+                  size='lg'
+                  className='grid-cols-3'
+                />
+              )}
+
               {fetchedSites.map((site) => (
                 <WorkerCardFlip
                   key={site._id}
@@ -78,7 +113,8 @@ export default function SearchWorkerPage() {
                   address={site.owner.address.state}
                   description={site.about}
                   position={'t'}
-                ></WorkerCardFlip>
+                  route={site.owner._id}
+                />
               ))}
             </div>
           </div>
