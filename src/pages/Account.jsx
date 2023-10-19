@@ -8,19 +8,21 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Spinner
+  Spinner,
+  Select,
+  SelectItem
 } from '@nextui-org/react';
 import { EditPencil, Edit } from 'iconoir-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
+//import axios from 'axios';
+import { patchUser } from '../utils/fetch';
 import { useUser } from '../utils/UserContext';
-
-// TODO: Add validation to the different fields
-// TODO: FIX THIS
+import { clabe } from 'clabe-validator';
+import { categories, expertise } from '../utils/utils';
 
 const schema = Yup.object().shape({
   name: Yup.lazy((value) =>
@@ -65,6 +67,19 @@ const schema = Yup.object().shape({
             'El Telefono debe de tener 10 numeros',
             (val) => val.length === 10
           )
+  ),
+  category: Yup.lazy((value) =>
+    !value ? Yup.string() : Yup.string().required('La Categoría es requerida')
+  ),
+  expertise: Yup.lazy((value) =>
+    !value ? Yup.string() : Yup.string().required('La Experiencia es requerida')
+  ),
+  CLABE: Yup.lazy((value) =>
+    !value
+      ? Yup.string()
+      : Yup.string().test('CLABE', 'La CLABE no es valida', (val) => {
+          return clabe.validate(val).ok;
+        })
   )
 });
 
@@ -72,6 +87,7 @@ export default function Account() {
   const {
     register,
     handleSubmit,
+    unregister,
     formState: { errors }
   } = useForm({
     mode: 'onBlur',
@@ -84,6 +100,19 @@ export default function Account() {
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  console.log(errors);
+
+  useEffect(() => {
+    if (userData.type != 'worker') {
+      delete editable['category'];
+      delete editable['expertise'];
+      delete editable['CLABE'];
+      unregister('category');
+      unregister('expertise');
+      unregister('CLABE');
+    }
+  }, [userData.type, editable, unregister]);
 
   // useEffect(() => {
   //   fetchUser({ accept: 'application/json' })
@@ -123,23 +152,33 @@ export default function Account() {
     if (Object.keys(userInfo.address).length === 0) {
       delete userInfo['address'];
     }
-    const token = sessionStorage.getItem('token');
-    axios
-      .patch('http://localhost:8080/api/v1/user/update/', userInfo, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`
-        }
-      })
-      .then((response) => {
+    patchUser({ 'Content-Type': 'multipart/form-data' }, userInfo)
+      .then((res) => {
         setLoading(false);
-        console.log(response);
-        setMessage(response.data.message);
+        console.log(res);
+        setMessage(res.data.message);
       })
-      .catch((error) => {
+      .catch((err) => {
         setLoading(false);
-        setMessage(error.response.data.message);
+        console.log(err);
+        setMessage(err.data.message);
       });
+    // axios
+    //   .patch('http://localhost:8080/api/v1/user/update/', userInfo, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       Authorization: `Bearer ${token}`
+    //     }
+    //   })
+    //   .then((response) => {
+    //     setLoading(false);
+    //     console.log(response);
+    //     setMessage(response.data.message);
+    //   })
+    //   .catch((error) => {
+    //     setLoading(false);
+    //     setMessage(error.response.data.message);
+    //   });
   };
 
   async function onChange(event) {
@@ -478,41 +517,33 @@ export default function Account() {
             {userData.type === 'worker' && (
               <div className='flex flex-col gap-3'>
                 <h4 className='font-oswald'>Información del Worker</h4>
-                <Input
-                  type='text'
+                <Select
                   size='sm'
-                  {...(editable.category
-                    ? { isReadOnly: false }
-                    : { isReadOnly: true })}
                   variant='bordered'
                   label='Categoria'
                   placeholder={userData.category}
                   errorMessage={errors.category?.message}
                   isInvalid={!!errors.category}
-                  onValueChange={(value) => {
+                  onSelectionChange={(value) => {
                     if (value) {
                       setStatus(true);
                     } else {
                       setStatus(false);
                     }
                   }}
-                  endContent={
-                    <button
-                      className='focus:outline-none'
-                      type='button'
-                      onClick={onEdit.bind(this, 'category')}
-                    >
-                      {editable.category ? <Edit /> : <EditPencil />}
-                    </button>
-                  }
                   {...register('category')}
-                />
-                <Input
-                  type='text'
+                >
+                  <SelectItem value='' disabled>
+                    Seleccione una categoría
+                  </SelectItem>
+                  {categories.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Select
                   size='sm'
-                  {...(editable.expertise
-                    ? { isReadOnly: false }
-                    : { isReadOnly: true })}
                   variant='bordered'
                   label='Años de experiencia'
                   placeholder={userData.expertise}
@@ -525,16 +556,46 @@ export default function Account() {
                       setStatus(false);
                     }
                   }}
+                  {...register('expertise')}
+                >
+                  <SelectItem value='' disabled>
+                    Seleccione su experiencia
+                  </SelectItem>
+                  {expertise.map((exp) => (
+                    <SelectItem key={exp} value={exp}>
+                      {exp}
+                    </SelectItem>
+                  ))}
+                </Select>
+                <Input
+                  type='text'
+                  size='sm'
+                  {...(editable.CLABE
+                    ? { isReadOnly: false }
+                    : { isReadOnly: true })}
+                  variant='bordered'
+                  label='CLABE'
+                  description={clabe.validate(userData.CLABE).bank}
+                  placeholder={userData.CLABE}
+                  errorMessage={errors.CLABE?.message}
+                  isInvalid={!!errors.CLABE}
+                  onValueChange={(value) => {
+                    if (value) {
+                      setStatus(true);
+                    } else {
+                      setStatus(false);
+                    }
+                  }}
                   endContent={
                     <button
                       className='focus:outline-none'
                       type='button'
-                      onClick={onEdit.bind(this, 'expertise')}
+                      onClick={onEdit.bind(this, 'CLABE')}
                     >
-                      {editable.expertise ? <Edit /> : <EditPencil />}
+                      {editable.CLABE ? <Edit /> : <EditPencil />}
                     </button>
                   }
-                  {...register('expertise')}
+                  {...register('CLABE')}
                 />
               </div>
             )}
@@ -542,7 +603,9 @@ export default function Account() {
               size='lg'
               radius='md'
               type='submit'
-              {...(status ? { isDisabled: false } : { isDisabled: true })}
+              {...(Object.keys(errors).length === 0 && status
+                ? { isDisabled: false }
+                : { isDisabled: true })}
               className='text-white bg-wkablack font-oswald hover:cursor-pointer'
               startContent={<img src='/arrow-right.svg' alt='next' />}
               onPress={onOpen}

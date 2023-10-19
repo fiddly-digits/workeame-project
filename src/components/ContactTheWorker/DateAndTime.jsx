@@ -3,7 +3,12 @@ import {
   SelectItem,
   Button,
   RadioGroup,
-  Radio
+  Radio,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from '@nextui-org/react';
 import { SelectorIcon } from './SelectorIcon';
 import { useState } from 'react';
@@ -25,19 +30,21 @@ export default function DateAndTime({ schedule, services }) {
   const [dayAvailableHours, setDayAvailableHours] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [bookingStatus, setBookingStatus] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   function onSubmit() {
     if (selectedService === null) {
-      setBookingStatus('Debes de seleccionar un servicio');
+      setErrorMessage('Debes de seleccionar un servicio');
       return;
     }
     if (selectedDate === null) {
-      setBookingStatus('Debes de seleccionar una fecha');
+      setErrorMessage('Debes de seleccionar una fecha');
       return;
     }
     if (selectedHour === null || selectedEndHour === null) {
-      setBookingStatus('Debes de seleccionar un rango de horas');
+      setErrorMessage('Debes de seleccionar un rango de horas');
       return;
     }
 
@@ -47,8 +54,8 @@ export default function DateAndTime({ schedule, services }) {
 
     const data = {
       date: selectedDate,
-      start: dayjs(selectedDate).hour(selectedHour).toISOString(),
-      end: dayjs(selectedDate).hour(selectedEndHour).toISOString()
+      start: dayjs(selectedDate).hour(selectedHour).minute(0).toISOString(),
+      end: dayjs(selectedDate).hour(selectedEndHour).minute(0).toISOString()
     };
 
     console.log(data);
@@ -56,12 +63,13 @@ export default function DateAndTime({ schedule, services }) {
     createBooking(data, selectedService)
       .then((res) => {
         console.log(res);
-        setBookingStatus('Cita agendada con exito');
-        window.location.reload();
+        setBookingStatus('Cita agendada con éxito');
+        setIsModalOpen(true);
       })
       .catch((err) => {
         console.log(err);
         setBookingStatus(err.response.data.message);
+        setIsModalOpen(true);
       });
 
     console.log('selected hour', selectedHour);
@@ -216,6 +224,11 @@ export default function DateAndTime({ schedule, services }) {
               </Select>
             )}
           </div>
+          {errorMessage && (
+            <p className='text-center text-red-500 font-roboto'>
+              {errorMessage}
+            </p>
+          )}
           <div className='flex flex-row justify-around mt-3'>
             <Button
               radius='md'
@@ -225,13 +238,52 @@ export default function DateAndTime({ schedule, services }) {
               AGENDAR
             </Button>
           </div>
-          {bookingStatus ? (
-            <p className='self-center text-center text-red-500 font-roboto'>
-              {bookingStatus}
-            </p>
-          ) : null}
+          {isModalOpen && bookingStatus && (
+            <DateAndTimeModal
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              bookingStatus={bookingStatus}
+            />
+          )}
         </form>
       </section>
     </>
+  );
+}
+
+function DateAndTimeModal({ isModalOpen, setIsModalOpen, bookingStatus }) {
+  return (
+    <Modal
+      isOpen={isModalOpen}
+      onOpenChange={setIsModalOpen}
+      isDismissable={false}
+      hideCloseButton
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className='flex flex-col gap-1'>
+              Estatus de tu solicitud
+            </ModalHeader>
+            <ModalBody>
+              <p className='text-red-500 font-roboto'>{bookingStatus}</p>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                className='text-white bg-wkablack font-oswald'
+                onPress={() => {
+                  onClose();
+                  if (bookingStatus === 'Cita agendada con éxito') {
+                    window.location.reload();
+                  }
+                }}
+              >
+                Cerrar
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   );
 }

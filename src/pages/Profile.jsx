@@ -291,8 +291,6 @@ export default function Profile() {
                     {showSection && (
                       <div>
                         <div className='bg-white h-auto w-full rounded-2xl shadow-[0px_0px_5px_0px_rgba(0,0,0,0.1)]'>
-                          {/* Name of bd */}
-                          {/* <DescriptionOfService name="karen"></DescriptionOfService> */}
                           <DateAndTime
                             schedule={schedule}
                             services={services}

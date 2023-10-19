@@ -1,15 +1,15 @@
-import { Button, Checkbox, ScrollShadow } from "@nextui-org/react";
-import { arrayRange } from "../utils/utils";
-import { useState } from "react";
-import dayjs from "dayjs";
-import "dayjs/locale/es";
-import DayJSUtc from "dayjs/plugin/utc";
-import DayJSTimezone from "dayjs/plugin/timezone";
-import { Restart } from "iconoir-react";
-import { patchSchedule } from "../utils/fetch";
-import ModalOnCall from "./ModalOnCall";
+import { Button, Checkbox, ScrollShadow } from '@nextui-org/react';
+import { arrayRange } from '../utils/utils';
+import { useState } from 'react';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import DayJSUtc from 'dayjs/plugin/utc';
+import DayJSTimezone from 'dayjs/plugin/timezone';
+import { Restart } from 'iconoir-react';
+import { patchSchedule } from '../utils/fetch';
+import ModalOnCall from './ModalOnCall';
 
-dayjs.locale("es");
+dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
 
@@ -19,23 +19,14 @@ export default function DaySchedule({ element }) {
   const [availability, setAvailability] = useState(element.availability);
   const date = element.date;
   const [shouldOpenModal, setShouldOpenModal] = useState(false);
-  const [status, setStatus] = useState({ success: false, message: "" });
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   control,
-  //   watch,
-  //   unregister,
-  //   formState: { errors }
-  // } = useForm();
+  const [status, setStatus] = useState({ success: false, message: '' });
 
   const onSubmit = () => {
-    console.log("element id", element._id);
+    console.log('element id', element._id);
     if (availability && activeHours.length === 0) {
       setStatus({
         success: false,
-        message: "Debes seleccionar al menos una hora",
+        message: 'Debes seleccionar al menos una hora'
       });
       setShouldOpenModal(true);
       return;
@@ -45,7 +36,7 @@ export default function DaySchedule({ element }) {
       JSON.stringify(activeHours) === JSON.stringify(element.activeHours) &&
       availability === element.availability
     ) {
-      setStatus({ success: false, message: "No has hecho ningún cambio" });
+      setStatus({ success: false, message: 'No has hecho ningún cambio' });
       setShouldOpenModal(true);
       return;
     }
@@ -54,8 +45,8 @@ export default function DaySchedule({ element }) {
       availability,
       activeHours,
       ...(dayjs(date).isBefore(dayjs())
-        ? { date: dayjs(date).add(1, "week").startOf("day").toISOString() }
-        : { date: date }),
+        ? { date: dayjs(date).add(1, 'week').startOf('day').toISOString() }
+        : { date: date })
     };
 
     console.log(dataToSubmit);
@@ -65,19 +56,19 @@ export default function DaySchedule({ element }) {
         console.log(res);
         setStatus({
           success: true,
-          message: "Agenda Actualizada Correctamente",
+          message: 'Agenda Actualizada Correctamente'
         });
         setShouldOpenModal(true);
       })
       .catch((err) => {
         console.log(err);
-        setStatus({ success: false, message: "Error al actualizar la agenda" });
+        setStatus({ success: false, message: 'Error al actualizar la agenda' });
         setShouldOpenModal(true);
       });
   };
 
   return (
-    <div className="flex flex-col items-center gap-3 my-2">
+    <div className='flex flex-col items-center gap-3 my-2'>
       <Checkbox
         isSelected={availability}
         onValueChange={setAvailability}
@@ -86,19 +77,19 @@ export default function DaySchedule({ element }) {
             setActiveHours([]);
           }
         }}
-        color="secondary"
+        color='secondary'
       >
         Estas Disponible?
       </Checkbox>
       {availability ? (
         <ScrollShadow
           hideScrollBar
-          className="h-[200px] flex flex-col items-center"
+          className='h-[200px] flex flex-col items-center'
         >
           {hours.map((hour) => (
             <Checkbox
-              key={`${dayjs(element.date).format("dddd")}-${hour}`}
-              color="secondary"
+              key={`${dayjs(element.date).format('dddd')}-${hour}`}
+              color='secondary'
               isSelected={activeHours.includes(hour)}
               onValueChange={
                 activeHours.includes(hour)
@@ -106,33 +97,33 @@ export default function DaySchedule({ element }) {
                   : () => setActiveHours([...activeHours, hour])
               }
             >
-              {`${hour.toString().padStart(2, "0")}:00`}
+              {`${hour.toString().padStart(2, '0')}:00`}
             </Checkbox>
           ))}
         </ScrollShadow>
       ) : (
-        <div className="h-[200px]"> </div>
+        <div className='h-[200px]'> </div>
       )}
 
-      <div className="flex gap-2">
+      <div className='flex gap-2'>
         <Button
-          radius="sm"
-          type="button"
+          radius='sm'
+          type='button'
           onPress={() => {
             setActiveHours(element.activeHours);
             setAvailability(element.availability);
           }}
-          className="text-white w-fit bg-wkablack font-oswald hover:bg-zinc-700"
+          className='text-white w-fit bg-wkablack font-oswald hover:bg-zinc-700'
         >
           <Restart />
         </Button>
         <Button
-          radius="sm"
-          type="button"
+          radius='sm'
+          type='button'
           onPress={onSubmit}
-          className="text-white w-fit bg-wkablack font-oswald hover:bg-zinc-700"
+          className='text-white w-fit bg-wkablack font-oswald hover:bg-zinc-700'
         >
-          {dayjs(element.date).isAfter(dayjs()) ? "Modificar" : "Actualizar"}
+          {dayjs(element.date).isAfter(dayjs()) ? 'Modificar' : 'Actualizar'}
         </Button>
       </div>
       {shouldOpenModal && (
