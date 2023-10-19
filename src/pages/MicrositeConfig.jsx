@@ -17,8 +17,9 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Trash } from 'iconoir-react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { arrayRange } from '../utils/utils';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { arrayRange, isProtectedDashboardRoute } from '../utils/utils';
+import { useUser } from '../utils/UserContext';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import DayJSUtc from 'dayjs/plugin/utc';
@@ -85,6 +86,14 @@ export default function MicrositeConfiguration() {
   const [fetchStatus, setFetchStatus] = useState('');
   const [selectedDays, setSelectedDays] = useState([]);
   const [themeError, setThemeError] = useState('');
+  const { userData } = useUser();
+
+  if (
+    isProtectedDashboardRoute.includes(location.pathname) &&
+    userData.isMicrositeCreated
+  ) {
+    return <Navigate to='/dashboard' replace />;
+  }
 
   //Función para agregar un nuevo componente
   const addService = () => {

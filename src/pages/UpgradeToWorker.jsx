@@ -3,11 +3,13 @@ import { categories, expertise } from '../utils/utils';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import ChangeText from '../components/ChangeText';
 import { clabe } from 'clabe-validator';
 import { useState } from 'react';
 import { patchUser } from '../utils/fetch';
+import { useUser } from '../utils/UserContext';
+import { isProtectedDashboardRoute } from '../utils/utils';
 
 const schema = Yup.object().shape({
   expYears: Yup.string().required('Especificar tu experiencia es necesario'),
@@ -23,6 +25,7 @@ export default function BecomeWorker() {
   const navigate = useNavigate();
   const [bank, setBank] = useState('');
   const [status, setStatus] = useState('');
+  const { userData } = useUser();
   const {
     register,
     handleSubmit,
@@ -31,6 +34,13 @@ export default function BecomeWorker() {
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
+
+  if (
+    isProtectedDashboardRoute.includes(location.pathname) &&
+    userData.type === 'worker'
+  ) {
+    return <Navigate to='/dashboard' replace />;
+  }
 
   async function onSubmit(data) {
     const userData = {

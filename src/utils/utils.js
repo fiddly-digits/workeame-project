@@ -2618,3 +2618,9 @@ export const bookingStatusColorDictionary = {
   cancelled: '#f44336',
   completed: '#2196f3'
 };
+
+export const isProtectedDashboardRoute = [
+  '/dashboard/complete',
+  '/dashboard/become-worker',
+  '/dashboard/microsite-config'
+];

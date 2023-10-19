@@ -5,7 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { states, CURPValidator } from '../utils/utils';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { useUser } from '../utils/UserContext';
+import { isProtectedDashboardRoute } from '../utils/utils';
 
 const { VITE_API_URL, VITE_USER_COMPLETE } = import.meta.env;
 
@@ -38,12 +40,11 @@ const schema = Yup.object().shape({
     })
 });
 
-//TODO: HANDLE ERRORS WITH MODAL
-
 export default function CompleteProfile() {
   const [selectedState, setSelectedState] = useState('');
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const { userData } = useUser();
   const navigate = useNavigate();
   const {
     register,
@@ -55,6 +56,13 @@ export default function CompleteProfile() {
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
+
+  if (
+    isProtectedDashboardRoute.includes(location.pathname) &&
+    userData.isProfileComplete
+  ) {
+    return <Navigate to='/dashboard' replace />;
+  }
 
   async function onSubmit(data) {
     setLoading(true);
