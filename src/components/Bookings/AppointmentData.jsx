@@ -10,7 +10,7 @@ import {
   SelectItem,
   Spinner
 } from '@nextui-org/react';
-import { ChatBubble, Check } from 'iconoir-react';
+import { Check } from 'iconoir-react';
 import { bookingStatusDictionary } from '../../utils/utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
@@ -19,6 +19,7 @@ import DayJSTimezone from 'dayjs/plugin/timezone';
 import { useState } from 'react';
 import { updateBookingStatus } from '../../utils/fetch';
 import clsx from 'clsx';
+import { clabe } from 'clabe-validator';
 
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
@@ -32,16 +33,23 @@ export default function AppointmentData({ booking, type, isOverdue }) {
   const workerStatusColors = clsx('text-gray-500', {
     'text-green-500': booking.workerStatus === 'confirmed',
     'text-red-500': booking.workerStatus === 'cancelled',
-    'bg-primary-500': booking.workerStatus === 'completed'
+    'bg-secondary-500': booking.workerStatus === 'completed'
   });
 
   const clientStatusColors = clsx('text-gray-500', {
     'text-green-500': booking.clientStatus === 'confirmed',
     'text-red-500': booking.clientStatus === 'cancelled',
-    'bg-primary-500': booking.clientStatus === 'completed'
+    'bg-secondary-500': booking.clientStatus === 'completed'
   });
 
-  console.log(isOverdue);
+  const shadowColors = clsx('shadow-md', {
+    'shadow-green-400': !isOverdue,
+    'shadow-red-400':
+      isOverdue ||
+      booking.clientStatus === 'cancelled' ||
+      booking.workerStatus === 'cancelled'
+    //'shadow-secondary-400': booking.clientStatus === 'completed'
+  });
 
   function onSubmit() {
     console.log('submit');
@@ -82,7 +90,7 @@ export default function AppointmentData({ booking, type, isOverdue }) {
         window.location.reload();
       })
       .catch((err) => {
-        setResponseStatus(err.data.message);
+        setResponseStatus(err.response.data.message);
       });
   }
 
@@ -95,7 +103,7 @@ export default function AppointmentData({ booking, type, isOverdue }) {
   }
 
   return (
-    <Card fullWidth>
+    <Card fullWidth className={shadowColors}>
       <CardHeader className='justify-between font-oswald'>
         <div className='flex items-center gap-3'>
           {type === 'provider' ? (
@@ -105,17 +113,23 @@ export default function AppointmentData({ booking, type, isOverdue }) {
             </>
           ) : (
             <>
-              <Avatar src={booking.provider.photo} />
+              <Avatar showFallback src={booking.provider.photo} />
               <p>Cita con {booking.provider.name}</p>
             </>
           )}
         </div>
-        <Button
-          size='sm'
-          className='text-white bg-wkablack font-oswald hover:cursor-pointer'
-        >
-          <ChatBubble />
-        </Button>
+        {isOverdue === true ||
+        booking.clientStatus === 'cancelled' ||
+        booking.workerStatus === 'cancelled' ? (
+          <p className='text-gray-500'>
+            {booking.clientStatus === 'cancelled' ||
+            booking.workerStatus === 'cancelled'
+              ? 'Cita Cancelada'
+              : 'Cita Vencida'}
+          </p>
+        ) : (
+          <p className='text-gray-500'>Cita Activa</p>
+        )}
       </CardHeader>
       <Divider />
       <CardBody className='gap-3 font-roboto'>
@@ -130,6 +144,13 @@ export default function AppointmentData({ booking, type, isOverdue }) {
               Fin:{' '}
               {dayjs(booking.end).format('D MMMM YYYY [a las] HH:mm [horas]')}
             </p>
+            {type === 'customer' && (
+              <>
+                <p>CLABE: {booking.provider.CLABE} </p>
+                <p>Banco: {clabe.validate(booking.provider.CLABE).bank}</p>
+              </>
+            )}
+
             <p>
               {type === 'provider' ? 'Status Cliente' : 'Status Worker'}:{' '}
               <span

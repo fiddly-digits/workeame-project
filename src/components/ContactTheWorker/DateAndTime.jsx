@@ -54,8 +54,8 @@ export default function DateAndTime({ schedule, services }) {
 
     const data = {
       date: selectedDate,
-      start: dayjs(selectedDate).hour(selectedHour).toISOString(),
-      end: dayjs(selectedDate).hour(selectedEndHour).toISOString()
+      start: dayjs(selectedDate).hour(selectedHour).minute(0).toISOString(),
+      end: dayjs(selectedDate).hour(selectedEndHour).minute(0).toISOString()
     };
 
     console.log(data);
