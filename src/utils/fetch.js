@@ -17,10 +17,10 @@ export const fetchUser = async (headers, params) => {
   return data.data.data;
 };
 
-export const patchUser = async (method, headers, body) => {
+export const patchUser = async (headers, body) => {
   const token = sessionStorage.getItem('token');
   const options = {
-    method,
+    method: 'PATCH',
     url: `http://localhost:8080/api/v1/user/update/`,
     headers: {
       Authorization: `Bearer ${token}`,
