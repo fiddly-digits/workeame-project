@@ -202,3 +202,23 @@ export const fetchWorkersData = async (filters) => {
     return data.data.data;
   }
 };
+
+export const passwordResetRequest = async (body) => {
+  const options = {
+    method: 'POST',
+    url: 'http://localhost:8080/api/v1/auth/forgotten-password',
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
+
+export const passwordReset = async (body, params) => {
+  const options = {
+    method: 'PATCH',
+    url: `http://localhost:8080/api/v1/auth/reset-password/${params}`,
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
