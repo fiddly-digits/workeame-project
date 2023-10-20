@@ -58,7 +58,7 @@ export default function DateAndTime({ schedule, services }) {
 
     createBooking(data, selectedService)
       .then((res) => {
-        setBookingStatus('Cita agendada con éxito');
+        if (res) setBookingStatus('Cita agendada con éxito');
         setIsModalOpen(true);
       })
       .catch((err) => {
@@ -131,7 +131,7 @@ export default function DateAndTime({ schedule, services }) {
                       dayjs(day.date).isAfter(dayjs(), 'day')
                     ) {
                       return (
-                        <Radio value={day._id}>
+                        <Radio key={day._id} value={day._id}>
                           {dayjs(day.date).format(
                             'dddd, D [de] MMMM [de] YYYY'
                           )}

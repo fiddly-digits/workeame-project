@@ -3,6 +3,8 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenu,
+  NavbarMenuItem,
   NavbarMenuToggle,
   Link,
   Button,
@@ -247,6 +249,23 @@ export default function HeaderApp({ color }) {
           </NavbarItem>
         </NavbarContent>
       )}
+      <NavbarMenu>
+        <NavbarMenuItem>
+          <Link color='foreground' href='#' className=' line font-oswald'>
+            QUIENES SOMOS
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link href='#' color='foreground' className='line font-oswald'>
+            COMO FUNCIONA
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link color='foreground' href='#' className='line font-oswald'>
+            PORQUE NOSOTROS
+          </Link>
+        </NavbarMenuItem>
+      </NavbarMenu>
     </Navbar>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Card, CardBody, Spinner } from '@nextui-org/react';
 import MenuItem from '../components/MenuItem';
 import HeaderApp from '../components/HeaderApp';
@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 
 export default function Dashboard() {
   const { userData, setUserData } = useUser();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUser({ accept: 'application/json' })
@@ -35,6 +36,13 @@ export default function Dashboard() {
     window.location.href = '/';
     window.location.reload();
   }
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('token');
+    Cookies.remove('userData');
+    navigate('/', { replace: true });
+    window.location.reload();
+  };
 
   if (!userData) {
     return (
@@ -188,9 +196,7 @@ export default function Dashboard() {
                       reference='/login'
                       position='bottom'
                       onClick={() => {
-                        sessionStorage.removeItem('token');
-                        Cookies.remove('userData');
-                        window.location.reload();
+                        handleLogout();
                       }}
                     />
                   </ul>
