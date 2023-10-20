@@ -29,6 +29,7 @@ import Index from './pages/Index';
 import { UserProvider } from './utils/UserContext';
 import SearchWorkerPage from './pages/SearchWorkerPage';
 import ErrorPage from './pages/ErrorPage';
+import RequestPasswordChange from './pages/RequestPasswordChange';
 
 const token = sessionStorage.getItem('token');
 
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: '/verify/:token',
         element: <Verify />
+      },
+      {
+        path: '/forgot-password',
+        element: <RequestPasswordChange />
       }
     ]
   },
