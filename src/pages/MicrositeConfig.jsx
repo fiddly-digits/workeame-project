@@ -29,6 +29,8 @@ dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
 
+const { VITE_API_URL } = import.meta.env;
+
 const schema = Yup.object().shape({
   aboutMe: Yup.string()
     .required('La descripción es requerida')
@@ -211,42 +213,30 @@ export default function MicrositeConfiguration() {
   };
 
   function micrositePost(micrositeInfo, token) {
-    return axios.post(
-      'http://localhost:8080/api/v1/ms/create/',
-      micrositeInfo,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`
-        }
+    return axios.post(`${VITE_API_URL}ms/create/`, micrositeInfo, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`
       }
-    );
+    });
   }
 
   function servicePost(serviceInfo, token) {
-    return axios.post(
-      'http://localhost:8080/api/v1/service/create/',
-      serviceInfo,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
+    return axios.post(`${VITE_API_URL}service/create/`, serviceInfo, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       }
-    );
+    });
   }
 
   function schedulePost(scheduleInfo, token) {
-    return axios.post(
-      'http://localhost:8080/api/v1/schedule/create/',
-      scheduleInfo,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
+    return axios.post(`${VITE_API_URL}schedule/create/`, scheduleInfo, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
       }
-    );
+    });
   }
 
   function createSchedule(day, data, index) {

@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const { VITE_API_URL, VITE_AUTH_RESEND } = import.meta.env;
+const { VITE_API_URL } = import.meta.env;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -30,7 +30,7 @@ export default function Resend() {
   async function onSubmit(data) {
     console.log(data);
     axios
-      .post(`${VITE_API_URL}${VITE_AUTH_RESEND}`, data)
+      .post(`${VITE_API_URL}auth/resend`, data)
       .then((res) => {
         console.log(res.data);
         setSuccessMessage(

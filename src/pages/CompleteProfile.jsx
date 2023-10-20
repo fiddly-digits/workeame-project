@@ -4,12 +4,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { states, CURPValidator } from '../utils/utils';
-import axios from 'axios';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { useUser } from '../utils/UserContext';
 import { isProtectedDashboardRoute } from '../utils/utils';
-
-const { VITE_API_URL, VITE_USER_COMPLETE } = import.meta.env;
+import { completeUser } from '../utils/fetch';
 
 const schema = Yup.object().shape({
   street: Yup.string().required('La calle y número son requeridos'),
@@ -67,7 +65,6 @@ export default function CompleteProfile() {
   async function onSubmit(data) {
     setLoading(true);
     console.log(data);
-    const token = sessionStorage.getItem('token');
     const userData = {
       address: {
         street: data.street,
@@ -82,12 +79,8 @@ export default function CompleteProfile() {
       phone: `+52${data.phone}`
     };
     console.log(userData);
-    axios
-      .patch(`${VITE_API_URL}${VITE_USER_COMPLETE}`, userData, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+
+    completeUser({ accept: 'application/json' }, userData)
       .then((res) => {
         setLoading(false);
         setStatus(res.data.message);

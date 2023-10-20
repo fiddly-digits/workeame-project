@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useUser } from '../utils/UserContext';
 
+const { VITE_API_URL } = import.meta.env;
+
 const schema = Yup.object().shape({
   email: Yup.lazy((value) =>
     !value ? Yup.string() : Yup.string().email('El email no es válido')
@@ -32,7 +34,7 @@ export default function Mail() {
     console.log(data);
     const token = sessionStorage.getItem('token');
     axios
-      .patch('http://localhost:8080/api/v1/user/mailChange/', data, {
+      .patch(`${VITE_API_URL}user/mailChange/`, data, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`

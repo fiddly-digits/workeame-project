@@ -18,7 +18,6 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-//import axios from 'axios';
 import { patchUser } from '../utils/fetch';
 import { useUser } from '../utils/UserContext';
 import { clabe } from 'clabe-validator';
@@ -114,16 +113,6 @@ export default function Account() {
     }
   }, [userData.type, editable, unregister]);
 
-  // useEffect(() => {
-  //   fetchUser({ accept: 'application/json' })
-  //     .then((res) => {
-  //       setUserData(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
   const onEdit = (id) => {
     setEditable({ ...editable, [id]: !editable[id] });
   };
@@ -163,22 +152,6 @@ export default function Account() {
         console.log(err);
         setMessage(err.data.message);
       });
-    // axios
-    //   .patch('http://localhost:8080/api/v1/user/update/', userInfo, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       Authorization: `Bearer ${token}`
-    //     }
-    //   })
-    //   .then((response) => {
-    //     setLoading(false);
-    //     console.log(response);
-    //     setMessage(response.data.message);
-    //   })
-    //   .catch((error) => {
-    //     setLoading(false);
-    //     setMessage(error.response.data.message);
-    //   });
   };
 
   async function onChange(event) {

@@ -15,7 +15,7 @@ import {
   useDisclosure
 } from '@nextui-org/react';
 
-const { VITE_API_URL, VITE_USER_REGISTER } = import.meta.env;
+const { VITE_API_URL } = import.meta.env;
 
 const schema = Yup.object().shape({
   name: Yup.string().required('El nombre es requerido'),
@@ -67,7 +67,7 @@ export default function Register() {
     };
     console.log(userInfo);
     axios
-      .post(VITE_API_URL + VITE_USER_REGISTER, userInfo, {
+      .post(`${VITE_API_URL}user/register`, userInfo, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then((response) => {

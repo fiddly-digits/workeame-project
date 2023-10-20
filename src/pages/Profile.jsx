@@ -4,11 +4,9 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import { EffectFade, Pagination, Navigation } from 'swiper/modules';
 import { Accordion, Spinner, AccordionItem, Snippet } from '@nextui-org/react';
-//import OfferSticker from '../components/OfferSticker';
-import CommentCard from '../components/CommentCard';
+//import CommentCard from '../components/CommentCard';
 import { Checkbox } from '@nextui-org/react';
 import { useState, useEffect } from 'react';
-/* import DescriptionOfService from "../components/ContactTheWorker/DescriptionOfService"; */
 import DateAndTime from '../components/ContactTheWorker/DateAndTime';
 import HeaderApp from '../components/HeaderApp';
 import Footer from '../components/Footer';
@@ -157,8 +155,8 @@ export default function Profile() {
                 modules={[EffectFade, Navigation, Pagination]}
                 className='mySwiper'
               >
-                {images.map((image) => (
-                  <SwiperSlide key={image.split('/').pop()}>
+                {images.map((image, index) => (
+                  <SwiperSlide key={`${index}-${image.split('/').pop()}`}>
                     <div className='pb-5 w-80 h-72 lg:w-96 lg:h-80'>
                       <img
                         src={image}
@@ -194,14 +192,6 @@ export default function Profile() {
                         {` ${service.price} `}
                       </p>
                       <p>{service.isPaymentPerHour && 'por hora'}</p>
-                      {/* <span className='text-black'>|</span>
-                      <p>{service.pricetype}</p>
-                      <span className='text-black'>|</span>
-                      <OfferSticker
-                      className='m-2 bg-yellow-400'
-                      offer={service.offer}
-                      description={service.offerDescription}
-                    ></OfferSticker> */}
                     </div>
                     <div className='flex justify-center'>
                       {service.Discounts.length != 0 && (
@@ -213,7 +203,7 @@ export default function Profile() {
               </Accordion>
             </div>
           </section>
-          <section className='flex flex-col items-center w-full gap-4 mx-auto '>
+          {/* <section className='flex flex-col items-center w-full gap-4 mx-auto '>
             <h3 className='text-2xl font-semibold tracking-wider font-oswald'>
               Sus clientes opinan...
             </h3>
@@ -235,7 +225,7 @@ export default function Profile() {
                 </SwiperSlide>
               </Swiper>
             </div>
-          </section>
+          </section> */}
 
           {!token || token.id === userData._id ? (
             <section className='flex flex-row w-full gap-2 mx-auto my-10 justify-evenly md:gap-14'>

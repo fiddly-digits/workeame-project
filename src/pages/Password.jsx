@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { EyeAlt, EyeClose } from 'iconoir-react';
 import Cookie from 'js-cookie';
 
-// TODO: Password Recovery on Login Page
+const { VITE_API_URL } = import.meta.env;
 
 const schema = Yup.object().shape({
   oldPassword: Yup.lazy((value) =>
@@ -65,7 +65,7 @@ export default function Password() {
     console.log(data);
     const token = sessionStorage.getItem('token');
     axios
-      .patch('http://localhost:8080/api/v1/user/passwordChange/', data, {
+      .patch(`${VITE_API_URL}user/passwordChange/`, data, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`

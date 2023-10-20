@@ -6,22 +6,39 @@ const handleToken = () => {
   return JSON.parse(atob(payload));
 };
 
+const { VITE_API_URL } = import.meta.env;
+
 export const fetchUser = async (headers, params) => {
   const plainPayload = params || handleToken();
   const options = {
     method: 'GET',
-    url: `http://localhost:8080/api/v1/user/${plainPayload.id}`,
+    url: `${VITE_API_URL}user/${plainPayload.id}`,
     headers
   };
   let data = await axios.request(options);
   return data.data.data;
 };
 
+export const completeUser = async (headers, body) => {
+  const token = sessionStorage.getItem('token');
+  const options = {
+    method: 'PATCH',
+    url: `${VITE_API_URL}user/complete/`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...headers
+    },
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
+
 export const patchUser = async (headers, body) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'PATCH',
-    url: `http://localhost:8080/api/v1/user/update/`,
+    url: `${VITE_API_URL}user/update/`,
     headers: {
       Authorization: `Bearer ${token}`,
       ...headers
@@ -36,7 +53,7 @@ export const fetchMS = async (headers, params) => {
   const plainPayload = params || handleToken();
   const options = {
     method: 'GET',
-    url: `http://localhost:8080/api/v1/ms/${plainPayload.id}`,
+    url: `${VITE_API_URL}ms/${plainPayload.id}`,
     headers
   };
   let data = await axios.request(options);
@@ -47,7 +64,7 @@ export const patchMS = async (headers, body) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'PATCH',
-    url: `http://localhost:8080/api/v1/ms/update/`,
+    url: `${VITE_API_URL}ms/update/`,
     headers: {
       Authorization: `Bearer ${token}`,
       ...headers
@@ -62,7 +79,7 @@ export const fetchServices = async (method, headers) => {
   const plainPayload = handleToken();
   const options = {
     method,
-    url: `http://localhost:8080/api/v1/service/${plainPayload.id}`,
+    url: `${VITE_API_URL}service/${plainPayload.id}`,
     headers
   };
   let data = await axios.request(options);
@@ -73,7 +90,7 @@ export const patchService = async (serviceID, body) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'PATCH',
-    url: `http://localhost:8080/api/v1/service/update/${serviceID}`,
+    url: `${VITE_API_URL}service/update/${serviceID}`,
     headers: {
       Authorization: `Bearer ${token}`
     },
@@ -87,7 +104,7 @@ export const createService = async (body) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'POST',
-    url: `http://localhost:8080/api/v1/service/create`,
+    url: `${VITE_API_URL}service/create`,
     headers: {
       Authorization: `Bearer ${token}`
     },
@@ -101,7 +118,7 @@ export const deleteService = async (serviceID) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'DELETE',
-    url: `http://localhost:8080/api/v1/service/delete/${serviceID}`,
+    url: `${VITE_API_URL}service/delete/${serviceID}`,
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -114,7 +131,7 @@ export const fetchSchedule = async (method, headers) => {
   const plainPayload = handleToken();
   const options = {
     method,
-    url: `http://localhost:8080/api/v1/schedule/${plainPayload.id}`,
+    url: `${VITE_API_URL}schedule/${plainPayload.id}`,
     headers
   };
   let data = await axios.request(options);
@@ -125,7 +142,7 @@ export const patchSchedule = async (scheduleID, body) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'PATCH',
-    url: `http://localhost:8080/api/v1/schedule/update/${scheduleID}`,
+    url: `${VITE_API_URL}schedule/update/${scheduleID}`,
     headers: {
       Authorization: `Bearer ${token}`
     },
@@ -139,7 +156,7 @@ export const createBooking = async (body, serviceID) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'POST',
-    url: `http://localhost:8080/api/v1/booking/create/${serviceID}`,
+    url: `${VITE_API_URL}booking/create/${serviceID}`,
     headers: {
       Authorization: `Bearer ${token}`
     },
@@ -153,7 +170,7 @@ export const fetchBookings = async (queryParam) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'GET',
-    url: `http://localhost:8080/api/v1/booking/?type=${queryParam}`,
+    url: `${VITE_API_URL}booking/?type=${queryParam}`,
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -166,7 +183,7 @@ export const updateBookingStatus = async (bookingID, body) => {
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'PATCH',
-    url: `http://localhost:8080/api/v1/booking/statusUpdate/${bookingID}`,
+    url: `${VITE_API_URL}booking/statusUpdate/${bookingID}`,
     headers: {
       Authorization: `Bearer ${token}`
     },
@@ -189,14 +206,14 @@ export const fetchWorkersData = async (filters) => {
     }
     const options = {
       method: 'GET',
-      url: `http://localhost:8080/api/v1/ms/${query}`
+      url: `${VITE_API_URL}ms/${query}`
     };
     let data = await axios.request(options);
     return data.data.data;
   } else {
     const options = {
       method: 'GET',
-      url: 'http://localhost:8080/api/v1/ms/'
+      url: `${VITE_API_URL}ms/`
     };
     let data = await axios.request(options);
     return data.data.data;
@@ -206,7 +223,7 @@ export const fetchWorkersData = async (filters) => {
 export const passwordResetRequest = async (body) => {
   const options = {
     method: 'POST',
-    url: 'http://localhost:8080/api/v1/auth/forgotten-password',
+    url: `${VITE_API_URL}auth/forgotten-password`,
     data: body
   };
   let data = await axios.request(options);
@@ -216,7 +233,7 @@ export const passwordResetRequest = async (body) => {
 export const passwordReset = async (body, params) => {
   const options = {
     method: 'PATCH',
-    url: `http://localhost:8080/api/v1/auth/reset-password/${params}`,
+    url: `${VITE_API_URL}auth/reset-password/${params}`,
     data: body
   };
   let data = await axios.request(options);

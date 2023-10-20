@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { EyeAlt, EyeClose } from 'iconoir-react';
 
-const { VITE_API_URL, VITE_AUTH_LOGIN } = import.meta.env;
+const { VITE_API_URL } = import.meta.env;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -43,7 +43,7 @@ export default function Login() {
   async function onSubmit(data) {
     console.log(data);
     axios
-      .post(VITE_API_URL + VITE_AUTH_LOGIN, data)
+      .post(`${VITE_API_URL}auth/login`, data)
       .then((res) => {
         console.log(res.data.token);
         sessionStorage.setItem('token', res.data?.token);

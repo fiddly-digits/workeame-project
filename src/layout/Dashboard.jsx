@@ -8,40 +8,9 @@ import { fetchUser } from '../utils/fetch';
 import dayjs from 'dayjs';
 import { useUser } from '../utils/UserContext';
 import Cookies from 'js-cookie';
-//import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
-  //const userData = useOutletContext();
-  //const navigate = useNavigate();
   const { userData, setUserData } = useUser();
-  //const [userData, setUserData] = useState({});
-  // const isLogged = () => {
-  //   if (userData) {
-  //     setUser(userData);
-  //   } else {
-  //     setUser({});
-  //   }
-  // };
-
-  //   if (!userData) {
-  //     console.log(userData);
-  //     navigate('/');
-  //   }
-
-  // const fetchData = async () => {
-  //   const token = sessionStorage.getItem('token');
-  //   if (token) {
-  //     const payload = token.split('.')[1];
-  //     const plainPayload = JSON.parse(atob(payload));
-  //     var options = {
-  //       method: 'GET',
-  //       url: `http://localhost:8080/api/v1/user/${plainPayload.id}`,
-  //       headers: { accept: 'application/json' }
-  //     };
-  //     let data = await axios.request(options);
-  //     setUserData(data.data.data);
-  //   }
-  // };
 
   useEffect(() => {
     fetchUser({ accept: 'application/json' })
