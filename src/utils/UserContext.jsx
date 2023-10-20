@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
 
-const { VITE_CRYPTOJS } = import.meta.env;
+const { VITE_CRYPTOJS } = process.env;
 
 const UserContext = createContext();
 

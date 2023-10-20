@@ -6,7 +6,7 @@ const handleToken = () => {
   return JSON.parse(atob(payload));
 };
 
-const { VITE_API_URL } = import.meta.env;
+const { VITE_API_URL } = process.env;
 
 export const fetchUser = async (headers, params) => {
   const plainPayload = params || handleToken();
