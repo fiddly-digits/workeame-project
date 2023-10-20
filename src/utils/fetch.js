@@ -198,7 +198,7 @@ export const fetchWorkersData = async (filters) => {
     const { category, state } = filters;
     let query = '';
     if (category && state) {
-      query = `?category=${category}&state=${state}}`;
+      query = `?category=${category}&state=${state}`;
     } else if (category) {
       query = `?category=${category}`;
     } else if (state) {
