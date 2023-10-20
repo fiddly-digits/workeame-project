@@ -19,7 +19,10 @@ export default function ScheduleUpdate() {
       .then((res) => {
         setSchedule(res);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        //TODO: HANDLE ERROR
+        console.log(err);
+      });
   }, []);
 
   if (!schedule) {
@@ -50,7 +53,7 @@ export default function ScheduleUpdate() {
                   className='border rounded-md bg-fourth shadow-xl w-[14rem] p-3 font-roboto'
                   key={`incoming-${index}`}
                 >
-                  <p className='font-roboto font-semibold text-center'>
+                  <p className='font-semibold text-center font-roboto'>
                     {dayjs(element.date).format('dddd, D [/] MMM YYYY')}
                   </p>
                   <DaySchedule element={element} />
@@ -60,7 +63,7 @@ export default function ScheduleUpdate() {
           })}
         </div>
       </div>
-      <div className='flex flex-col capitalize mt-5'>
+      <div className='flex flex-col mt-5 capitalize'>
         {schedule.filter((element) => dayjs(element.date).isBefore(dayjs()))
           .length > 0 && (
           <h2 className='w-full my-5 text-xl tracking-wider text-zinc-500 font-oswald'>
@@ -77,7 +80,7 @@ export default function ScheduleUpdate() {
                     className=' rounded-md bg-zinc-300 shadow-xl w-[14rem] p-3 font-roboto'
                     key={`incoming-${index}`}
                   >
-                    <p className='font-roboto font-semibold text-center'>
+                    <p className='font-semibold text-center font-roboto'>
                       {dayjs(element.date)
                         .add(1, 'week')
                         .format('dddd D [/] MMM YYYY')}

@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 interface Props {
   name: string;
   job?: string;
@@ -9,24 +9,23 @@ interface Props {
 export default function WorkerCard({ name, job, picture, className }: Props) {
   return (
     <Card
-      shadow="sm"
+      shadow='sm'
       isPressable
-      onPress={() => }
       className={`m-2 ${className} max-w-[20rem] max-h-[30rem] `}
     >
-      <CardBody className="p-0 overflow-hidden shadow-sm rounded-t-sm">
+      <CardBody className='p-0 overflow-hidden rounded-t-sm shadow-sm'>
         <Image
-          shadow="sm"
-          radius="lg"
-          width="100%"
+          shadow='sm'
+          radius='lg'
+          width='100%'
           alt={`${name}-${job}`}
-          className="object-cover w-full rounded-none"
+          className='object-cover w-full rounded-none'
           src={picture}
         />
       </CardBody>
-      <CardFooter className="flex-col font-roboto text-large ">
-        <b className="text-2xl font-bold uppercase tracking-[2px]">{name}</b>
-        <p className=" text-base text-gray-500 font-roboto font-extralight uppercase tracking-[1.5px]">
+      <CardFooter className='flex-col font-roboto text-large '>
+        <b className='text-2xl font-bold uppercase tracking-[2px]'>{name}</b>
+        <p className=' text-base text-gray-500 font-roboto font-extralight uppercase tracking-[1.5px]'>
           {job}
         </p>
       </CardFooter>

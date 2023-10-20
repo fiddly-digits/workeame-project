@@ -1,16 +1,16 @@
-import SwitchActiveInactive from "./SwitchActiveInactive";
+import SwitchActiveInactive from './SwitchActiveInactive';
 
 export default function TableStatus() {
   return (
     <>
-      <table className="flex flex-col w-auto md:max-w-[38rem] justify-center border-separate border-spacing-y-4 border-spacing-x-[4.5rem] text-sm  font-roboto mx-5">
-        <thead className=" mb-2">
-          <tr className="flex justify-around mx-10 ">
-            <th className="tracking-[8px] text-base"> Hora </th>
-            <th className="tracking-[8px] text-base pr-3"> Status </th>
+      <table className='flex flex-col w-auto md:max-w-[38rem] justify-center border-separate border-spacing-y-4 border-spacing-x-[4.5rem] text-sm  font-roboto mx-5'>
+        <thead className='mb-2 '>
+          <tr className='flex justify-around mx-10 '>
+            <th className='tracking-[8px] text-base'> Hora </th>
+            <th className='tracking-[8px] text-base pr-3'> Status </th>
           </tr>
         </thead>
-        <tbody className=" flex flex-col items-center h-80 overflow-auto">
+        <tbody className='flex flex-col items-center overflow-auto  h-80'>
           <tr>
             <td>08:00 - 09:00</td>
             <td>

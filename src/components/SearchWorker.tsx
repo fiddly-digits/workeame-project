@@ -25,7 +25,8 @@ export default function SearchWorker() {
         setLoading(false);
       })
       .catch((err) => {
-        setLoading(false);
+        //TODO: HANDLE ERROR
+        if (err) setLoading(false);
       });
   }, []);
 

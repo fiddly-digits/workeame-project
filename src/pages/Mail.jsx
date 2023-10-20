@@ -39,7 +39,7 @@ export default function Mail() {
           Authorization: `Bearer ${token}`
         }
       })
-      .then((res) => {
+      .then(() => {
         sessionStorage.removeItem('token');
         Cookies.remove('userData');
         navigate('/login', { replace: true });

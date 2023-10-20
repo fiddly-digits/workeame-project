@@ -31,9 +31,10 @@ export default function Resend() {
     axios
       .post(`${VITE_API_URL}auth/resend`, data)
       .then((res) => {
-        setSuccessMessage(
-          'Se ha enviado un nuevo correo de verificación, seras redirigido al login'
-        );
+        if (res)
+          setSuccessMessage(
+            'Se ha enviado un nuevo correo de verificación, seras redirigido al login'
+          );
         setTimeout(() => {
           navigate('/login');
         }, 2000);

@@ -70,7 +70,7 @@ export default function Password() {
           Authorization: `Bearer ${token}`
         }
       })
-      .then((res) => {
+      .then(() => {
         sessionStorage.removeItem('token');
         Cookie.remove('userData');
         navigate('/login', { replace: true });

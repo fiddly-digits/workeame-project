@@ -25,7 +25,10 @@ export default function ServiceUpdate() {
         setService(res);
         setInitialServices(res);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        //TODO: HANDLE ERROR
+        console.log(err);
+      });
   }, []);
 
   if (!service) {
@@ -45,7 +48,7 @@ export default function ServiceUpdate() {
         {service.map((element, index) => {
           return (
             <Fragment key={`service-${index}`}>
-              <p className='text-xl font-medium text-zinc-500 text-center font-roboto'>
+              <p className='text-xl font-medium text-center text-zinc-500 font-roboto'>
                 {Object.keys(element) != 0 ? 'Modifica' : 'Agrega'} tu Servicio
               </p>
 

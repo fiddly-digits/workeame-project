@@ -43,7 +43,10 @@ export default function Profile() {
         setServices(res.owner.Services);
         setShareURL(`https://workea.me/ms/${res.micrositeURL}`);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        //TODO: HANDLE ERROR
+        console.log(err);
+      });
   }, [params, tokenExists]);
 
   const backgroundClasses = clsx('flex flex-col items-center h-auto mx-auto', {

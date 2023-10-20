@@ -32,7 +32,7 @@ export default function Verify() {
     axios
       .post(`${VITE_API_URL}auth/confirmation/${token}`, data)
       .then((res) => {
-        navigate('/login');
+        if (res) navigate('/login');
       })
       .catch((err) => {
         setErrorMessage(err.response.data.message);

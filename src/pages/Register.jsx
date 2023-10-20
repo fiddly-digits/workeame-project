@@ -70,10 +70,10 @@ export default function Register() {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then((response) => {
-        navigate('/login');
+        if (response) navigate('/login');
       })
       .catch((error) => {
-        setErrorMessage(error.response.data.message);
+        if (error) setErrorMessage(error.response.data.message);
         setShowModal(true);
       });
   }

@@ -4,20 +4,20 @@ import { Button, ButtonGroup } from '@nextui-org/react';
 import AppointmentData from '../components/Bookings/AppointmentData';
 import dayjs from 'dayjs';
 
-// TODO: Fix how the bookings are listed
-
 export default function Bookings() {
   const [providerBookings, setProviderBookings] = useState([]);
   const [customerBookings, setCustomerBookings] = useState([]);
   const [isProviderDisabled, setIsProviderDisabled] = useState(true);
   const [isCustomerDisabled, setIsCustomerDisabled] = useState(false);
 
+  //TODO:HANDLE ERRORS
+
   useEffect(() => {
     fetchBookings('provider')
       .then((res) => {
         setProviderBookings(res);
       })
-      .catch((err) => {});
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Bookings() {
       .then((res) => {
         setCustomerBookings(res);
       })
-      .catch((err) => {});
+      .catch(() => {});
   }, []);
 
   return (

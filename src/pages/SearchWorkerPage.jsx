@@ -11,6 +11,7 @@ export default function SearchWorkerPage() {
   const [selectedState, setSelectedState] = useState('');
   const [fetchedSites, setFetchedSites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     fetchWorkersData()
@@ -19,6 +20,7 @@ export default function SearchWorkerPage() {
         setLoading(false);
       })
       .catch((err) => {
+        if (err) setError('Ha habido un error al cargar los datos');
         setLoading(false);
       });
   }, []);
@@ -33,6 +35,7 @@ export default function SearchWorkerPage() {
         setLoading(false);
       })
       .catch((err) => {
+        if (err) setError('Ha habido un error al cargar los datos');
         setLoading(false);
       });
   };
@@ -90,7 +93,7 @@ export default function SearchWorkerPage() {
                 Buscar
               </Button>
             </form>
-            <div className='grid grid-cols-1 my-10 md:grid-cols-2 lg:grid-cols-3 justify-items-center'>
+            <div className='grid grid-cols-1 gap-3 my-10 md:grid-cols-2 lg:grid-cols-3 justify-items-center'>
               {loading && (
                 <Spinner
                   color='secondary'
@@ -112,6 +115,11 @@ export default function SearchWorkerPage() {
                   route={site.owner._id}
                 />
               ))}
+              {error && (
+                <p className='flex justify-center text-red-400 font-roboto'>
+                  {error}
+                </p>
+              )}
             </div>
           </div>
         </main>

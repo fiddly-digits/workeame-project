@@ -50,14 +50,19 @@ export default function DaySchedule({ element }) {
 
     patchSchedule(element._id, dataToSubmit)
       .then((res) => {
-        setStatus({
-          success: true,
-          message: 'Agenda Actualizada Correctamente'
-        });
+        if (res)
+          setStatus({
+            success: true,
+            message: 'Agenda Actualizada Correctamente'
+          });
         setShouldOpenModal(true);
       })
       .catch((err) => {
-        setStatus({ success: false, message: 'Error al actualizar la agenda' });
+        if (err)
+          setStatus({
+            success: false,
+            message: 'Error al actualizar la agenda'
+          });
         setShouldOpenModal(true);
       });
   };

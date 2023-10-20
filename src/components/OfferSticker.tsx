@@ -10,7 +10,7 @@ export default function OfferSticker({ className, offer, description }: Props) {
       <div
         className={`rounded-md p-1 h-auto text-black text-xs font-roboto font-semibold text-center ${className} `}
       >
-        -{offer}% <span className="font-normal">{description}</span>
+        -{offer}% <span className='font-normal'>{description}</span>
       </div>
     </>
   );
