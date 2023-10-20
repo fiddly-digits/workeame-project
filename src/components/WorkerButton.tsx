@@ -27,7 +27,7 @@ export default function WorkerButton({
         /{' '}
       </span>
       <a
-        href='.'
+        href='/'
         className={clsx(
           `hover:text-black text-white font-oswald font-bold ${className}`,
           { hidden: !beingWorker }

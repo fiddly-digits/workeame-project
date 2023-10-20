@@ -1,6 +1,6 @@
 export default function CustomCard() {
   return (
-    <div className='flex flex-col overflow-hidden bg-white rounded-md shadow-md font-oswald'>
+    <div className='flex flex-col overflow-hidden bg-white rounded-md shadow-md w-80 md:w-auto font-oswald'>
       <div className='p-10'>
         <h1 className='pb-8 text-2xl subpixel-antialiased font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800 lg:text-5xl'>
           QUIENES SOMOS
@@ -14,11 +14,13 @@ export default function CustomCard() {
           <span className='font-bold'>instante</span>.
         </p>
       </div>
-      <img
-        className='object-cover w-auto h-auto'
-        src='https://workeame-bucket.s3.amazonaws.com/hero-1.webp'
-        alt='card-img'
-      />
+      <div className='h-[25rem] overflow-hidden'>
+        <img
+          className='object-cover w-full h-full bg-center '
+          src='https://workeame-bucket.s3.amazonaws.com/hero-1.webp'
+          alt='card-img'
+        />
+      </div>
     </div>
   );
 }
