@@ -29,7 +29,7 @@ dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
 
-const { VITE_API_URL } = import.meta.env;
+const { VITE_API_URL } = process.env;
 
 const schema = Yup.object().shape({
   aboutMe: Yup.string()

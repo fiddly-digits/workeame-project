@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { EyeAlt, EyeClose } from 'iconoir-react';
 import Cookie from 'js-cookie';
 
-const { VITE_API_URL } = import.meta.env;
+const { VITE_API_URL } = process.env;
 
 const schema = Yup.object().shape({
   oldPassword: Yup.lazy((value) =>

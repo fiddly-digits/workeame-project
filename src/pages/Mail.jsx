@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { useUser } from '../utils/UserContext';
 
-const { VITE_API_URL } = import.meta.env;
+const { VITE_API_URL } = process.env;
 
 const schema = Yup.object().shape({
   email: Yup.lazy((value) =>

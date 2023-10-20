@@ -15,7 +15,7 @@ import {
   useDisclosure
 } from '@nextui-org/react';
 
-const { VITE_API_URL } = import.meta.env;
+const { VITE_API_URL } = process.env;
 
 const schema = Yup.object().shape({
   name: Yup.string().required('El nombre es requerido'),

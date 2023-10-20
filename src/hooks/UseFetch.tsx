@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const { VITE_SITE_URL } = import.meta.env;
+const { VITE_SITE_URL } = process.env;
 
 interface BaseProps {
   path: string;
