@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Trash } from 'iconoir-react';
 import axios from 'axios';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { arrayRange, isProtectedDashboardRoute } from '../utils/utils';
 import { useUser } from '../utils/UserContext';
 import dayjs from 'dayjs';
@@ -79,7 +79,7 @@ export default function MicrositeConfiguration() {
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [service, setService] = useState([1]); // Estado para almacenar los componentes
   const [selectedImages, setSelectedImages] = useState([]);
   const [selectedTheme, setSelectedTheme] = useState(0);
@@ -115,6 +115,7 @@ export default function MicrositeConfiguration() {
 
   const onSubmit = async (data) => {
     console.log(data);
+    console.log('selected IMAGES', selectedImages);
     const token = sessionStorage.getItem('token');
     if (selectedTheme === 0) {
       setThemeError('Debes seleccionar un tema');
@@ -164,6 +165,8 @@ export default function MicrositeConfiguration() {
       }
     }
 
+    console.log('micrositeInfo', micrositeInfo);
+
     console.log(days);
     let schedules = [];
     days.forEach((day, index) => {
@@ -195,10 +198,10 @@ export default function MicrositeConfiguration() {
         console.log('res', res);
         if (res) setFetchStatus('Tu micrositio ha sido creado con éxito');
         setShowSpinner(false);
-        setTimeout(() => {
-          navigate('/dashboard', { replace: true });
-          window.location.reload();
-        }, 5000);
+        // setTimeout(() => {
+        //   navigate('/dashboard', { replace: true });
+        //   window.location.reload();
+        // }, 5000);
       })
       .catch((err) => {
         console.log(err);
@@ -206,9 +209,9 @@ export default function MicrositeConfiguration() {
           'Hubo un error al crear tu micrositio, esto no deberia pasar. contactanos en contacto@workea.me'
         );
         setShowSpinner(false);
-        setTimeout(() => {
-          window.location.reload();
-        }, 10000);
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 10000);
       });
   };
 
@@ -621,14 +624,34 @@ export default function MicrositeConfiguration() {
               </fieldset>
             </section>
             <div className='flex flex-col items-center justify-center gap-3'>
-              <Button
+              {fetchStatus ? (
+                <Button
+                  as={Link}
+                  to={'/dashboard'}
+                  radius='sm'
+                  className='px-8 text-white bg-black font-oswald hover:bg-zinc-700 w-60'
+                  startContent={<img src='/arrow-right.svg' alt='next' />}
+                >
+                  Regresa
+                </Button>
+              ) : (
+                <Button
+                  radius='sm'
+                  type='submit'
+                  className='px-8 text-white bg-black font-oswald hover:bg-zinc-700 w-60'
+                  startContent={<img src='/arrow-right.svg' alt='next' />}
+                >
+                  Siguiente
+                </Button>
+              )}
+              {/* <Button
                 type='submit'
                 radius='sm'
                 className='px-8 text-white bg-black font-oswald hover:bg-zinc-700 w-60'
               >
                 <img src='/arrow-right.svg' alt='arrow' className='w-6 h-6' />
                 Siguiente
-              </Button>
+              </Button> */}
               {showSpinner && <Spinner color='secondary' label='Cargando...' />}
               {fetchStatus && (
                 <p className='text-red-400 text-l font-roboto'>{fetchStatus}</p>
