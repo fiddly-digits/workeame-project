@@ -31,7 +31,6 @@ export default function Mail() {
   const [errorMessage, setErrorMessage] = useState();
 
   async function onSubmit(data) {
-    console.log(data);
     const token = sessionStorage.getItem('token');
     axios
       .patch(`${VITE_API_URL}user/mailChange/`, data, {
@@ -41,7 +40,6 @@ export default function Mail() {
         }
       })
       .then((res) => {
-        console.log(res);
         sessionStorage.removeItem('token');
         Cookies.remove('userData');
         navigate('/login', { replace: true });

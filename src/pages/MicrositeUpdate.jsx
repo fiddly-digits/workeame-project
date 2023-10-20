@@ -44,7 +44,6 @@ export default function MicrositeUpdate() {
   useEffect(() => {
     fetchMS({ accept: 'application/json' })
       .then((res) => {
-        console.log(res);
         setSiteData(res);
         setSelectedTheme(res.theme);
         setSelectedImages(Object.values(res.carousel));
@@ -52,13 +51,16 @@ export default function MicrositeUpdate() {
         setSelectedAbout(res.about);
       })
       .catch((err) => {
-        console.log(err);
+        if (err) {
+          setStatusMessage(
+            'Hubo un error obteniendo los datos del servidor contáctenos en contacto@workea.me'
+          );
+        }
       });
   }, []);
 
   const onSubmit = async (data) => {
     setShowSpinner(true);
-    console.log(data);
     let modifiedData = {};
     let newImages = [];
     let serverImages = [];
@@ -81,8 +83,6 @@ export default function MicrositeUpdate() {
         newImages.push(image);
       }
     });
-    console.log('selectedImages', selectedImages);
-
     if (newImages.length > 0) {
       modifiedData.newImages = newImages;
     }
@@ -97,14 +97,7 @@ export default function MicrositeUpdate() {
         return acc;
       }, {});
     }
-    console.log(newImages);
-    console.log(serverImages);
-    console.log(modifiedData.carousel);
-
-    console.log('modifiedData', modifiedData);
-
     if (Object.keys(modifiedData).length > 0) {
-      console.log(modifiedData);
       await patchMS(
         {
           'Content-Type': 'multipart/form-data'
@@ -112,16 +105,15 @@ export default function MicrositeUpdate() {
         modifiedData
       )
         .then((res) => {
-          console.log(res);
           setShowSpinner(false);
-          setStatusMessage('Cambios guardados con éxito');
+          if (res) setStatusMessage('Cambios guardados con éxito');
         })
         .catch((err) => {
-          console.log(err);
           setShowSpinner(false);
-          setStatusMessage(
-            'Hubo un error al guardar tus cambios, contáctenos en contacto@workea.me'
-          );
+          if (err)
+            setStatusMessage(
+              'Hubo un error al guardar tus cambios, contáctenos en contacto@workea.me'
+            );
         });
     }
   };
@@ -141,7 +133,6 @@ export default function MicrositeUpdate() {
     const images = [...selectedImages];
     images.splice(index, 1);
     setSelectedImages(images);
-    console.log(images);
   }
 
   if (!siteData) {

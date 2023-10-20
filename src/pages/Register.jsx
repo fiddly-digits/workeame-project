@@ -65,13 +65,11 @@ export default function Register() {
       password: data.password,
       photo: selectedImage[0]
     };
-    console.log(userInfo);
     axios
       .post(`${VITE_API_URL}user/register`, userInfo, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then((response) => {
-        console.log('Aqui tendria que redirigirte', response);
         navigate('/login');
       })
       .catch((error) => {

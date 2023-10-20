@@ -11,7 +11,7 @@ export default function WorkerCard({ name, job, picture, className }: Props) {
     <Card
       shadow="sm"
       isPressable
-      onPress={() => console.log("item pressed")}
+      onPress={() => }
       className={`m-2 ${className} max-w-[20rem] max-h-[30rem] `}
     >
       <CardBody className="p-0 overflow-hidden shadow-sm rounded-t-sm">

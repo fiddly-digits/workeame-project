@@ -19,12 +19,9 @@ export default function SearchWorkerPage() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   }, []);
-
-  console.log(selectedState, selectedCategory);
 
   const onSearch = () => {
     setFetchedSites([]);
@@ -36,7 +33,6 @@ export default function SearchWorkerPage() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
         setLoading(false);
       });
   };

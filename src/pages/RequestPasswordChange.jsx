@@ -24,14 +24,11 @@ export default function RequestPasswordChange() {
   const [statusMessage, setStatusMessage] = useState();
 
   async function onSubmit(data) {
-    console.log(data);
     passwordResetRequest(data)
       .then((res) => {
-        console.log(res.data);
         setStatusMessage(res.data.message);
       })
       .catch((err) => {
-        console.log(err);
         setStatusMessage(err.response.data.message);
       });
   }

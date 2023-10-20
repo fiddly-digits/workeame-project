@@ -34,13 +34,11 @@ export default function PasswordReset() {
   const { token } = useParams();
 
   async function onSubmit(data) {
-    console.log(data);
     passwordReset({ password: data.password }, token)
       .then((res) => {
         setStatusMessage(res.data.message);
       })
       .catch((err) => {
-        console.log(err);
         setStatusMessage(err.response.data.message);
       });
   }

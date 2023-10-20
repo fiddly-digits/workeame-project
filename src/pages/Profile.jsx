@@ -43,13 +43,8 @@ export default function Profile() {
         setServices(res.owner.Services);
         setShareURL(`https://workea.me/ms/${res.micrositeURL}`);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [params, tokenExists]);
-
-  console.log('theme', siteData.theme);
-  console.log(token);
 
   const backgroundClasses = clsx('flex flex-col items-center h-auto mx-auto', {
     'bg-third/90': siteData.theme === 1,

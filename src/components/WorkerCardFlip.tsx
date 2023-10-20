@@ -20,14 +20,14 @@ export default function WorkerCardFlip({
   position,
   route
 }: Props) {
-  console.log(route);
+  ;
   return (
     <div className='flip-card'>
       <div className='flip-card-inner max-h-[28rem]'>
         <Card
           shadow='sm'
           isPressable
-          onPress={() => console.log('item pressed')}
+          onPress={() => }
           className={`m-2 flip-card-front rounded-${position}-[80px]`}
         >
           <CardBody className='p-0 overflow-hidden shadow-sm radius-sm'>
@@ -53,7 +53,7 @@ export default function WorkerCardFlip({
           <Card
             shadow='sm'
             isPressable
-            onPress={() => console.log('item pressed')}
+            onPress={() => }
             className={`p-4 w-60 h-80 flip-card-front rounded-${position}-[80px]`}
           >
             <CardBody className='p-0 overflow-visible shadow-sm radius-sm'>

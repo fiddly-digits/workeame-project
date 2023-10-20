@@ -17,9 +17,7 @@ export default function Bookings() {
       .then((res) => {
         setProviderBookings(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
@@ -27,13 +25,8 @@ export default function Bookings() {
       .then((res) => {
         setCustomerBookings(res);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, []);
-
-  console.log('provider', providerBookings);
-  console.log('customer', customerBookings);
 
   return (
     <div className='flex flex-col items-center justify-center gap-10 m-10'>

@@ -28,11 +28,9 @@ export default function Resend() {
   const navigate = useNavigate();
 
   async function onSubmit(data) {
-    console.log(data);
     axios
       .post(`${VITE_API_URL}auth/resend`, data)
       .then((res) => {
-        console.log(res.data);
         setSuccessMessage(
           'Se ha enviado un nuevo correo de verificación, seras redirigido al login'
         );
@@ -41,7 +39,6 @@ export default function Resend() {
         }, 2000);
       })
       .catch((err) => {
-        console.log(err);
         setErrorMessage(err.response.data.message);
       });
   }

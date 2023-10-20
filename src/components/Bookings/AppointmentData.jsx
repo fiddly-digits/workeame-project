@@ -52,8 +52,6 @@ export default function AppointmentData({ booking, type, isOverdue }) {
   });
 
   function onSubmit() {
-    console.log('submit');
-    console.log(selectedStatus);
     if (selectedStatus === '') {
       setSelectionError('Para actualizar, selecciona un status');
       return;

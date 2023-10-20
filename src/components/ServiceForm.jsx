@@ -71,7 +71,6 @@ export default function ServiceForm({ element, setService, index }) {
     if (isElementEmpty) {
       createService(dataToSubmit)
         .then((res) => {
-          console.log(res.data);
           setStatus(res.data);
           setService((prev) => {
             const newServices = [...prev];
@@ -81,14 +80,12 @@ export default function ServiceForm({ element, setService, index }) {
           setShouldOpenModal(true);
         })
         .catch((err) => {
-          console.log(err);
           setStatus(err.response.data);
           setShouldOpenModal(true);
         });
     } else {
       patchService(element._id, dataToSubmit)
         .then((res) => {
-          console.log(res.data);
           setStatus(res.data);
           setService((prev) => {
             const newServices = [...prev];
@@ -98,15 +95,12 @@ export default function ServiceForm({ element, setService, index }) {
           setShouldOpenModal(true);
         })
         .catch((err) => {
-          console.log(err);
           setStatus(err.response.data);
           setShouldOpenModal(true);
         });
     }
 
-    console.log('Data to Submit', dataToSubmit);
-
-    //console.log(data);
+    //;
   };
 
   const onDelete = () => {
@@ -116,7 +110,6 @@ export default function ServiceForm({ element, setService, index }) {
         setShouldOpenModal(true);
       })
       .catch((err) => {
-        console.log(err);
         setStatus(err.response.data);
         setShouldOpenModal(true);
       });

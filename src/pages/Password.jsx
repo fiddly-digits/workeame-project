@@ -62,7 +62,6 @@ export default function Password() {
   const toggleOldVisibility = () => setIsOldVisible(!isOldVisible);
 
   async function onSubmit(data) {
-    console.log(data);
     const token = sessionStorage.getItem('token');
     axios
       .patch(`${VITE_API_URL}user/passwordChange/`, data, {
@@ -72,7 +71,6 @@ export default function Password() {
         }
       })
       .then((res) => {
-        console.log(res);
         sessionStorage.removeItem('token');
         Cookie.remove('userData');
         navigate('/login', { replace: true });

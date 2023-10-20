@@ -16,7 +16,7 @@ export default function ReviewCard(selectedBooking) {
           index += 1;
           return (
             <button type='button' key={index} onClick={() => setRating(index)}>
-              {console.log('index', index)}
+              {}
               <Star {...(index <= rating && { fill: false })} />
             </button>
           );

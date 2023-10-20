@@ -24,9 +24,6 @@ export default function HeaderApp({ color }) {
   const { userData } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log('mi ubicacion', location.pathname);
-  console.log('userData', userData);
-
   const handleLogout = () => {
     sessionStorage.removeItem('token');
     Cookies.remove('userData');

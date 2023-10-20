@@ -41,17 +41,14 @@ export default function Login() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   async function onSubmit(data) {
-    console.log(data);
     axios
       .post(`${VITE_API_URL}auth/login`, data)
       .then((res) => {
-        console.log(res.data.token);
         sessionStorage.setItem('token', res.data?.token);
         navigate('/dashboard', { replace: true }, { state: userData });
         location.reload();
       })
       .catch((err) => {
-        console.log(err);
         setErrorMessage(err.response.data.message);
       });
   }

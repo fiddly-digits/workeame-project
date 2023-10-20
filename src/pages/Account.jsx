@@ -100,8 +100,6 @@ export default function Account() {
   const [status, setStatus] = useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-  console.log(errors);
-
   useEffect(() => {
     if (userData.type != 'worker') {
       delete editable['category'];
@@ -119,7 +117,6 @@ export default function Account() {
 
   const onSubmit = (data) => {
     setLoading(true);
-    console.log(data);
     const userInfo = {
       ...(data.name && { name: data.name }),
       ...(data.lastName && { lastName: data.lastName }),
@@ -144,12 +141,10 @@ export default function Account() {
     patchUser({ 'Content-Type': 'multipart/form-data' }, userInfo)
       .then((res) => {
         setLoading(false);
-        console.log(res);
         setMessage(res.data.message);
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
         setMessage(err.data.message);
       });
   };

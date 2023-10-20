@@ -29,15 +29,12 @@ export default function Verify() {
   const navigate = useNavigate();
 
   async function onSubmit(data) {
-    console.log(data);
     axios
       .post(`${VITE_API_URL}auth/confirmation/${token}`, data)
       .then((res) => {
-        console.log(res.data);
         navigate('/login');
       })
       .catch((err) => {
-        console.log(err);
         setErrorMessage(err.response.data.message);
       });
   }

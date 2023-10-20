@@ -64,7 +64,6 @@ export default function CompleteProfile() {
 
   async function onSubmit(data) {
     setLoading(true);
-    console.log(data);
     const userData = {
       address: {
         street: data.street,
@@ -78,8 +77,6 @@ export default function CompleteProfile() {
       type: 'user',
       phone: `+52${data.phone}`
     };
-    console.log(userData);
-
     completeUser({ accept: 'application/json' }, userData)
       .then((res) => {
         setLoading(false);

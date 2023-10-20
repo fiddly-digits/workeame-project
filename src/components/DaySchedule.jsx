@@ -22,7 +22,6 @@ export default function DaySchedule({ element }) {
   const [status, setStatus] = useState({ success: false, message: '' });
 
   const onSubmit = () => {
-    console.log('element id', element._id);
     if (availability && activeHours.length === 0) {
       setStatus({
         success: false,
@@ -49,11 +48,8 @@ export default function DaySchedule({ element }) {
         : { date: date })
     };
 
-    console.log(dataToSubmit);
-
     patchSchedule(element._id, dataToSubmit)
       .then((res) => {
-        console.log(res);
         setStatus({
           success: true,
           message: 'Agenda Actualizada Correctamente'
@@ -61,7 +57,6 @@ export default function DaySchedule({ element }) {
         setShouldOpenModal(true);
       })
       .catch((err) => {
-        console.log(err);
         setStatus({ success: false, message: 'Error al actualizar la agenda' });
         setShouldOpenModal(true);
       });

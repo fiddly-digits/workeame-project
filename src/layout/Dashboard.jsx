@@ -18,7 +18,7 @@ export default function Dashboard() {
         setUserData(res);
       })
       .catch((err) => {
-        console.log(err);
+        ;
       });
   }, [setUserData]);
 
@@ -28,10 +28,10 @@ export default function Dashboard() {
 
   const tokenExpiration = dayjs.unix(plainPayload.exp);
   const now = dayjs();
-  console.log(dayjs.unix(plainPayload.exp).format('DD/MM/YYYY  HH:mm:ss'));
+  .format('DD/MM/YYYY  HH:mm:ss'));
 
-  console.log(tokenExpiration.isBefore(now));
-  console.log(now);
+  );
+  ;
   if (tokenExpiration.isBefore(now)) {
     sessionStorage.removeItem('token');
     Cookies.remove('userData');

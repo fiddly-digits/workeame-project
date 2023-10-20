@@ -50,32 +50,21 @@ export default function DateAndTime({ schedule, services }) {
 
     setBookingStatus(null);
 
-    console.log(selectedService);
-
     const data = {
       date: selectedDate,
       start: dayjs(selectedDate).hour(selectedHour).minute(0).toISOString(),
       end: dayjs(selectedDate).hour(selectedEndHour).minute(0).toISOString()
     };
 
-    console.log(data);
-
     createBooking(data, selectedService)
       .then((res) => {
-        console.log(res);
         setBookingStatus('Cita agendada con éxito');
         setIsModalOpen(true);
       })
       .catch((err) => {
-        console.log(err);
         setBookingStatus(err.response.data.message);
         setIsModalOpen(true);
       });
-
-    console.log('selected hour', selectedHour);
-    console.log('selected end hour', selectedEndHour);
-    console.log('selected Service', selectedService);
-    console.log('selected Date', selectedDate);
 
     console.log(
       'count numbers in range',
@@ -131,7 +120,6 @@ export default function DateAndTime({ schedule, services }) {
                     const day = schedule.find(
                       (day) => day._id === event.target.value
                     );
-                    console.log(day);
                     setSelectedDate(day.date);
                     setSelectedHour(null);
                     setDayAvailableHours(day.activeHours);
