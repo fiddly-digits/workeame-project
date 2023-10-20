@@ -143,15 +143,16 @@ export default function HeaderApp({ color }) {
                     onClick={() => navigate(`/ms/${userData._id}`)}
                   />
                 )}
-                {!userData?.isMicrositeCreated && (
-                  <DropdownItem
-                    key='microsite-config'
-                    color='secondary'
-                    title='Configura tu Sitio'
-                    className='font-semibold font-oswald'
-                    onClick={() => navigate('/dashboard/microsite-config')}
-                  />
-                )}
+                {!userData?.isMicrositeCreated &&
+                  userData.type === 'worker' && (
+                    <DropdownItem
+                      key='microsite-config'
+                      color='secondary'
+                      title='Configura tu Sitio'
+                      className='font-semibold font-oswald'
+                      onClick={() => navigate('/dashboard/microsite-config')}
+                    />
+                  )}
 
                 {userData?.type === 'worker' && (
                   <DropdownItem
@@ -181,6 +182,13 @@ export default function HeaderApp({ color }) {
                     className='font-semibold font-oswald'
                   />
                 )}
+                <DropdownItem
+                  key='busca-workers'
+                  color='secondary'
+                  title='Busca Workers'
+                  className='font-semibold font-oswald'
+                  onClick={() => navigate('/search')}
+                />
 
                 <DropdownItem
                   key='bookings'
