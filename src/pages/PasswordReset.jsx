@@ -3,16 +3,25 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { passwordResetRequest } from '../utils/fetch';
+import { useParams, Link } from 'react-router-dom';
+import { passwordReset } from '../utils/fetch';
 
 const schema = Yup.object().shape({
-  email: Yup.string()
-    .email('El email no es válido')
-    .required('El email es requerido')
+  password: Yup.string()
+    .required('La contraseña es requerida')
+    .min(8, 'Debe contener al menos 8 caracteres')
+    .matches(/[A-Z]/, 'Debe contener al menos una mayúscula')
+    .matches(/[0-9]/, 'Debe contener al menos un número')
+    .matches(
+      /[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/,
+      'Debe contener al menos un cáracter especial'
+    ),
+  repeatPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Las contraseñas deben coincidir')
+    .required('La contraseña es requerida')
 });
 
-export default function RequestPasswordChange() {
+export default function PasswordReset() {
   const {
     register,
     handleSubmit,
@@ -22,12 +31,12 @@ export default function RequestPasswordChange() {
     resolver: yupResolver(schema)
   });
   const [statusMessage, setStatusMessage] = useState();
+  const { token } = useParams();
 
   async function onSubmit(data) {
     console.log(data);
-    passwordResetRequest(data)
+    passwordReset({ password: data.password }, token)
       .then((res) => {
-        console.log(res.data);
         setStatusMessage(res.data.message);
       })
       .catch((err) => {
@@ -35,6 +44,7 @@ export default function RequestPasswordChange() {
         setStatusMessage(err.response.data.message);
       });
   }
+
   return (
     <div className='items-center h-screen bg-fourth'>
       <div className='absolute inset-0 z-0 right-[20rem] lg:right-[30rem] lg:top-[3rem] top-[32rem] md:top-[28rem] '>
@@ -44,7 +54,7 @@ export default function RequestPasswordChange() {
       </div>
       <main className='container relative z-10 py-5 mx-auto'>
         <h2 className='flex justify-center m-5 mt-20 text-2xl font-oswald'>
-          Solicita tu cambio de contraseña empezar a{' '}
+          Ingresa nuevamente tu password para empezar a{' '}
           <span className='mx-1 font-bold md:mx-2'>WORKEAR</span>
         </h2>
         <form
@@ -52,15 +62,24 @@ export default function RequestPasswordChange() {
           onSubmit={handleSubmit(onSubmit)}
         >
           <Input
-            type='email'
-            label='Email'
+            type='password'
+            label='Contraseña'
             size='sm'
             isRequired
-            isClearable
             variant='bordered'
-            errorMessage={errors.email?.message}
-            isInvalid={!!errors.email}
-            {...register('email')}
+            errorMessage={errors.password?.message}
+            isInvalid={!!errors.password}
+            {...register('password')}
+          />
+          <Input
+            type='password'
+            label='Confirmar contraseña'
+            size='sm'
+            isRequired
+            variant='bordered'
+            errorMessage={errors.repeatPassword?.message}
+            isInvalid={!!errors.repeatPassword}
+            {...register('repeatPassword')}
           />
           {statusMessage && (
             <div className='flex justify-center text-red-400 font-roboto'>

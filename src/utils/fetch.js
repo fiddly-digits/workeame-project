@@ -212,3 +212,13 @@ export const passwordResetRequest = async (body) => {
   let data = await axios.request(options);
   return data;
 };
+
+export const passwordReset = async (body, params) => {
+  const options = {
+    method: 'PATCH',
+    url: `http://localhost:8080/api/v1/auth/reset-password/${params}`,
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
