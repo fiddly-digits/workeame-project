@@ -92,7 +92,8 @@ export default function MicrositeConfiguration() {
 
   if (
     isProtectedDashboardRoute.includes(location.pathname) &&
-    userData.isMicrositeCreated
+    userData.isMicrositeCreated &&
+    userData.type === 'worker'
   ) {
     return <Navigate to='/dashboard' replace />;
   }

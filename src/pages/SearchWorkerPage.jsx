@@ -103,18 +103,32 @@ export default function SearchWorkerPage() {
                 />
               )}
 
-              {fetchedSites.map((site) => (
-                <WorkerCardFlip
-                  key={site._id}
-                  name={`${site.owner.name} ${site.owner.lastName}`}
-                  job={site.owner.category}
-                  picture={site.owner.photo}
-                  address={site.owner.address.state}
-                  description={site.about}
-                  position={'t'}
-                  route={site.owner._id}
-                />
-              ))}
+              {fetchedSites &&
+                fetchedSites.map((site) => {
+                  if (site.owner) {
+                    return (
+                      <WorkerCardFlip
+                        key={site._id}
+                        name={`${site.owner.name} ${site.owner.lastName}`}
+                        job={site.owner.category}
+                        picture={site.owner.photo}
+                        address={site.owner.address.state}
+                        description={site.about}
+                        position={'t'}
+                        route={site.owner._id}
+                      />
+                    );
+                  } else {
+                    return (
+                      <div className='flex justify-center col-span-3'>
+                        <p className='text-center text-red-400 grow font-roboto'>
+                          No se encontraron resultados para tu búsqueda, prueba
+                          otra vez
+                        </p>
+                      </div>
+                    );
+                  }
+                })}
               {error && (
                 <p className='flex justify-center text-red-400 font-roboto'>
                   {error}
