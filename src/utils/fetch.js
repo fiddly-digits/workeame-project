@@ -49,6 +49,21 @@ export const patchUser = async (headers, body) => {
   return data;
 };
 
+export const patchUserToWorker = async (headers, body) => {
+  const token = sessionStorage.getItem('token');
+  const options = {
+    method: 'PATCH',
+    url: `${VITE_API_URL}user/workerUpdate/`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      ...headers
+    },
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
+
 export const fetchMS = async (headers, params) => {
   const plainPayload = params || handleToken();
   const options = {

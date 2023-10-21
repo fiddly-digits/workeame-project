@@ -7,7 +7,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import ChangeText from '../components/ChangeText';
 import { clabe } from 'clabe-validator';
 import { useState } from 'react';
-import { patchUser } from '../utils/fetch';
+import { patchUserToWorker } from '../utils/fetch';
 import { useUser } from '../utils/UserContext';
 import { isProtectedDashboardRoute } from '../utils/utils';
 
@@ -49,7 +49,7 @@ export default function BecomeWorker() {
       category: data.category,
       CLABE: data.CLABE
     };
-    patchUser({ 'Content-Type': 'application/json' }, userData)
+    patchUserToWorker({ 'Content-Type': 'application/json' }, userData)
       .then((res) => {
         setStatus(res.message);
         navigate('/dashboard', { replace: true });
