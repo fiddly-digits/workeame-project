@@ -28,6 +28,8 @@ export default function Profile() {
   const params = useParams();
   const tokenExists = sessionStorage.getItem('token');
 
+  console.log('params', params);
+
   useEffect(() => {
     if (tokenExists) {
       const payload = tokenExists.split('.')[1];

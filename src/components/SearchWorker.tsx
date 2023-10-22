@@ -58,7 +58,7 @@ export default function SearchWorker() {
                 address={site.owner.address.state}
                 description={site.about}
                 position={'t'}
-                route={site.owner._id}
+                route={site.micrositeURL}
               />
             ))}
           </div>

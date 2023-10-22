@@ -52,6 +52,8 @@ export default function Dashboard() {
     );
   }
 
+  console.log(userData.micrositeURL);
+
   return (
     <div className='bg-fourth'>
       <HeaderApp userData={userData} />
@@ -127,7 +129,7 @@ export default function Dashboard() {
                             <MenuItem
                               icon='/presentation.svg'
                               action='Visita tu Sitio'
-                              reference={`/ms/${userData._id}`}
+                              reference={`/ms/${userData.micrositeURL}`}
                               position='top'
                             />
                             <MenuItem

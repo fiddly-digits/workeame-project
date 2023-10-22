@@ -140,7 +140,7 @@ export default function HeaderApp({ color }) {
                     color='secondary'
                     title='Visita tu Sitio'
                     className='font-semibold font-oswald'
-                    onClick={() => navigate(`/ms/${userData._id}`)}
+                    onClick={() => navigate(`/ms/${userData.micrositeURL}`)}
                   />
                 )}
                 {!userData?.isMicrositeCreated &&

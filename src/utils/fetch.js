@@ -68,9 +68,11 @@ export const fetchMS = async (headers, params) => {
   const plainPayload = params || handleToken();
   const options = {
     method: 'GET',
-    url: `${VITE_API_URL}ms/${plainPayload.id}`,
+    url: `${VITE_API_URL}ms/${plainPayload.micrositeURL}`,
     headers
   };
+
+  console.log(options.url);
   let data = await axios.request(options);
   return data.data.data;
 };

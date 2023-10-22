@@ -197,6 +197,7 @@ export default function MicrositeConfiguration() {
           setFetchStatus(
             'Hubo un error al crear tu micrositio, esto no deberia pasar. contactanos en contacto@workea.me'
           );
+        console.log(err);
         setShowSpinner(false);
         // setTimeout(() => {
         //   window.location.reload();
@@ -617,6 +618,7 @@ export default function MicrositeConfiguration() {
                 <Button
                   as={Link}
                   to={'/dashboard'}
+                  reloadDocument
                   radius='sm'
                   className='px-8 text-white bg-black font-oswald hover:bg-zinc-700 w-60'
                   startContent={<img src='/arrow-right.svg' alt='next' />}
