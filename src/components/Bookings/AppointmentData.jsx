@@ -8,18 +8,24 @@ import {
   Avatar,
   Select,
   SelectItem,
-  Spinner
+  Spinner,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalContent
 } from '@nextui-org/react';
-import { Check } from 'iconoir-react';
+import { Check, Paypal } from 'iconoir-react';
 import { bookingStatusDictionary } from '../../utils/utils';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
 import DayJSUtc from 'dayjs/plugin/utc';
 import DayJSTimezone from 'dayjs/plugin/timezone';
 import { useState } from 'react';
-import { updateBookingStatus } from '../../utils/fetch';
+import { bookingPaymentUpdate, updateBookingStatus } from '../../utils/fetch';
 import clsx from 'clsx';
 import { clabe } from 'clabe-validator';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
@@ -29,17 +35,23 @@ export default function AppointmentData({ booking, type, isOverdue }) {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectionError, setSelectionError] = useState('');
   const [responseStatus, setResponseStatus] = useState('');
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
+  const initialOptions = {
+    clientId: 'test',
+    currency: 'MXN',
+    intent: 'capture'
+  };
   const workerStatusColors = clsx('text-gray-500', {
     'text-green-500': booking.workerStatus === 'confirmed',
     'text-red-500': booking.workerStatus === 'cancelled',
-    'bg-secondary-500': booking.workerStatus === 'completed'
+    'text-secondary-500': booking.workerStatus === 'completed'
   });
 
   const clientStatusColors = clsx('text-gray-500', {
     'text-green-500': booking.clientStatus === 'confirmed',
     'text-red-500': booking.clientStatus === 'cancelled',
-    'bg-secondary-500': booking.clientStatus === 'completed'
+    'text-secondary-500': booking.clientStatus === 'completed'
   });
 
   const shadowColors = clsx('shadow-md', {
@@ -106,8 +118,8 @@ export default function AppointmentData({ booking, type, isOverdue }) {
         <div className='flex items-center gap-3'>
           {type === 'provider' ? (
             <>
-              <Avatar showFallback src={booking.customer.photo} />
-              <p>Solicitud de Cita de {booking.customer.name}</p>
+              <Avatar showFallback src={booking.customer?.photo} />
+              <p>Solicitud de Cita de {booking.customer?.name}</p>
             </>
           ) : (
             <>
@@ -134,6 +146,11 @@ export default function AppointmentData({ booking, type, isOverdue }) {
         <div className='flex flex-col gap-5 md:flex-row'>
           <div>
             <p>{booking.name}</p>
+            <p>
+              {' '}
+              Precio total del servicio: $
+              {booking.service.price * booking.timeslot.length} MXN
+            </p>
             <p>
               Inicio:{' '}
               {dayjs(booking.start).format('D MMMM YYYY [a las] HH:mm [horas]')}
@@ -173,6 +190,34 @@ export default function AppointmentData({ booking, type, isOverdue }) {
                   : bookingStatusDictionary[booking.clientStatus]}
               </span>
             </p>
+            {booking.isPaypalPaymentCompleted?.status === 'COMPLETED' && (
+              <p>El pago de esta cita ya fue completado</p>
+            )}
+            {type === 'customer' &&
+              booking.workerStatus === 'confirmed' &&
+              booking.clientStatus === 'confirmed' &&
+              booking.isPaypalPaymentCompleted?.status != 'COMPLETED' && (
+                <>
+                  <Button
+                    type='button'
+                    className='text-white bg-wkablack font-oswald'
+                    onPress={() => setShowPaymentModal(true)}
+                  >
+                    Pago Con Paypal <Paypal />
+                  </Button>
+                  {showPaymentModal && (
+                    <PaymentModal
+                      showModal={showPaymentModal}
+                      setShowModal={setShowPaymentModal}
+                      initialOptions={initialOptions}
+                      service={booking.service}
+                      providerName={booking.provider.name}
+                      priceMultiplier={booking.timeslot.length}
+                      bookingID={booking._id}
+                    />
+                  )}
+                </>
+              )}
           </div>
           {/* <div className='flex items-center justify-center grow'>
             <Button>Deja un mensaje</Button>
@@ -186,9 +231,17 @@ export default function AppointmentData({ booking, type, isOverdue }) {
             La cita esta vencida
           </p>
         ) : booking.workerStatus === 'cancelled' ||
-          booking.clientStatus === 'cancelled' ? (
+          booking.clientStatus === 'cancelled' ||
+          booking.clientStatus === 'completed' ||
+          booking.workerStatus === 'completed' ? (
           <p className='self-center text-center text-red-500 font-roboto'>
-            Esta cita ha sido cancelada
+            Esta cita ha sido{' '}
+            {(type === 'provider' && booking.workerStatus === 'cancelled') ||
+            (type === 'customer' && booking.clientStatus === 'cancelled') ? (
+              <span>cancelada</span>
+            ) : (
+              <span className='text-green-500'>completada</span>
+            )}
           </p>
         ) : (
           <div className='flex flex-col items-center gap-3 grow'>
@@ -239,5 +292,87 @@ export default function AppointmentData({ booking, type, isOverdue }) {
         )}
       </CardFooter>
     </Card>
+  );
+}
+
+function PaymentModal({
+  showModal,
+  setShowModal,
+  initialOptions,
+  service,
+  providerName,
+  priceMultiplier,
+  bookingID
+}) {
+  function onSubmit(order) {
+    const data = {
+      status: order.status,
+      order: order.id,
+      payedAmount: service.price * priceMultiplier
+    };
+
+    bookingPaymentUpdate(bookingID, data)
+      .then((res) => {
+        console.log('res', res);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log('err', err);
+      });
+  }
+
+  return (
+    <Modal
+      isOpen={showModal}
+      onOpenChange={setShowModal}
+      isDismissable={false}
+      hideCloseButton
+    >
+      <ModalContent>
+        <>
+          <ModalHeader className='flex flex-col gap-1'>
+            Pago de Tu Cita
+          </ModalHeader>
+          <ModalBody>
+            <div>
+              <h1 className='font-roboto'>
+                Paga tu cita con {providerName} via Paypal
+              </h1>
+            </div>
+            <PayPalScriptProvider options={initialOptions}>
+              <PayPalButtons
+                createOrder={(data, actions) => {
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        description: `Pago de cita de ${service.name}`,
+                        amount: {
+                          value: service.price * priceMultiplier
+                        }
+                      }
+                    ],
+                    application_context: {
+                      shipping_preference: 'NO_SHIPPING'
+                    }
+                  });
+                }}
+                onApprove={async (data, actions) => {
+                  const order = await actions.order.capture();
+                  onSubmit(order);
+                }}
+              />
+            </PayPalScriptProvider>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              className='text-white bg-wkablack font-oswald'
+              onPress={() => setShowModal(false)}
+            >
+              Cancelar
+            </Button>
+          </ModalFooter>
+        </>
+      </ModalContent>
+    </Modal>
   );
 }

@@ -256,3 +256,18 @@ export const passwordReset = async (body, params) => {
   let data = await axios.request(options);
   return data;
 };
+
+export const bookingPaymentUpdate = async (params, body) => {
+  console.log('params', params);
+  const token = sessionStorage.getItem('token');
+  const options = {
+    method: 'PATCH',
+    url: `${VITE_API_URL}booking/paymentUpdate/${params}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
