@@ -37,8 +37,6 @@ export default function AppointmentData({ booking, type, isOverdue }) {
   const [responseStatus, setResponseStatus] = useState('');
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  console.log('booking', booking);
-
   const initialOptions = {
     clientId: 'test',
     currency: 'MXN',
@@ -307,13 +305,11 @@ function PaymentModal({
   bookingID
 }) {
   function onSubmit(order) {
-    console.log('Status desde el onsubmit', order);
     const data = {
       status: order.status,
       order: order.id,
       payedAmount: service.price * priceMultiplier
     };
-    console.log(bookingID);
 
     bookingPaymentUpdate(bookingID, data)
       .then((res) => {
