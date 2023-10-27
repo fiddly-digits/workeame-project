@@ -3,16 +3,10 @@ import { Spinner } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import { fetchWorkersData } from '../utils/fetch';
 import { Link } from 'react-router-dom';
+import { shuffleArray } from '../utils/utils';
 
 //Aleatorizar Workers Cards
-function shuffleArray(array) {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1)); //genera un número entero aleatorio j
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; //intercambia la posición de i y j
-  }
-  return newArray;
-}
+
 export default function SearchWorker() {
   const [fetchedSites, setFetchedSites] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +52,7 @@ export default function SearchWorker() {
                 address={site.owner.address.state}
                 description={site.about}
                 position={'t'}
-                route={site.owner._id}
+                route={site.micrositeURL}
               />
             ))}
           </div>

@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Textarea, Button, Spinner } from '@nextui-org/react';
 import { Link } from 'react-router-dom';
+import { useUser } from '../utils/UserContext';
 
 //TODO: Buscar un placeholder para swiper
 
@@ -22,6 +23,7 @@ const schema = Yup.object().shape({
 });
 
 export default function MicrositeUpdate() {
+  const { userData, setUserData } = useUser();
   const [siteData, setSiteData] = useState(null);
   const [selectedTheme, setSelectedTheme] = useState(null);
   const [selectedImages, setSelectedImages] = useState([]);
@@ -42,7 +44,7 @@ export default function MicrositeUpdate() {
   });
 
   useEffect(() => {
-    fetchMS({ accept: 'application/json' })
+    fetchMS({ accept: 'application/json' }, userData)
       .then((res) => {
         setSiteData(res);
         setSelectedTheme(res.theme);

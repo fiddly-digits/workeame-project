@@ -127,7 +127,7 @@ export default function Dashboard() {
                             <MenuItem
                               icon='/presentation.svg'
                               action='Visita tu Sitio'
-                              reference={`/ms/${userData._id}`}
+                              reference={`/ms/${userData.micrositeURL}`}
                               position='top'
                             />
                             <MenuItem

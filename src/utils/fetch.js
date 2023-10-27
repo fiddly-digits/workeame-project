@@ -68,9 +68,10 @@ export const fetchMS = async (headers, params) => {
   const plainPayload = params || handleToken();
   const options = {
     method: 'GET',
-    url: `${VITE_API_URL}ms/${plainPayload.id}`,
+    url: `${VITE_API_URL}ms/${plainPayload.micrositeURL}`,
     headers
   };
+
   let data = await axios.request(options);
   return data.data.data;
 };
@@ -249,6 +250,20 @@ export const passwordReset = async (body, params) => {
   const options = {
     method: 'PATCH',
     url: `${VITE_API_URL}auth/reset-password/${params}`,
+    data: body
+  };
+  let data = await axios.request(options);
+  return data;
+};
+
+export const bookingPaymentUpdate = async (params, body) => {
+  const token = sessionStorage.getItem('token');
+  const options = {
+    method: 'PATCH',
+    url: `${VITE_API_URL}booking/paymentUpdate/${params}`,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
     data: body
   };
   let data = await axios.request(options);

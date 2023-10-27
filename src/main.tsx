@@ -127,7 +127,7 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: 'ms/:id',
+    path: 'ms/:micrositeURL',
     element: <Profile />,
     errorElement: <ErrorPage />
   },

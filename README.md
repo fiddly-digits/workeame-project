@@ -1,10 +1,10 @@
 # WORKEA.ME
 
-[![Built with TypeScript](https://img.shields.io/badge/Built%20with-TypeScript-blue.svg)](https://www.typescriptlang.org/)
+[![Built with TypeScript](https://img.shields.io/badge/Built%20with-Javascript-yellow.svg)]
 [![Styled with Tailwind CSS](https://img.shields.io/badge/Styled%20with-Tailwind%20CSS-blueviolet.svg)](https://tailwindcss.com/)
 [![Styled with Sass](https://img.shields.io/badge/Styled%20with-Sass-pink.svg)](https://sass-lang.com/)
 [![Powered by React](https://img.shields.io/badge/Powered%20by-React-blue.svg)](https://reactjs.org/)
-[![Powered by Next.js](https://img.shields.io/badge/Powered%20by-Next.js-orange.svg)](https://nextjs.org/)
+[![Powered by Next.js](https://img.shields.io/badge/Powered%20by-Vite-purple.svg)](https://vitejs.dev/)
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black.svg)](https://vercel.com/)
 
 ## What is Workea.me?

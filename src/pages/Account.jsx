@@ -145,7 +145,7 @@ export default function Account() {
       })
       .catch((err) => {
         setLoading(false);
-        setMessage(err.data.message);
+        setMessage(err.response.data.message);
       });
   };
 
