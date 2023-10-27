@@ -14,6 +14,12 @@ dayjs.extend(DayJSTimezone);
 export default function ScheduleUpdate() {
   const [schedule, setSchedule] = useState(null);
 
+  const nextDayOfWeek = (dayOfWeek) => {
+    const now = dayjs();
+    const day = now.day(dayOfWeek);
+    return day.isBefore(now) ? day.add(1, 'week') : day;
+  };
+
   useEffect(() => {
     fetchSchedule('GET', { accept: 'application/json' })
       .then((res) => {
@@ -81,10 +87,18 @@ export default function ScheduleUpdate() {
                     key={`incoming-${index}`}
                   >
                     <p className='font-semibold text-center font-roboto'>
-                      {dayjs(element.date)
-                        .add(1, 'week')
-                        .format('dddd D [/] MMM YYYY')}
+                      {nextDayOfWeek(dayjs(element.date).day()).format(
+                        'dddd D [/] MMM YYYY'
+                      )}
+                      {/* {dayjs(element.date).add(1, 'week').isBefore(dayjs())
+                        ? dayjs(element.date)
+                            .add(2, 'week')
+                            .format('dddd D [/] MMM YYYY')
+                        : dayjs(element.date)
+                            .add(1, 'week')
+                            .format('dddd D [/] MMM YYYY')} */}
                     </p>
+
                     <DaySchedule element={element} />
                   </div>
                 );

@@ -9,9 +9,16 @@ import { Restart } from 'iconoir-react';
 import { patchSchedule } from '../utils/fetch';
 import ModalOnCall from './ModalOnCall';
 
+// FIXME: Adapt 2 weeks from now
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
+
+const nextDayOfWeek = (dayOfWeek) => {
+  const now = dayjs();
+  const day = now.day(dayOfWeek);
+  return day.isBefore(now) ? day.add(1, 'week') : day;
+};
 
 export default function DaySchedule({ element }) {
   const hours = arrayRange(0, 23, 1);
@@ -44,7 +51,7 @@ export default function DaySchedule({ element }) {
       availability,
       activeHours,
       ...(dayjs(date).isBefore(dayjs())
-        ? { date: dayjs(date).add(1, 'week').startOf('day').toISOString() }
+        ? { date: nextDayOfWeek(dayjs(date).day()) }
         : { date: date })
     };
 
