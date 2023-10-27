@@ -144,7 +144,7 @@ export default function AppointmentData({ booking, type, isOverdue }) {
       <Divider />
       <CardBody className="gap-3 font-roboto">
         <div className="flex flex-col gap-5 md:flex-row">
-          <div>
+          <div className=" flex flex-col gap-2">
             <p className="font-bold text-lg tracking-wider my-2">
               {booking.name}
             </p>
@@ -202,7 +202,7 @@ export default function AppointmentData({ booking, type, isOverdue }) {
                 <>
                   <Button
                     type="button"
-                    className="text-white bg-wkablack font-oswald"
+                    className="text-white bg-wkablack font-oswald my-4"
                     onPress={() => setShowPaymentModal(true)}
                   >
                     Pago Con Paypal <Paypal />
