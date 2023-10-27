@@ -227,8 +227,14 @@ export default function AppointmentData({ booking, type, isOverdue }) {
       <Divider />
       <CardFooter className='gap-3 font-roboto'>
         {isOverdue === true ? (
-          <p className='self-center text-center text-red-500 font-roboto'>
-            La cita esta vencida
+          <p className='self-center text-center font-roboto'>
+            La cita esta{' '}
+            {booking.clientStatus === 'completed' &&
+            booking.workerStatus === 'completed' ? (
+              <span className='text-green-500'>completada</span>
+            ) : (
+              <span className='text-red-500'>vencida</span>
+            )}
           </p>
         ) : booking.workerStatus === 'cancelled' ||
           booking.clientStatus === 'cancelled' ||
@@ -358,6 +364,7 @@ function PaymentModal({
                 }}
                 onApprove={async (data, actions) => {
                   const order = await actions.order.capture();
+                  console.log(order);
                   onSubmit(order);
                 }}
               />
