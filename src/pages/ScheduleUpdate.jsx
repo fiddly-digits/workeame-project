@@ -89,7 +89,6 @@ export default function ScheduleUpdate() {
                 dayjs(element.date).isBefore(dayjs()) &&
                 !dayjs(element.date).isToday(dayjs())
               ) {
-                console.log(element.date);
                 return (
                   <div
                     className=' rounded-md bg-zinc-300 shadow-xl w-[14rem] p-3 font-roboto'

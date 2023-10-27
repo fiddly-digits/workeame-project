@@ -72,7 +72,6 @@ export const fetchMS = async (headers, params) => {
     headers
   };
 
-  console.log(options.url);
   let data = await axios.request(options);
   return data.data.data;
 };
@@ -258,7 +257,6 @@ export const passwordReset = async (body, params) => {
 };
 
 export const bookingPaymentUpdate = async (params, body) => {
-  console.log('params', params);
   const token = sessionStorage.getItem('token');
   const options = {
     method: 'PATCH',
