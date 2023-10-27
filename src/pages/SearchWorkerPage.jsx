@@ -5,6 +5,7 @@ import WorkerCardFlip from '../components/WorkerCardFlip';
 import { states, categories } from '../utils/utils';
 import { useEffect, useState } from 'react';
 import { fetchWorkersData } from '../utils/fetch';
+import { shuffleArray } from '../utils/utils';
 
 export default function SearchWorkerPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -16,7 +17,8 @@ export default function SearchWorkerPage() {
   useEffect(() => {
     fetchWorkersData()
       .then((res) => {
-        setFetchedSites(res);
+        const shuffledArray = shuffleArray(res);
+        setFetchedSites(shuffledArray);
         setLoading(false);
       })
       .catch((err) => {
@@ -31,7 +33,8 @@ export default function SearchWorkerPage() {
     setLoading(true);
     fetchWorkersData(searchTerms)
       .then((res) => {
-        setFetchedSites(res);
+        const shuffledArray = shuffleArray(res);
+        setFetchedSites(shuffledArray);
         setLoading(false);
       })
       .catch((err) => {

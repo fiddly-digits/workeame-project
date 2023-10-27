@@ -52,8 +52,6 @@ export default function Dashboard() {
     );
   }
 
-  console.log(userData.micrositeURL);
-
   return (
     <div className='bg-fourth'>
       <HeaderApp userData={userData} />
