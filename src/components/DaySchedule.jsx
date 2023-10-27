@@ -20,10 +20,14 @@ const nextDayOfWeek = (dayOfWeek) => {
   return day.isBefore(now) ? day.add(1, 'week') : day;
 };
 
-export default function DaySchedule({ element }) {
+export default function DaySchedule({ element, isNext }) {
   const hours = arrayRange(0, 23, 1);
-  const [activeHours, setActiveHours] = useState(element.activeHours);
-  const [availability, setAvailability] = useState(element.availability);
+  const [activeHours, setActiveHours] = useState(
+    isNext ? [] : element.activeHours
+  );
+  const [availability, setAvailability] = useState(
+    isNext ? false : element.availability
+  );
   const date = element.date;
   const [shouldOpenModal, setShouldOpenModal] = useState(false);
   const [status, setStatus] = useState({ success: false, message: '' });
@@ -73,7 +77,9 @@ export default function DaySchedule({ element }) {
         setShouldOpenModal(true);
       });
   };
-
+  // {...(!errors.oldPassword && !errors.newPassword
+  //   ? { isDisabled: false }
+  //   : { isDisabled: true })}
   return (
     <div className='flex flex-col items-center gap-3 my-2'>
       <Checkbox

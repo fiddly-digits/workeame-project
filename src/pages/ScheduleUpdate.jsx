@@ -3,6 +3,7 @@ import { fetchSchedule } from '../utils/fetch';
 import { Spinner } from '@nextui-org/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es';
+import isToday from 'dayjs/plugin/isToday';
 import DayJSUtc from 'dayjs/plugin/utc';
 import DayJSTimezone from 'dayjs/plugin/timezone';
 import DaySchedule from '../components/DaySchedule';
@@ -10,6 +11,7 @@ import DaySchedule from '../components/DaySchedule';
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
+dayjs.extend(isToday);
 
 export default function ScheduleUpdate() {
   const [schedule, setSchedule] = useState(null);
@@ -53,7 +55,10 @@ export default function ScheduleUpdate() {
         )}
         <div className='flex flex-wrap items-center my-5 h-[25rem] lg:h-full overflow-auto justify-around gap-10'>
           {schedule.map((element, index) => {
-            if (dayjs(element.date).isAfter(dayjs())) {
+            if (
+              dayjs(element.date).isAfter(dayjs()) ||
+              dayjs(element.date).isToday(dayjs())
+            ) {
               return (
                 <div
                   className='border rounded-md bg-fourth shadow-xl w-[14rem] p-3 font-roboto'
@@ -80,7 +85,11 @@ export default function ScheduleUpdate() {
           {schedule
             .sort((a, b) => dayjs(a.date).date() - dayjs(b.date).date())
             .map((element, index) => {
-              if (dayjs(element.date).isBefore(dayjs())) {
+              if (
+                dayjs(element.date).isBefore(dayjs()) &&
+                !dayjs(element.date).isToday(dayjs())
+              ) {
+                console.log(element.date);
                 return (
                   <div
                     className=' rounded-md bg-zinc-300 shadow-xl w-[14rem] p-3 font-roboto'
@@ -99,7 +108,7 @@ export default function ScheduleUpdate() {
                             .format('dddd D [/] MMM YYYY')} */}
                     </p>
 
-                    <DaySchedule element={element} />
+                    <DaySchedule element={element} isNext />
                   </div>
                 );
               }
