@@ -22,6 +22,7 @@ import { createBooking } from '../../utils/fetch';
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
+dayjs.tz.setDefault('America/Mexico_City');
 
 export default function DateAndTime({ schedule, services }) {
   const [selectedHour, setSelectedHour] = useState(null);

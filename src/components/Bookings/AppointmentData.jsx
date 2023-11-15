@@ -13,85 +13,86 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  ModalContent,
-} from "@nextui-org/react";
-import { Check, Paypal } from "iconoir-react";
-import { bookingStatusDictionary } from "../../utils/utils";
-import dayjs from "dayjs";
-import "dayjs/locale/es";
-import DayJSUtc from "dayjs/plugin/utc";
-import DayJSTimezone from "dayjs/plugin/timezone";
-import { useState } from "react";
-import { bookingPaymentUpdate, updateBookingStatus } from "../../utils/fetch";
-import clsx from "clsx";
-import { clabe } from "clabe-validator";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+  ModalContent
+} from '@nextui-org/react';
+import { Check, Paypal } from 'iconoir-react';
+import { bookingStatusDictionary } from '../../utils/utils';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import DayJSUtc from 'dayjs/plugin/utc';
+import DayJSTimezone from 'dayjs/plugin/timezone';
+import { useState } from 'react';
+import { bookingPaymentUpdate, updateBookingStatus } from '../../utils/fetch';
+import clsx from 'clsx';
+import { clabe } from 'clabe-validator';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
-dayjs.locale("es");
+dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
+dayjs.tz.setDefault('America/Mexico_City');
 
 export default function AppointmentData({ booking, type, isOverdue }) {
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectionError, setSelectionError] = useState("");
-  const [responseStatus, setResponseStatus] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectionError, setSelectionError] = useState('');
+  const [responseStatus, setResponseStatus] = useState('');
   const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const initialOptions = {
-    clientId: "test",
-    currency: "MXN",
-    intent: "capture",
+    clientId: 'test',
+    currency: 'MXN',
+    intent: 'capture'
   };
-  const workerStatusColors = clsx("text-gray-500", {
-    "text-green-500": booking.workerStatus === "confirmed",
-    "text-red-500": booking.workerStatus === "cancelled",
-    "text-secondary-500": booking.workerStatus === "completed",
+  const workerStatusColors = clsx('text-gray-500', {
+    'text-green-500': booking.workerStatus === 'confirmed',
+    'text-red-500': booking.workerStatus === 'cancelled',
+    'text-secondary-500': booking.workerStatus === 'completed'
   });
 
-  const clientStatusColors = clsx("text-gray-500", {
-    "text-green-500": booking.clientStatus === "confirmed",
-    "text-red-500": booking.clientStatus === "cancelled",
-    "text-secondary-500": booking.clientStatus === "completed",
+  const clientStatusColors = clsx('text-gray-500', {
+    'text-green-500': booking.clientStatus === 'confirmed',
+    'text-red-500': booking.clientStatus === 'cancelled',
+    'text-secondary-500': booking.clientStatus === 'completed'
   });
 
-  const shadowColors = clsx("shadow-md", {
-    "shadow-green-400": !isOverdue,
-    "shadow-red-400":
+  const shadowColors = clsx('shadow-md', {
+    'shadow-green-400': !isOverdue,
+    'shadow-red-400':
       isOverdue ||
-      booking.clientStatus === "cancelled" ||
-      booking.workerStatus === "cancelled",
+      booking.clientStatus === 'cancelled' ||
+      booking.workerStatus === 'cancelled'
     //'shadow-secondary-400': booking.clientStatus === 'completed'
   });
 
   function onSubmit() {
-    if (selectedStatus === "") {
-      setSelectionError("Para actualizar, selecciona un status");
+    if (selectedStatus === '') {
+      setSelectionError('Para actualizar, selecciona un status');
       return;
     }
     if (
-      selectedStatus === "completed" &&
-      type === "provider" &&
-      booking.workerStatus !== "confirmed"
+      selectedStatus === 'completed' &&
+      type === 'provider' &&
+      booking.workerStatus !== 'confirmed'
     ) {
       setSelectionError(
-        "No puedes completar una cita que no ha sido confirmada"
+        'No puedes completar una cita que no ha sido confirmada'
       );
       return;
     }
 
     if (
-      selectedStatus === "completed" &&
-      type === "customer" &&
-      booking.clientStatus !== "confirmed"
+      selectedStatus === 'completed' &&
+      type === 'customer' &&
+      booking.clientStatus !== 'confirmed'
     ) {
       setSelectionError(
-        "No puedes completar una cita que no ha sido confirmada"
+        'No puedes completar una cita que no ha sido confirmada'
       );
       return;
     }
 
     const data = {
-      status: selectedStatus,
+      status: selectedStatus
     };
 
     updateBookingStatus(booking._id, data)
@@ -106,17 +107,17 @@ export default function AppointmentData({ booking, type, isOverdue }) {
 
   if (!booking) {
     return (
-      <div className="flex items-center justify-center w-full h-full">
-        <Spinner color="secondary" label="Cargando..." size="lg" />
+      <div className='flex items-center justify-center w-full h-full'>
+        <Spinner color='secondary' label='Cargando...' size='lg' />
       </div>
     );
   }
 
   return (
     <Card className={`w-[21rem] my-5 ${shadowColors}`}>
-      <CardHeader className="justify-between font-oswald">
-        <div className="flex items-center gap-3">
-          {type === "provider" ? (
+      <CardHeader className='justify-between font-oswald'>
+        <div className='flex items-center gap-3'>
+          {type === 'provider' ? (
             <>
               <Avatar showFallback src={booking.customer?.photo} />
               <p>Solicitud de Cita de {booking.customer?.name}</p>
@@ -129,39 +130,39 @@ export default function AppointmentData({ booking, type, isOverdue }) {
           )}
         </div>
         {isOverdue === true ||
-        booking.clientStatus === "cancelled" ||
-        booking.workerStatus === "cancelled" ? (
-          <p className="text-gray-500">
-            {booking.clientStatus === "cancelled" ||
-            booking.workerStatus === "cancelled"
-              ? "Cita Cancelada"
-              : "Cita Vencida"}
+        booking.clientStatus === 'cancelled' ||
+        booking.workerStatus === 'cancelled' ? (
+          <p className='text-gray-500'>
+            {booking.clientStatus === 'cancelled' ||
+            booking.workerStatus === 'cancelled'
+              ? 'Cita Cancelada'
+              : 'Cita Vencida'}
           </p>
         ) : (
-          <p className="text-gray-500">Cita Activa</p>
+          <p className='text-gray-500'>Cita Activa</p>
         )}
       </CardHeader>
       <Divider />
-      <CardBody className="gap-3 font-roboto">
-        <div className="flex flex-col gap-5 md:flex-row">
-          <div className=" flex flex-col gap-2">
-            <p className="font-bold text-lg tracking-wider my-2">
+      <CardBody className='gap-3 font-roboto'>
+        <div className='flex flex-col gap-5 md:flex-row'>
+          <div className='flex flex-col gap-2 '>
+            <p className='my-2 text-lg font-bold tracking-wider'>
               {booking.name}
             </p>
             <p>
-              {" "}
+              {' '}
               Precio total del servicio: $
               {booking.service.price * booking.timeslot.length} MXN
             </p>
-            <p className="font-semibold">
-              Inicio:{" "}
-              {dayjs(booking.start).format("D MMMM YYYY [a las] HH:mm [hrs.]")}
+            <p className='font-semibold'>
+              Inicio:{' '}
+              {dayjs(booking.start).format('D MMMM YYYY [a las] HH:mm [hrs.]')}
             </p>
-            <p className="font-semibold">
-              Fin:{" "}
-              {dayjs(booking.end).format("D MMMM YYYY [a las] HH:mm [hrs.]")}
+            <p className='font-semibold'>
+              Fin:{' '}
+              {dayjs(booking.end).format('D MMMM YYYY [a las] HH:mm [hrs.]')}
             </p>
-            {type === "customer" && (
+            {type === 'customer' && (
               <>
                 <p>CLABE: {booking.provider.CLABE} </p>
                 <p>Banco: {clabe.validate(booking.provider.CLABE).bank}</p>
@@ -169,40 +170,40 @@ export default function AppointmentData({ booking, type, isOverdue }) {
             )}
 
             <p>
-              {type === "provider" ? "Status Cliente" : "Status Worker"}:{" "}
+              {type === 'provider' ? 'Status Cliente' : 'Status Worker'}:{' '}
               <span
                 className={
-                  type === "provider" ? clientStatusColors : workerStatusColors
+                  type === 'provider' ? clientStatusColors : workerStatusColors
                 }
               >
-                {type === "provider"
+                {type === 'provider'
                   ? bookingStatusDictionary[booking.clientStatus]
                   : bookingStatusDictionary[booking.workerStatus]}
               </span>
             </p>
             <p>
-              Tu Status:{" "}
+              Tu Status:{' '}
               <span
                 className={
-                  type === "provider" ? workerStatusColors : clientStatusColors
+                  type === 'provider' ? workerStatusColors : clientStatusColors
                 }
               >
-                {type === "provider"
+                {type === 'provider'
                   ? bookingStatusDictionary[booking.workerStatus]
                   : bookingStatusDictionary[booking.clientStatus]}
               </span>
             </p>
-            {booking.isPaypalPaymentCompleted?.status === "COMPLETED" && (
+            {booking.isPaypalPaymentCompleted?.status === 'COMPLETED' && (
               <p>El pago de esta cita ya fue completado</p>
             )}
-            {type === "customer" &&
-              booking.workerStatus === "confirmed" &&
-              booking.clientStatus === "confirmed" &&
-              booking.isPaypalPaymentCompleted?.status != "COMPLETED" && (
+            {type === 'customer' &&
+              booking.workerStatus === 'confirmed' &&
+              booking.clientStatus === 'confirmed' &&
+              booking.isPaypalPaymentCompleted?.status != 'COMPLETED' && (
                 <>
                   <Button
-                    type="button"
-                    className="text-white bg-wkablack font-oswald my-4"
+                    type='button'
+                    className='my-4 text-white bg-wkablack font-oswald'
                     onPress={() => setShowPaymentModal(true)}
                   >
                     Pago Con Paypal <Paypal />
@@ -227,7 +228,7 @@ export default function AppointmentData({ booking, type, isOverdue }) {
         </div>
       </CardBody>
       <Divider />
-      <CardFooter className="gap-3 font-roboto">
+      <CardFooter className='gap-3 font-roboto'>
         {isOverdue === true ? (
           <p className='self-center text-center font-roboto'>
             La cita esta{' '}
@@ -237,44 +238,43 @@ export default function AppointmentData({ booking, type, isOverdue }) {
             ) : (
               <span className='text-red-500'>vencida</span>
             )}
-
           </p>
-        ) : booking.workerStatus === "cancelled" ||
-          booking.clientStatus === "cancelled" ||
-          booking.clientStatus === "completed" ||
-          booking.workerStatus === "completed" ? (
-          <p className="self-center text-center text-red-500 font-roboto">
-            Esta cita ha sido{" "}
-            {(type === "provider" && booking.workerStatus === "cancelled") ||
-            (type === "customer" && booking.clientStatus === "cancelled") ? (
+        ) : booking.workerStatus === 'cancelled' ||
+          booking.clientStatus === 'cancelled' ||
+          booking.clientStatus === 'completed' ||
+          booking.workerStatus === 'completed' ? (
+          <p className='self-center text-center text-red-500 font-roboto'>
+            Esta cita ha sido{' '}
+            {(type === 'provider' && booking.workerStatus === 'cancelled') ||
+            (type === 'customer' && booking.clientStatus === 'cancelled') ? (
               <span>cancelada</span>
             ) : (
-              <span className="text-green-500">completada</span>
+              <span className='text-green-500'>completada</span>
             )}
           </p>
         ) : (
-          <div className="flex flex-col items-center gap-3 grow">
+          <div className='flex flex-col items-center gap-3 grow'>
             <p>Actualiza el Status</p>
-            <div className="flex flex-col items-center justify-center w-full gap-3 grow md:flex-row">
+            <div className='flex flex-col items-center justify-center w-full gap-3 grow md:flex-row'>
               <Select
-                variant="bordered"
-                size="sm"
-                label="Status"
+                variant='bordered'
+                size='sm'
+                label='Status'
                 errorMessage={selectionError}
                 isInvalid={!!selectionError}
                 onChange={(e) => {
                   setSelectedStatus(e.target.value);
-                  setSelectionError("");
+                  setSelectionError('');
                 }}
               >
                 {Object.keys(bookingStatusDictionary)
                   .filter((key) => {
-                    if (type === "provider") {
-                      return key !== "pending" && key !== booking.workerStatus;
-                    } else if (type === "customer") {
-                      return key !== "pending" && key !== booking.clientStatus;
+                    if (type === 'provider') {
+                      return key !== 'pending' && key !== booking.workerStatus;
+                    } else if (type === 'customer') {
+                      return key !== 'pending' && key !== booking.clientStatus;
                     } else {
-                      return key !== "Pending";
+                      return key !== 'Pending';
                     }
                   })
                   .map((key) => (
@@ -284,16 +284,16 @@ export default function AppointmentData({ booking, type, isOverdue }) {
                   ))}
               </Select>
               <Button
-                type="button"
+                type='button'
                 onPress={onSubmit}
-                size="lg"
-                className="text-white bg-wkablack font-oswald hover:cursor-pointer"
+                size='lg'
+                className='text-white bg-wkablack font-oswald hover:cursor-pointer'
               >
                 <Check />
               </Button>
             </div>
             {responseStatus && (
-              <p className="self-center text-center text-red-500 font-roboto">
+              <p className='self-center text-center text-red-500 font-roboto'>
                 {responseStatus}
               </p>
             )}
@@ -311,22 +311,22 @@ function PaymentModal({
   service,
   providerName,
   priceMultiplier,
-  bookingID,
+  bookingID
 }) {
   function onSubmit(order) {
     const data = {
       status: order.status,
       order: order.id,
-      payedAmount: service.price * priceMultiplier,
+      payedAmount: service.price * priceMultiplier
     };
 
     bookingPaymentUpdate(bookingID, data)
       .then((res) => {
-        console.log("res", res);
+        console.log('res', res);
         window.location.reload();
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log('err', err);
       });
   }
 
@@ -339,12 +339,12 @@ function PaymentModal({
     >
       <ModalContent>
         <>
-          <ModalHeader className="flex flex-col gap-1">
+          <ModalHeader className='flex flex-col gap-1'>
             Pago de Tu Cita
           </ModalHeader>
           <ModalBody>
             <div>
-              <h1 className="font-roboto">
+              <h1 className='font-roboto'>
                 Paga tu cita con {providerName} via Paypal
               </h1>
             </div>
@@ -356,13 +356,13 @@ function PaymentModal({
                       {
                         description: `Pago de cita de ${service.name}`,
                         amount: {
-                          value: service.price * priceMultiplier,
-                        },
-                      },
+                          value: service.price * priceMultiplier
+                        }
+                      }
                     ],
                     application_context: {
-                      shipping_preference: "NO_SHIPPING",
-                    },
+                      shipping_preference: 'NO_SHIPPING'
+                    }
                   });
                 }}
                 onApprove={async (data, actions) => {
@@ -374,7 +374,7 @@ function PaymentModal({
           </ModalBody>
           <ModalFooter>
             <Button
-              className="text-white bg-wkablack font-oswald"
+              className='text-white bg-wkablack font-oswald'
               onPress={() => setShowModal(false)}
             >
               Cancelar

@@ -13,6 +13,7 @@ import ModalOnCall from './ModalOnCall';
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
+dayjs.tz.setDefault('America/Mexico_City');
 
 const nextDayOfWeek = (dayOfWeek) => {
   const now = dayjs();
@@ -54,6 +55,7 @@ export default function DaySchedule({ element, isNext }) {
     const dataToSubmit = {
       availability,
       activeHours,
+      weekday: dayjs(date).day(),
       ...(dayjs(date).isBefore(dayjs())
         ? { date: nextDayOfWeek(dayjs(date).day()) }
         : { date: date })
