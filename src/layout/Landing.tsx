@@ -35,10 +35,12 @@ export default function Landing() {
           <div className="flex flex-col mt-24 mb-7 lg:flex-row lg:items-center lg:max-w-[1200px]">
             <WInfo></WInfo>
           </div>
-          <h2 className="mb-3 text-3xl font-semibold text-center lg:text-5xl font-oswald text-third">
+          <h2 className="mb-3 w-72 md:w-auto text-3xl font-semibold text-center lg:text-5xl font-oswald text-third">
             ¡Únete y hagamos que las cosas sucedan juntos!
           </h2>
-          <BottomButtons nextTitle="COMO FUNCIONA" reference="third" />
+          <div className="w-screen ml-28 md:ml-72 flex">
+            <BottomButtons nextTitle="COMO FUNCIONA" reference="third" />
+          </div>
         </section>
 
         <section id="third-section" className="flex justify-center bg-third">
@@ -55,7 +57,7 @@ export default function Landing() {
               <SwiperCardTwo />
               <SwiperCard left />
             </div>
-            <BottomButtons nextTitle="PORQUE NOSOTROS" reference="fourth" />
+            <BottomButtons nextTitle="POR QUÉ NOSOTROS" reference="fourth" />
           </article>
         </section>
 
@@ -72,7 +74,7 @@ export default function Landing() {
               />
               <div className="p-10">
                 <h1 className="pb-8 text-2xl subpixel-antialiased font-bold leading-tight tracking-widest text-center font-oswald text-neutral-800 lg:text-7xl">
-                  PORQUE NOSOTROS
+                  POR QUÉ NOSOTROS
                 </h1>
                 <Accordion variant="light" selectionMode="multiple">
                   <AccordionItem
@@ -177,7 +179,7 @@ export default function Landing() {
         <section id="fifth-section">
           <SearchWorker></SearchWorker>
         </section>
-        <Footer letters="relative -right-56" />
+        <Footer letters="relative -right-52" />
       </main>
     </>
   );
