@@ -6,8 +6,16 @@ import HeaderApp from '../components/HeaderApp';
 import Footer from '../components/Footer';
 import { fetchUser } from '../utils/fetch';
 import dayjs from 'dayjs';
+import 'dayjs/locale/es';
+import DayJSUtc from 'dayjs/plugin/utc';
+import DayJSTimezone from 'dayjs/plugin/timezone';
 import { useUser } from '../utils/UserContext';
 import Cookies from 'js-cookie';
+
+dayjs.locale('es');
+dayjs.extend(DayJSUtc);
+dayjs.extend(DayJSTimezone);
+dayjs.tz.setDefault('America/Mexico_City');
 
 export default function Dashboard() {
   const { userData, setUserData } = useUser();

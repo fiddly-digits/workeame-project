@@ -28,6 +28,7 @@ import DayJSTimezone from 'dayjs/plugin/timezone';
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
+dayjs.tz.setDefault('America/Mexico_City');
 
 const { VITE_API_URL } = process.env;
 

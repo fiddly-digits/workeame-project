@@ -11,6 +11,7 @@ import DaySchedule from '../components/DaySchedule';
 dayjs.locale('es');
 dayjs.extend(DayJSUtc);
 dayjs.extend(DayJSTimezone);
+dayjs.tz.setDefault('America/Mexico_City');
 dayjs.extend(isToday);
 
 export default function ScheduleUpdate() {
