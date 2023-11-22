@@ -68,8 +68,6 @@ export default function MicrositeConfiguration() {
     dayjs().add(5, 'day').format('dddd'),
     dayjs().add(6, 'day').format('dddd')
   ];
-
-  console.log(days);
   const hours = arrayRange(0, 23, 1);
   const {
     register,
@@ -118,7 +116,6 @@ export default function MicrositeConfiguration() {
   };
 
   const onSubmit = async (data) => {
-    console.log(data);
     const token = sessionStorage.getItem('token');
     if (selectedTheme === 0) {
       setThemeError('Debes seleccionar un tema');
@@ -173,8 +170,6 @@ export default function MicrositeConfiguration() {
     days.forEach((day, index) => {
       schedules = [...schedules, createSchedule(day, data, index)];
     });
-
-    console.log(schedules);
 
     let responses = [];
     if (Object.keys(micrositeInfo).length !== 0)
@@ -241,8 +236,7 @@ export default function MicrositeConfiguration() {
 
   function createSchedule(day, data, index) {
     //const timezoneName = 'America/Mexico_City';
-    console.log('Data Day', data[day]);
-    console.log('Day', day);
+
     const date = dayjs().add(index, 'day').startOf('day').toISOString();
     let schedule = {
       date: date,
@@ -256,7 +250,6 @@ export default function MicrositeConfiguration() {
         schedule.activeHours.push(i);
       }
     }
-    console.log(schedule);
     return schedule;
   }
 
@@ -589,7 +582,6 @@ export default function MicrositeConfiguration() {
                     No te preocupes, podrás actualizarlas mas tarde
                   </p>
                   <div className='flex justify-center'>
-                    {console.log(selectedDays)}
                     {selectedDays.map((day) => (
                       <div className='flex-col' key={`${day}-scroll`}>
                         <p className='text-sm text-center font-roboto'>{day}</p>
