@@ -14,8 +14,10 @@ import { fetchMS } from '../utils/fetch';
 import { useParams } from 'react-router-dom';
 import { handleExpertise } from '../utils/utils';
 import clsx from 'clsx';
+import { useUser } from '../utils/UserContext';
 
 export default function Profile() {
+  const loggedUser = useUser().userData;
   const [showSection, setShowSection] = useState(false);
   const [userData, setUserData] = useState({});
   const [siteData, setSiteData] = useState({});
@@ -264,30 +266,35 @@ export default function Profile() {
                 </div>
               </section>
               <section className='flex flex-col justify-between w-full gap-2 mx-auto'>
-                <div>
-                  <Checkbox
-                    onChange={handleCheckboxChange}
-                    radius='full'
-                    size='lg'
-                    color='secondary'
-                  >
-                    <p className='text-2xl tracking-wider font-oswald'>
-                      Contacta con el <span className='font-bold'>Worker</span>
-                    </p>
-                  </Checkbox>
-                  <div className='mt-5 mb-10'>
-                    {showSection && (
-                      <div>
-                        <div className='bg-white h-auto w-full rounded-2xl shadow-[0px_0px_5px_0px_rgba(0,0,0,0.1)]'>
-                          <DateAndTime
-                            schedule={schedule}
-                            services={services}
-                          />
+                {loggedUser.isProfileComplete ? (
+                  <div>
+                    <Checkbox
+                      onChange={handleCheckboxChange}
+                      radius='full'
+                      size='lg'
+                      color='secondary'
+                    >
+                      <p className='text-2xl tracking-wider font-oswald'>
+                        Contacta con el{' '}
+                        <span className='font-bold'>Worker</span>
+                      </p>
+                    </Checkbox>
+                    <div className='mt-5 mb-10'>
+                      {showSection && (
+                        <div>
+                          <div className='bg-white h-auto w-full rounded-2xl shadow-[0px_0px_5px_0px_rgba(0,0,0,0.1)]'>
+                            <DateAndTime
+                              schedule={schedule}
+                              services={services}
+                            />
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <p className='self-center text-2xl text-wkablack md:text-base'>{`Interesado en los servicios de ${userData.name}, completa tu perfil!`}</p>
+                )}
               </section>
             </>
           )}

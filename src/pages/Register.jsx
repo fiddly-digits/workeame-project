@@ -11,8 +11,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
-  useDisclosure
+  Button
 } from '@nextui-org/react';
 
 const { VITE_API_URL } = process.env;
@@ -42,9 +41,8 @@ const schema = Yup.object().shape({
 });
 
 export default function Register() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  //const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedImage, setSelectedImage] = useState();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -54,8 +52,10 @@ export default function Register() {
     mode: 'onBlur',
     resolver: yupResolver(schema)
   });
-  const [showModal, setShowModal] = useState(false);
+  //const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [registrationStatus, setRegistrationStatus] = useState('');
 
   async function onSubmit(data) {
     const userInfo = {
@@ -70,11 +70,17 @@ export default function Register() {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
       .then((response) => {
-        if (response) navigate('/login');
+        if (response) {
+          setRegistrationStatus('Registro exitoso');
+          setIsModalOpen(true);
+        }
       })
       .catch((error) => {
-        if (error) setErrorMessage(error.response.data.message);
-        setShowModal(true);
+        if (error) {
+          setRegistrationStatus('Ha habido un error al registrarte');
+          setErrorMessage(error.response.data.message);
+          setIsModalOpen(true);
+        }
       });
   }
 
@@ -211,43 +217,68 @@ export default function Register() {
               radius='md'
               type='submit'
               className='text-white bg-wkablack font-oswald hover:cursor-pointer'
-              onPress={onOpen}
               startContent={<img src='/arrow-right.svg' alt='next' />}
             >
               REGISTRATE
             </Button>
-            {showModal && (
-              <Modal
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                isDismissable={false}
-                placement='center'
-                shouldBlockScroll={true}
-              >
-                <ModalContent>
-                  {(onClose) => (
-                    <>
-                      <ModalHeader className='flex flex-col gap-1'>
-                        Ha habido un problema
-                      </ModalHeader>
-                      <ModalBody>{errorMessage}</ModalBody>
-                      <ModalFooter>
-                        <Button
-                          color='danger'
-                          variant='light'
-                          onPress={onClose}
-                        >
-                          Close
-                        </Button>
-                      </ModalFooter>
-                    </>
-                  )}
-                </ModalContent>
-              </Modal>
+            {isModalOpen && registrationStatus && (
+              <RegisterModal
+                isModalOpen={isModalOpen}
+                setIsModalOpen={setIsModalOpen}
+                registrationStatus={registrationStatus}
+                errorMessage={errorMessage}
+              />
             )}
           </div>
         </form>
       </main>
     </div>
+  );
+}
+
+function RegisterModal({
+  isModalOpen,
+  setIsModalOpen,
+  registrationStatus,
+  errorMessage
+}) {
+  const navigate = useNavigate();
+  return (
+    <Modal
+      isOpen={isModalOpen}
+      onOpenChange={setIsModalOpen}
+      isDismissable={false}
+      hideCloseButton
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalHeader className='flex flex-col gap-1'>
+              {registrationStatus}
+            </ModalHeader>
+            <ModalBody>
+              <p className='text-red-500 font-roboto'>
+                {errorMessage
+                  ? errorMessage
+                  : 'En Breve recibirás un correo donde podrás verificar tu cuenta.'}
+              </p>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                className='text-white bg-wkablack font-oswald'
+                onPress={() => {
+                  onClose();
+                  if (registrationStatus === 'Registro exitoso') {
+                    navigate('/Login');
+                  }
+                }}
+              >
+                Entendido!
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   );
 }
