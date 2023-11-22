@@ -123,9 +123,9 @@ export default function SearchWorkerPage() {
                     );
                   }
                 })}
-              {fetchedSites.forEach((site) => {
+              {/* {fetchedSites.forEach((site) => {
                 console.log(site);
-              })}
+              })} */}
               {fetchedSites.length === 0 && !loading && (
                 <div className='flex justify-center col-span-3'>
                   <p className='text-center text-red-400 grow font-roboto'>
