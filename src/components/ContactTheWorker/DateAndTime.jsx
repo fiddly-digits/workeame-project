@@ -54,8 +54,10 @@ export default function DateAndTime({ schedule, services }) {
     const data = {
       date: selectedDate,
       start: dayjs(selectedDate).hour(selectedHour).minute(0).toISOString(),
-      end: dayjs(selectedDate).hour(selectedEndHour).minute(0).toISOString()
+      end: dayjs(selectedDate).hour(selectedEndHour).minute(0).toISOString(),
+      timeslot: getNumbersInRange(selectedHour, selectedEndHour)
     };
+    console.log(data);
 
     createBooking(data, selectedService)
       .then((res) => {
@@ -66,11 +68,6 @@ export default function DateAndTime({ schedule, services }) {
         setBookingStatus(err.response.data.message);
         setIsModalOpen(true);
       });
-
-    console.log(
-      'count numbers in range',
-      getNumbersInRange(selectedHour, selectedEndHour)
-    );
   }
 
   return (
