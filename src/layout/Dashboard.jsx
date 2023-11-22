@@ -167,12 +167,15 @@ export default function Dashboard() {
                       action='Chats'
                       isDisabled={true}
                     /> */}
-                    <MenuItem
-                      icon='/check-circle-t.svg'
-                      action='Tus citas'
-                      reference='bookings'
-                      position={'bottom'}
-                    />
+
+                    {userData.isProfileComplete && (
+                      <MenuItem
+                        icon='/check-circle-t.svg'
+                        action='Tus citas'
+                        reference='bookings'
+                        position={'bottom'}
+                      />
+                    )}
                   </ul>
                   <h3 className='font-roboto text-sm text-center my-3 tracking-[2px] text-gray-500'>
                     Cuenta
