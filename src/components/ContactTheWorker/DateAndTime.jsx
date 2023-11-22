@@ -57,7 +57,6 @@ export default function DateAndTime({ schedule, services }) {
       end: dayjs(selectedDate).hour(selectedEndHour).minute(0).toISOString(),
       timeslot: getNumbersInRange(selectedHour, selectedEndHour)
     };
-    console.log(data);
 
     createBooking(data, selectedService)
       .then((res) => {
