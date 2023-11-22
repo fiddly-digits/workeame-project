@@ -166,6 +166,7 @@ export default function MicrositeConfiguration() {
     }
 
     let schedules = [];
+
     days.forEach((day, index) => {
       schedules = [...schedules, createSchedule(day, data, index)];
     });
@@ -236,9 +237,11 @@ export default function MicrositeConfiguration() {
   function createSchedule(day, data, index) {
     //const timezoneName = 'America/Mexico_City';
 
+    const date = dayjs().add(index, 'day').startOf('day').toISOString();
     let schedule = {
-      date: dayjs().add(index, 'day').startOf('day').toISOString(),
+      date: date,
       availability: data[day],
+      weekday: dayjs(date).day(),
       activeHours: []
     };
     for (let i = 0; i <= 23; i++) {
